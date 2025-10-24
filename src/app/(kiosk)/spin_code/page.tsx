@@ -8,7 +8,7 @@ import {
 
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useContext, useState } from "react";
+import { Suspense, useContext, useState } from "react";
 
 import { fetchPostObj } from "@/action/function";
 import ShowSpinGame from "@/component/ShowSpinGame";
@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { KaosContext } from "../layout";
 
-export default function LoyaltySpin() {
+function LoyaltySpinInner() {
   const [code, setCode] = useState("");
   const { dealer_id }: any = useContext(KaosContext);
   const [spinData, setSpinData] = useState([]);
@@ -208,5 +208,12 @@ export default function LoyaltySpin() {
         </div>
       </div>
     </>
+  );
+}
+export default function LoyaltySpin() {
+  return (
+    <Suspense fallback={<div className="text-center py-20">Loading...</div>}>
+      <LoyaltySpinInner />
+    </Suspense>
   );
 }
