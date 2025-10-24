@@ -44,22 +44,7 @@ const Layout = ({ children }: any) => {
   const router = useRouter();
   const pathname = usePathname();
   const isKioskPage = pathname === "/kiosk";
-  if (!bannerData) {
-    return (
-      <div className="min-h-screen flex  justify-center bg-background">
-        <video
-          src={
-            "https://mypcp.us/assets/images/standing_screen/splash-video.mp4"
-          }
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="max-w-[731px] min-h-[1300px] object-cover"
-        />
-      </div>
-    );
-  }
+
   return (
     <KaosContext.Provider
       value={{
