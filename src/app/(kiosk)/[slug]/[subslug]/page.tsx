@@ -1,6 +1,7 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
+import SafeHTML from "@/components/SafeHTML";
 import { useContext, useEffect, useState } from "react";
 import { KaosContext } from "../../layout";
 
@@ -36,13 +37,15 @@ const DetailKaosHtmlPage = ({
   return (
     <div className="w-full bg-background flex flex-col gap-4 overflow-hidden">
       {!loading && data && (
-        <div>
-          <div
-            className="bg-background"
-            // @ts-ignore
-            dangerouslySetInnerHTML={{ __html: data?.descriptionHtml }}
-          />
-        </div>
+        // @ts-ignore
+        <SafeHTML html={data?.descriptionHtml} />
+        // <div>
+        //   <div
+        //     className="bg-background"
+        //     // @ts-ignore
+        //     dangerouslySetInnerHTML={{ __html: data?.descriptionHtml }}
+        //   />
+        // </div>
       )}
     </div>
   );

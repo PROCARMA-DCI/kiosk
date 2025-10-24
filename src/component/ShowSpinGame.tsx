@@ -156,10 +156,12 @@ export default function ShowSpinGame({ data, open, close }: any) {
           imageUrl={winningSegment?.image}
         >
           <div className="flex flex-col justify-center items-center gap-4 max-w-sm mx-auto">
-            <h1 className="text-5xl font-extrabold text-center">Free Merch</h1>
+            <h1 className="text-5xl font-extrabold text-center">
+              {lastWinner}
+            </h1>
             <p className="text-center text-light text-xl text-muted-foreground mt-2 ">
-              Congratulations! You won free merch of your selection. This will
-              be added to your rewards in the loyalty section of your
+              Congratulations! You won free {lastWinner} of your selection. This
+              will be added to your rewards in the loyalty section of your
               Dealer&apos;s app.
             </p>
             <div className="flex flex-col">

@@ -46,12 +46,12 @@ const DetailKaosPage = ({ params }: { params: { slug: string } }) => {
         data &&
         data?.map((item: any, index: number) => (
           <Link key={index} href={`/${card_id}/${item.detailId}`}>
-            <div className="rounded-[27.08px] bg-[#0093c8] shadow-md m-auto w-[622.94px] h-[156.28px] text-white">
+            <div className="rounded-[27.08px] bg-[#0093c8] shadow-md m-auto w-[622.94px] h-[152.28px] text-white">
               <div className="flex items-center gap-4 ">
                 <Image
                   src={item.image}
                   alt="kiosk slug"
-                  className="w-[179.79px] h-[156.28px] shadow-md rounded-[27.08px] object-cover -ms-2 skew-x-6"
+                  className="w-[179.79px] h-[150px] mt-[1px] rounded-[27.08px] object-cover  scale-125"
                   height={500}
                   width={500}
                 />
