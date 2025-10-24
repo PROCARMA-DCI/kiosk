@@ -7,8 +7,9 @@ import { KaosContext } from "./layout";
 const KaosHomePage = () => {
   const { bannerData }: any = useContext(KaosContext);
   console.log(bannerData);
+
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loading</div>}>
       <div>
         {bannerData?.bannerType === "image" && (
           <img
