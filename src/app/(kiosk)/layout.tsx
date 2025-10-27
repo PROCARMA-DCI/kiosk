@@ -4,46 +4,63 @@ import { HeaderKaos } from "@/component/HeaderKaos";
 import MenuKaos from "@/component/MenuKaos";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, Home } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, useEffect, useRef, useState } from "react";
 
 interface KaosContextType {
-  dealer_id: string | null;
-  setDealerID: React.Dispatch<React.SetStateAction<string | null>>;
+  dealer_id: string | undefined | null;
+  setDealerID: React.Dispatch<React.SetStateAction<string | undefined | null>>;
   bannerData: any;
   setBannerData: React.Dispatch<React.SetStateAction<any>>;
+  dealerModel: boolean;
+  setDealerModel: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const KaosContext = createContext<KaosContextType | undefined>(
   undefined
 );
 const Layout = ({ children }: any) => {
-  const [dealer_id, setDealerID] = useState<string | null>("515");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [dealer_id, setDealerID] = useState<string | undefined | null>(
+    searchParams.get("dealer_id")
+  );
   const [bannerData, setBannerData] = useState<any>(null);
   const [showHome, setShowHome] = useState(false);
+  const [dealerModel, setDealerModel] = useState<boolean>(false);
   const [inactive, setInactive] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // 🔹 Reset inactivity timer on user action
-  useEffect(() => {
-    const resetTimer = () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-      setInactive(false);
-      timerRef.current = setTimeout(() => setInactive(true), 10000); // 10s inactivity
-    };
+  // useEffect(() => {
+  //   const resetTimer = () => {
+  //     if (timerRef.current) clearTimeout(timerRef.current);
+  //     setInactive(false);
+  //     timerRef.current = setTimeout(() => setInactive(true), 10000000); // 10s inactivity
+  //   };
 
-    const events = ["mousemove", "keydown", "mousedown", "touchstart"];
-    events.forEach((e) => window.addEventListener(e, resetTimer));
-    resetTimer();
+  //   const events = ["mousemove", "keydown", "mousedown", "touchstart"];
+  //   events.forEach((e) => window.addEventListener(e, resetTimer));
+  //   resetTimer();
 
-    return () => {
-      events.forEach((e) => window.removeEventListener(e, resetTimer));
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, []);
-  const router = useRouter();
-  const pathname = usePathname();
+  //   return () => {
+  //     events.forEach((e) => window.removeEventListener(e, resetTimer));
+  //     if (timerRef.current) clearTimeout(timerRef.current);
+  //   };
+  // }, []);
+
   const isKioskPage = pathname === "/kiosk";
+
+  // ✅ Whenever dealer_id changes, sync it to the query
+  useEffect(() => {
+    if (dealer_id) {
+      const params = new URLSearchParams(window.location.search);
+      params.set("dealer_id", dealer_id);
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      router.replace(newUrl, { scroll: false }); // updates query without reload
+    }
+  }, [dealer_id, router]);
 
   return (
     <KaosContext.Provider
@@ -52,12 +69,19 @@ const Layout = ({ children }: any) => {
         setDealerID,
         bannerData,
         setBannerData,
+        dealerModel,
+        setDealerModel,
       }}
     >
       <div className="min-h-screen flex  justify-center bg-background">
-        <div className="relative w-full max-w-[731px] min-h-[1300px] rounded-lg shadow-2xl overflow-hidden flex flex-col">
+        <div className="relative w-full max-w-[731px] min-h-[1300px] shadow-2xl overflow-hidden flex flex-col">
           <div className="absolute top-0 right-0 ">
-            <MenuKaos dealer_id={dealer_id} setDealerId={setDealerID} />
+            <MenuKaos
+              dealer_id={dealer_id}
+              setDealerId={setDealerID}
+              dealerModel={dealerModel}
+              setDealerModel={setDealerModel}
+            />
           </div>
           {/* Back & Home Buttons */}
           {!isKioskPage && (
@@ -77,16 +101,18 @@ const Layout = ({ children }: any) => {
               </button>
 
               {/* Home Button (appears on hover) */}
-              <button
-                onClick={() => router.push("/kiosk")}
-                className={`ml-1 cursor-pointer bg-[#00244C99] hover:bg-[#03295599] text-white hover:text-white p-2 h-10 rounded-full shadow-lg transition-all duration-500 ${
-                  showHome
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 -translate-x-10 pointer-events-none"
-                }`}
-              >
-                <Home className="h-4 w-4 " />
-              </button>
+              {pathname !== "/" && (
+                <button
+                  onClick={() => router.push("/kiosk")}
+                  className={`ml-1 cursor-pointer bg-[#00244C99] hover:bg-[#03295599] text-white hover:text-white p-2 h-10 rounded-full shadow-lg transition-all duration-500 ${
+                    showHome
+                      ? "opacity-100 translate-x-0"
+                      : "opacity-0 -translate-x-10 pointer-events-none"
+                  }`}
+                >
+                  <Home className="h-4 w-4 " />
+                </button>
+              )}
             </div>
           )}
           <HeaderKaos />
@@ -94,7 +120,7 @@ const Layout = ({ children }: any) => {
           {children}
         </div>
         {/* 🔹 Screensaver Overlay */}
-        {inactive && bannerData?.splashVideo && (
+        {/* {inactive && bannerData?.splashVideo && (
           <div
             className="absolute inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700"
             onClick={() => setInactive(false)} // click to close video
@@ -108,7 +134,7 @@ const Layout = ({ children }: any) => {
               className="max-w-[731px] min-h-[1300px] object-cover"
             />
           </div>
-        )}
+        )} */}
       </div>
     </KaosContext.Provider>
   );

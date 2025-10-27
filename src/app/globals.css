@@ -1,6 +1,58 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* @font-face {
+  font-family: "Uni Sans";
+  src: url("/fonts/UniSansHeavyCaps.otf") format("otf");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Uni Sans";
+  src: url("/fonts/UniSansThin.otf") format("otf");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir LT Pro";
+  src: url("/fonts/AvenirLTProLight.otf") format("otf");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Avenir LT Pro";
+  src: url("/fonts/AvenirLTProBook.otf") format("otf");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Avenir LT Pro";
+  src: url("/fonts/AvenirLTProMedium.otf") format("otf");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir LT Pro";
+  src: url("/fonts/AvenirLTProHeavy.otf") format("otf");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Avenir LT Pro";
+  src: url("/fonts/AvenirLTProBlack.otf") format("otf");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+} */
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -44,6 +96,7 @@
 }
 
 :root {
+  font-family: var(--font-avenir), sans-serif;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -119,6 +172,13 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+h1,
+h2,
+h3 {
+  font-family: var(--font-uni-sans), sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 @layer utilities {

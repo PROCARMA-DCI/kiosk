@@ -6,7 +6,7 @@ import FeatureCardKaos from "@/component/FeatureCard";
 import { KaosContext } from "./layout";
 const KaosHomePage = () => {
   const { bannerData }: any = useContext(KaosContext);
-  console.log(bannerData);
+
   if (!bannerData) {
     return (
       <div className="min-h-screen flex  justify-center bg-background">
@@ -26,6 +26,10 @@ const KaosHomePage = () => {
   return (
     <Suspense fallback={<div>Loading</div>}>
       <div>
+        {/* <h1 className="text-[27.08px]">Vehicle service contract</h1>
+        <p className="text-[13.54px] font-light uppercase">Avenir Light text</p>
+        <p className="text-[10.83px] font-bold">Avenir Heavy text</p> */}
+
         {bannerData?.bannerType === "image" && (
           <img
             className="w-full  h-[500px]"

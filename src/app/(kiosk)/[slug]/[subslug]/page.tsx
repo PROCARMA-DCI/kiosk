@@ -2,15 +2,13 @@
 
 import { fetchPostObj } from "@/action/function";
 import SafeHTML from "@/components/SafeHTML";
+import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { KaosContext } from "../../layout";
 
-const DetailKaosHtmlPage = ({
-  params,
-}: {
-  params: { slug: string; subslug: string };
-}) => {
+const DetailKaosHtmlPage = () => {
   const [data, setData] = useState(null);
+  const params = useParams();
   const [loading, setLoading] = useState(false);
   const { dealer_id }: any = useContext(KaosContext);
   const detail_id = params?.subslug;
@@ -35,7 +33,7 @@ const DetailKaosHtmlPage = ({
   }, [dealer_id, params.slug]);
 
   return (
-    <div className="w-full bg-background flex flex-col gap-4 overflow-hidden">
+    <div className="w-full  bg-background flex  mx-auto justify-center items-center">
       {!loading && data && (
         // @ts-ignore
         <SafeHTML html={data?.descriptionHtml} />

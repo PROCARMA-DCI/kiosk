@@ -4,11 +4,13 @@ import { fetchPostObj } from "@/action/function";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { KaosContext } from "../layout";
 
-const DetailKaosPage = ({ params }: { params: { slug: string } }) => {
+const DetailKaosPage = () => {
   const [data, setData] = useState<any>(null);
+  const params = useParams();
   const [loading, setLoading] = useState(false);
   const { dealer_id }: any = useContext(KaosContext);
   const card_id = params?.slug;
@@ -51,9 +53,9 @@ const DetailKaosPage = ({ params }: { params: { slug: string } }) => {
                 <Image
                   src={item.image}
                   alt="kiosk slug"
-                  className="w-[179.79px] h-[150px] mt-[1px] rounded-[27.08px] object-cover  scale-125"
-                  height={500}
-                  width={500}
+                  className="w-[179.79px] h-[152.28px]  rounded-[27.08px]   "
+                  height={300}
+                  width={300}
                 />
                 <div className="flex flex-col gap-2">
                   <h1 className="font-bold text-[27.08px] leading-[13.54px] tracking-[0] uppercase">

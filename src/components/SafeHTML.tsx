@@ -1,11 +1,16 @@
 import DOMPurify from "dompurify";
 
 export default function SafeHTML({ html }: { html: string }) {
-  const clean = DOMPurify.sanitize(html);
+  const cleanHtml = DOMPurify.sanitize(html, {
+    // FORBID_TAGS: ["html", "*", "body", "container", "header"],
+  });
+
   return (
-    <div
-      className="prose prose-neutral max-w-none"
-      dangerouslySetInnerHTML={{ __html: clean }}
-    />
+    <div className="relative overflow-hidden rounded-md border p-4">
+      <div
+        className="[&_*]:!max-w-full [&_*]:!text-inherit [&_*]:!m-0"
+        dangerouslySetInnerHTML={{ __html: cleanHtml }}
+      />
+    </div>
   );
 }
