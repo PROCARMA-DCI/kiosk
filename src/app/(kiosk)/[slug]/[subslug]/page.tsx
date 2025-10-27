@@ -1,10 +1,43 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
-import SafeHTML from "@/components/SafeHTML";
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { KaosContext } from "../../layout";
+
+import { useRef } from "react";
+
+export function HtmlPreview({ html }: { html?: string }) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    if (iframeRef.current && html) {
+      const doc = iframeRef.current.contentDocument;
+      if (doc) {
+        doc.open();
+        doc.write(`
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <style>
+                /* Optionally add your app fonts or base styles */
+                body {
+                  margin: 0;
+                  font-family: Avenir, sans-serif;
+             
+                }
+              </style>
+            </head>
+            <body>${html}</body>
+          </html>
+        `);
+        doc.close();
+      }
+    }
+  }, [html]);
+
+  return <iframe ref={iframeRef} className="w-full min-h-screen border-0" />;
+}
 
 const DetailKaosHtmlPage = () => {
   const [data, setData] = useState(null);
@@ -33,10 +66,11 @@ const DetailKaosHtmlPage = () => {
   }, [dealer_id, params.slug]);
 
   return (
-    <div className="w-full  bg-background flex  mx-auto justify-center items-center">
+    <div className="  ">
       {!loading && data && (
         // @ts-ignore
-        <SafeHTML html={data?.descriptionHtml} />
+        // <SafeHTML html={data?.descriptionHtml} />
+        <HtmlPreview html={data?.descriptionHtml} />
         // <div>
         //   <div
         //     className="bg-background"
