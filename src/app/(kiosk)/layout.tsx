@@ -33,22 +33,24 @@ const LayoutInner = ({ children }: any) => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // 🔹 Reset inactivity timer on user action
-  // useEffect(() => {
-  //   const resetTimer = () => {
-  //     if (timerRef.current) clearTimeout(timerRef.current);
-  //     setInactive(false);
-  //     timerRef.current = setTimeout(() => setInactive(true), 10000000); // 10s inactivity
-  //   };
+  useEffect(() => {
+    const resetTimer = () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      setInactive(false);
+      timerRef.current = setTimeout(() => setInactive(true), 30000); // 10s inactivity
+    };
 
-  //   const events = ["mousemove", "keydown", "mousedown", "touchstart"];
-  //   events.forEach((e) => window.addEventListener(e, resetTimer));
-  //   resetTimer();
+    // const events = ["mousemove", "keydown", "mousedown", "touchstart"];
+    const events = ["click", "keydown"];
 
-  //   return () => {
-  //     events.forEach((e) => window.removeEventListener(e, resetTimer));
-  //     if (timerRef.current) clearTimeout(timerRef.current);
-  //   };
-  // }, []);
+    events.forEach((e) => window.addEventListener(e, resetTimer));
+    resetTimer();
+
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, resetTimer));
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const isKioskPage = pathname === "/kiosk";
 
@@ -122,7 +124,7 @@ const LayoutInner = ({ children }: any) => {
           {children}
         </div>
         {/* 🔹 Screensaver Overlay */}
-        {/* {inactive && bannerData?.splashVideo && (
+        {inactive && bannerData?.splashVideo && (
           <div
             className="absolute inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700"
             onClick={() => setInactive(false)} // click to close video
@@ -136,7 +138,7 @@ const LayoutInner = ({ children }: any) => {
               className="max-w-[731px] min-h-[1300px] object-cover"
             />
           </div>
-        )} */}
+        )}
       </div>
     </KaosContext.Provider>
   );
