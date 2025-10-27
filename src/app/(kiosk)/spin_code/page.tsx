@@ -100,7 +100,7 @@ function LoyaltySpinInner() {
               <Button
                 disabled={!isReady}
                 onClick={handleSubmit}
-                className={`w-full py-5 text-lg font-semibold rounded-xl shadow-md transition-all ${
+                className={`w-full cursor-pointer py-5 text-lg font-semibold rounded-xl shadow-md transition-all ${
                   isReady
                     ? "bg-gradient-to-r from-[#00b2ff] to-[#0077cc] hover:scale-105 text-white"
                     : "bg-gray-300 text-gray-500 cursor-not-allowed"

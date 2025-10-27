@@ -16,6 +16,7 @@ const avenir = localFont({
 const uniSans = localFont({
   src: [
     { path: "../fonts/UniSansHeavy.otf", weight: "900" },
+    { path: "../fonts/UniSansRegular.ttf", weight: "400" },
     { path: "../fonts/UniSansThin.otf", weight: "200" },
   ],
   variable: "--font-uni-sans",

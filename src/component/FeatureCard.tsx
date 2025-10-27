@@ -12,7 +12,7 @@ import ShowImageHandle from "./ShowImageHandle";
 
 const FeatureCardKaos = () => {
   const { dealer_id } = useContext(KaosContext) || {};
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -57,58 +57,46 @@ const FeatureCardKaos = () => {
       className="w-full grid grid-cols-3 gap-6 font-uni"
       style={{ fontFamily: '"Uni Sans", sans-serif' }}
     >
-      {[
-        ...cards,
-        ...Array(
-          Math.max(12, Math.ceil(cards.length / 3) * 3) - cards.length
-        ).fill(null),
-      ].map((feature, index) =>
-        feature ? (
-          <Link
-            key={index}
-            href={
-              feature.type === "list"
-                ? `/${feature.id}`
-                : feature.type === "spinwheel"
-                ? `/spin_code?id=${feature.id}`
-                : "#"
-            }
-          >
-            <button
-              onClick={() => {
-                handleClick(feature);
-              }}
-              className={cn(
-                " w-[176.73px] bg-white h-[178.08px] rounded-[14.9px] shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer text-center flex flex-col items-center justify-center border-5 border-gray-200 hover:border-gray-300 ",
-                loading && "animate-pulse bg-gray-200"
-              )}
+      {loading
+        ? // 🔹 Show 6 skeleton cards while loading
+          Array(6)
+            .fill(null)
+            .map((_, index) => (
+              <div
+                key={index}
+                className="w-[176.73px] h-[178.08px] rounded-[14.9px] bg-gray-200 animate-pulse shadow-md border-5 border-gray-200"
+              />
+            ))
+        : // 🔹 Show actual cards when loaded
+          cards.map((feature, index) => (
+            <Link
+              key={index}
+              href={
+                feature.type === "list"
+                  ? `/${feature.id}?name=${feature.title}`
+                  : feature.type === "spinwheel"
+                  ? `/spin_code?id=${feature.id}`
+                  : "#"
+              }
             >
-              <div className="mb-4">
-                {feature.icon && (
-                  <ShowImageHandle
-                    src={feature.icon}
-                    alt={feature.title}
-                    width={100}
-                    height={100}
-                  />
-                )}
-              </div>
-              <h3 className="font-[900] text-[13.54px] leading-[13.54px] tracking-[0] uppercase text-center text-gray-800">
-                {feature.title}
-              </h3>
-            </button>
-          </Link>
-        ) : (
-          // Empty placeholder to maintain alignment
-          <div
-            key={index}
-            className={cn(
-              " w-[176.73px] bg-white h-[178.08px] rounded-[14.9px] shadow-md  border-5 border-gray-200",
-              loading && "animate-pulse bg-gray-200"
-            )}
-          />
-        )
-      )}
+              <button onClick={() => handleClick(feature)} className={cn("  ")}>
+                <div className="mb-4">
+                  {feature.icon && (
+                    <ShowImageHandle
+                      src={feature.icon}
+                      alt={feature.title}
+                      className="w-[176.73px] h-[178.08px] rounded-[14.9px] transition-all duration-300 hover:scale-105 cursor-pointer "
+                      width={500}
+                      height={500}
+                    />
+                  )}
+                </div>
+                <h3 className=" text-[13.54px] leading-[13.54px] tracking-[0] uppercase text-center text-[#455D69]">
+                  {feature.title}
+                </h3>
+              </button>
+            </Link>
+          ))}
     </div>
   );
 };

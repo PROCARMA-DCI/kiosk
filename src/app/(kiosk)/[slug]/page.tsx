@@ -4,16 +4,18 @@ import { fetchPostObj } from "@/action/function";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { KaosContext } from "../layout";
 
 const DetailKaosPage = () => {
   const [data, setData] = useState<any>(null);
+  const searhParams = useSearchParams();
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const { dealer_id }: any = useContext(KaosContext);
   const card_id = params?.slug;
+  const title = searhParams.get("name");
   const fetchCardDetail = async (dealer_id: string) => {
     const response = await fetchPostObj({
       api: "StandingScreenCenter/dealerCardDetail",
@@ -38,8 +40,11 @@ const DetailKaosPage = () => {
     <div className="w-full mt-10 flex flex-col gap-4">
       <div className="w-full flex justify-center items-center gap-4">
         <ChevronDown className="text-primary" />
-        <h1 className="text-center text-primary font-bold text-3xl uppercase leading-loose">
-          Select Coverage
+        <h1
+          className="text-center text-[#00BCFF] text-[50px] uppercase leading-loose"
+          style={{ fontWeight: "400" }}
+        >
+          {title}
         </h1>
         <ChevronDown className="text-primary" />
       </div>
@@ -61,20 +66,10 @@ const DetailKaosPage = () => {
                   <h1 className="font-bold text-[27.08px] leading-[13.54px] tracking-[0] uppercase">
                     {item.title}
                   </h1>
-                  <p
-                    className="uppercase text-[13.54px] font-light "
-                    style={{
-                      fontFamily: '"Avenir LT Pro", Avenir, sans-serif',
-                    }}
-                  >
+                  <p className="uppercase text-[13.54px] font-light ">
                     {item.subTitle}
                   </p>
-                  <p
-                    className="text-[10.83px] font-[700]"
-                    style={{
-                      fontFamily: '"Avenir LT Pro", Avenir, sans-serif',
-                    }}
-                  >
+                  <p className="text-[10.83px] " style={{ fontWeight: "700" }}>
                     {item.description}
                   </p>
                 </div>

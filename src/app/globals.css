@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* @font-face {
+@font-face {
   font-family: "Uni Sans";
   src: url("/fonts/UniSansHeavyCaps.otf") format("otf");
   font-weight: 900;
@@ -51,7 +51,7 @@
   font-weight: 800;
   font-style: normal;
   font-display: swap;
-} */
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -98,13 +98,13 @@
 :root {
   font-family: var(--font-avenir), sans-serif;
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: oklch(94.363% 0.00516 229.628);
   --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  --card: oklch(94.363% 0.00516 229.628);
   --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
+  --popover: oklch(94.363% 0.00516 229.628);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(74.843% 0.15517 233.279);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -172,6 +172,10 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+body {
+  font-family: var(--font-avenir), sans-serif;
+  font-weight: 400;
 }
 h1,
 h2,
