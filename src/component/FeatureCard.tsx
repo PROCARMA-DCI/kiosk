@@ -91,9 +91,9 @@ const FeatureCardKaos = () => {
                     />
                   )}
                 </div>
-                <h3 className=" text-[13.54px] leading-[13.54px] tracking-[0] uppercase text-center text-[#455D69]">
+                {/* <h3 className=" text-[13.54px] leading-[13.54px] tracking-[0] uppercase text-center text-[#455D69]">
                   {feature.title}
-                </h3>
+                </h3> */}
               </button>
             </Link>
           ))}
