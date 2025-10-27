@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack --no-lint",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "gitpush": "git add . && git commit -m \"update\" && git push"
   },
   "dependencies": {
     "@radix-ui/primitive": "^1.1.3",

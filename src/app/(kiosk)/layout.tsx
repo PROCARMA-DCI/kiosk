@@ -54,13 +54,15 @@ const LayoutInner = ({ children }: any) => {
 
   // ✅ Whenever dealer_id changes, sync it to the query
   useEffect(() => {
-    if (dealer_id) {
-      const params = new URLSearchParams(window.location.search);
+    if (!dealer_id) return;
+
+    const params = new URLSearchParams(searchParams.toString());
+    if (params.get("dealer_id") !== dealer_id) {
       params.set("dealer_id", dealer_id);
-      const newUrl = `${window.location.pathname}?${params.toString()}`;
-      router.replace(newUrl, { scroll: false }); // updates query without reload
+      const newUrl = `${pathname}?${params.toString()}`;
+      router.replace(newUrl, { scroll: false });
     }
-  }, [dealer_id, router]);
+  }, [dealer_id, pathname, router, searchParams]);
 
   return (
     <KaosContext.Provider
