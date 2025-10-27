@@ -5,7 +5,7 @@ import MenuKaos from "@/component/MenuKaos";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, Home } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, Suspense, useEffect, useRef, useState } from "react";
 
 interface KaosContextType {
   dealer_id: string | undefined | null;
@@ -19,7 +19,7 @@ interface KaosContextType {
 export const KaosContext = createContext<KaosContextType | undefined>(
   undefined
 );
-const Layout = ({ children }: any) => {
+const LayoutInner = ({ children }: any) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -140,4 +140,10 @@ const Layout = ({ children }: any) => {
   );
 };
 
-export default Layout;
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={<div className="p-10 text-center">Loading...</div>}>
+      <LayoutInner>{children}</LayoutInner>
+    </Suspense>
+  );
+}
