@@ -46,10 +46,24 @@ export function HeaderKaos() {
       <div
         className="   w-full flex items-center  h-20 shadow-lg  bg-cover bg-center bg-no-repeat text-white "
         // style={{ backgroundImage: `url(${bannerData?.topBanner})` }}
-        style={{
-          backgroundImage: "linear-gradient(to right, #00BCFF, #023553)",
-          backgroundBlendMode: "overlay",
-        }}
+        style={
+          bannerData?.topBanner
+            ? {
+                backgroundImage: `url(${bannerData?.topBanner})`,
+              }
+            : {
+                background: `
+      -webkit-linear-gradient(to right, #00BCFF, #023553),
+      linear-gradient(to right, #00BCFF, #023553)
+    `,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundBlendMode: "overlay",
+                // backgroundImage: "linear-gradient(to right, #00BCFF, #023553)",
+                // backgroundBlendMode: "overlay",
+              }
+        }
       >
         <div className="w-full flex items-center justify-between ">
           <div

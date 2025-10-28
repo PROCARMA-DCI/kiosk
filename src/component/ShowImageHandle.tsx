@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function ShowImageHandle({
   src,
-  alt,
+  alt = "image",
   defaultImage = "/images/camera_image.jpg",
   className,
   width = 500,

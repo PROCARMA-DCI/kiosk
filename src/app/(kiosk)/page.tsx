@@ -24,11 +24,12 @@ const KaosHomePage = () => {
   //     </div>
   //   );
   // }
+
   return (
     <Suspense fallback={<div>Loading</div>}>
       <div>
         {globalLoading && <Skeleton className="h-[500px] " />}
-        {bannerData?.bannerType === "image" && (
+        {bannerData?.bannerType === "image" ? (
           <img
             className="w-full  h-[500px]"
             src={bannerData?.bannerLink}
@@ -36,6 +37,16 @@ const KaosHomePage = () => {
             height={500}
             width={500}
           />
+        ) : (
+          bannerData?.bannerType === "video" && (
+            <iframe
+              className="w-full h-[500px]"
+              src={bannerData.splashVideo}
+              title="YouTube video"
+              allow="autoplay; fullscreen"
+              allowFullScreen={false}
+            />
+          )
         )}
 
         {/* Feature Card */}

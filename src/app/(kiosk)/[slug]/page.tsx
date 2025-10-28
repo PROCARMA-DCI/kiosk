@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import { toast } from "sonner";
 import { KaosContext } from "../layout";
 
 const DetailKaosPage = () => {
@@ -35,9 +36,12 @@ const DetailKaosPage = () => {
       fetchCardDetail(dealer_id);
     }
   }, [dealer_id, params.slug]);
-
+  const checkToast = () => {
+    console.log("toast");
+    toast.error("No found");
+  };
   return (
-    <div className="w-full mt-10 flex flex-col gap-4">
+    <div className="w-full mt-10 flex flex-col gap-4" onClick={checkToast}>
       <div className="w-full flex justify-center items-center gap-4">
         <ChevronDown className="text-primary" />
         <h1
