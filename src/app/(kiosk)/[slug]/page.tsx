@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-import { toast } from "sonner";
 import { KaosContext } from "../layout";
 
 const DetailKaosPage = () => {
@@ -36,12 +35,9 @@ const DetailKaosPage = () => {
       fetchCardDetail(dealer_id);
     }
   }, [dealer_id, params.slug]);
-  const checkToast = () => {
-    console.log("toast");
-    toast.error("No found");
-  };
+
   return (
-    <div className="w-full mt-10 flex flex-col gap-4" onClick={checkToast}>
+    <div className="w-full mt-10 flex flex-col gap-4">
       <div className="w-full flex justify-center items-center gap-4">
         <ChevronDown className="text-primary" />
         <h1
@@ -54,32 +50,38 @@ const DetailKaosPage = () => {
       </div>
 
       {!loading &&
-        data &&
-        data?.map((item: any, index: number) => (
-          <Link key={index} href={`/${card_id}/${item.detailId}`}>
-            <div className="rounded-[27.08px] bg-[#0093c8]  shadow-md m-auto w-[622.94px] h-[152.28px] text-white">
-              <div className="flex items-center gap-4 ">
-                <Image
-                  src={item.image}
-                  alt="kiosk slug"
-                  className="w-[179.79px] h-[152.28px]  rounded-[27.08px]   "
-                  height={300}
-                  width={300}
-                />
-                <div className="flex flex-col gap-2">
-                  <h1 className="font-bold text-[27.08px] leading-[13.54px] tracking-[0] uppercase">
-                    {item.title}
-                  </h1>
-                  <p className="uppercase text-[13.54px] font-light ">
-                    {item.subTitle}
-                  </p>
-                  <p className="text-[10.83px] " style={{ fontWeight: "700" }}>
-                    {item.description}
-                  </p>
+        (data ? (
+          data?.map((item: any, index: number) => (
+            <Link key={index} href={`/${card_id}/${item.detailId}`}>
+              <div className="rounded-[27.08px] bg-[#0093c8]  shadow-md m-auto w-[622.94px] h-[152.28px] text-white">
+                <div className="flex items-center gap-4 ">
+                  <Image
+                    src={item.image}
+                    alt="kiosk slug"
+                    className="w-[179.79px] h-[152.28px]  rounded-[27.08px]   "
+                    height={300}
+                    width={300}
+                  />
+                  <div className="flex flex-col gap-2">
+                    <h1 className="font-bold text-[27.08px] leading-[13.54px] tracking-[0] uppercase">
+                      {item.title}
+                    </h1>
+                    <p className="uppercase text-[13.54px] font-light ">
+                      {item.subTitle}
+                    </p>
+                    <p
+                      className="text-[10.83px] "
+                      style={{ fontWeight: "700" }}
+                    >
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          ))
+        ) : (
+          <h1 className="text-center text-[20px]">No Data Found</h1>
         ))}
     </div>
   );

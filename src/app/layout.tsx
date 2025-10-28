@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -32,6 +33,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${avenir.variable} ${uniSans.variable} antialiased`}>
         {children}
+        <Toaster />
       </body>
     </html>
   );
