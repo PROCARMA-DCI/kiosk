@@ -199,3 +199,11 @@ h3 {
     animation: spinClockwise 8s linear infinite;
   }
 }
+
+.kiosk-gradient {
+  background: -webkit-linear-gradient(bottom right, #30dab2, #0c5ebf);
+  background: linear-gradient(to bottom right, #30dab2, #0c5ebf);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}

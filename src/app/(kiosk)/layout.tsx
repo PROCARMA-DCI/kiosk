@@ -96,7 +96,7 @@ const LayoutInner = ({ children }: any) => {
           {/* Back & Home Buttons */}
           {!isKioskPage && pathname !== "/" && (
             <div
-              className="fixed left-2  top-1/2 -translate-y-1/2 z-50"
+              className="absolute left-2  top-1/2 -translate-y-1/2 z-50"
               onMouseEnter={() => setShowHome(true)}
               onMouseLeave={() => setShowHome(false)}
             >

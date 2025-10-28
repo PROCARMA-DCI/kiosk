@@ -13,6 +13,8 @@ import { Suspense, useContext, useState } from "react";
 import { fetchPostObj } from "@/action/function";
 import ShowSpinGame from "@/component/ShowSpinGame";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { KaosContext } from "../layout";
 
@@ -49,6 +51,44 @@ function LoyaltySpinInner() {
   const handleSubmit = () => {
     fetchCardDetail();
   };
+
+  const steps = [
+    {
+      id: 1,
+      title: "Download the Spitzer Via App",
+      text: "Download the app from either the Apple App Store or Google Play Store...",
+      img: "/images/kaos/qrcode.png",
+      class: "w-[87.14px] h-[87.14px]",
+    },
+    {
+      id: 2,
+      title: "Navigate to Loyalty Spin",
+      text: "Once logged in, navigate to (Loyalty Spin) from the sliding side menu.",
+      img: "/images/kaos/code1.png",
+      img2: "/images/kaos/code2.png",
+      class: "w-[97.96px] h-[70.66px]",
+    },
+    {
+      id: 3,
+      title: "Generate Code + Spin to Win!",
+      text: "After generating a code from the loyalty spin screen, enter your code in the kiosk to spin.",
+      img: "/images/kaos/code1.png",
+      class: "w-[97.96px] h-[70.66px]",
+    },
+  ];
+  const variants: any = {
+    hidden: { opacity: 0, y: 80, filter: "blur(12px)" },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        delay: i * 0.2,
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    }),
+  };
   return (
     <>
       <ShowSpinGame
@@ -62,15 +102,15 @@ function LoyaltySpinInner() {
         </h1>
 
         <div
-          className="w-[523px] h-[514px]  rounded-[85px] p-[20px]  shadow-2xl flex justify-center items-center "
-          style={{
-            backgroundImage:
-              "linear-gradient(to bottom right, #30dab2, #0c5ebf)",
-            backgroundColor: "#30dab2", // solid fallback if gradient fails
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          className="kiosk-gradient w-[523px] h-[514px]  rounded-[85px] p-[20px]  shadow-2xl flex justify-center items-center "
+          // style={{
+          //   backgroundImage:
+          //     "linear-gradient(to bottom right, #30dab2, #0c5ebf)",
+          //   backgroundColor: "#30dab2", // solid fallback if gradient fails
+          //   backgroundRepeat: "no-repeat",
+          //   backgroundSize: "cover",
+          //   backgroundPosition: "center",
+          // }}
         >
           <Card className="  w-[463.71px] h-[455.85px] rounded-[60px] flex items-center justify-center bg-white dark:bg-gray-900 border-none">
             <CardContent className="flex flex-col items-center justify-center p-8 space-y-8">
@@ -141,114 +181,24 @@ function LoyaltySpinInner() {
             </CardContent>
           </Card>
         </div>
-        <div className="relative flex flex-col gap-8 w-full  mx-auto mt-20">
-          {!isReady && (
-            <div
-              className="absolute inset-0 pointer-events-none transition-opacity duration-500"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(233, 237, 239,0.95) 100%)",
-              }}
-            />
-          )}
-          {/* Step 1 */}
-          <div className="flex items-start justify-between gap-4 w-[600px] mx-auto">
-            <div>
-              <div className="flex  gap-4">
-                <h1
-                  className=" uppercase leading-[100%] text-[#001931]"
-                  style={{
-                    fontFamily: "Uni Sans",
-                    fontSize: "25px",
-                    lineHeight: "100%",
-                    fontWeight: "900",
-                  }}
-                >
-                  1.
-                </h1>
-                <div>
-                  <h2 className="font-uni text-[25px] font-[900] uppercase leading-[100%] text-[#001931]">
-                    Download the Spitzer Via App
-                  </h2>
-                  <p
-                    className="text-[#55778B] mt-1 w-[421.25px]"
-                    style={{
-                      fontSize: "10.83px",
-                      lineHeight: "15.57px",
-                      fontWeight: "700",
-                    }}
-                  >
-                    Download the app from either the Apple App Store or Google
-                    Play Store. If you already have an account, make sure you
-                    are signed in. If you are new, please scan the QR code to
-                    become a Spitzer VIP member!
-                  </p>
-                </div>
-              </div>
-            </div>
-            <Image
-              src="/images/kaos/qrcode.png"
-              alt="QR Code"
-              width={180}
-              height={180}
-              className="rounded-xl border border-gray-200 w-[87.14px] h-[87.14px]"
-            />
-          </div>
-
-          {/* Step 2 */}
-          <div className="flex items-start justify-between w-[600px] mx-auto">
-            <div>
-              <div className="flex  gap-4 ">
+        <div className="relative flex flex-col gap-8 w-full mx-auto mt-20">
+          {steps.map((step, i) => (
+            <motion.div
+              key={step.id}
+              className="flex items-start justify-between gap-4 w-[600px] mx-auto"
+              variants={variants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              custom={i}
+            >
+              <div className="flex gap-4">
                 <h1 className="font-uni text-[25px] font-[900] uppercase leading-[100%] text-[#001931]">
-                  2.
+                  {step.id}.
                 </h1>
                 <div>
                   <h2 className="font-uni text-[25px] font-[900] uppercase leading-[100%] text-[#001931]">
-                    Navigate to Loyalty Spin
-                  </h2>
-
-                  <p
-                    className="text-[#55778B] mt-1 w-[421.25px]"
-                    style={{
-                      fontSize: "10.83px",
-                      lineHeight: "15.57px",
-                      fontWeight: "700",
-                    }}
-                  >
-                    Once logged in, navigate to (Loyalty Spin) from the sliding
-                    side menu.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center  ">
-              <Image
-                src="/images/kaos/code1.png"
-                alt="Navigate to Loyalty Spin"
-                width={500}
-                height={500}
-                className="rounded-xl   w-[97.96px] h-[70.66px]"
-              />
-              <Image
-                src="/images/kaos/code2.png"
-                alt="Navigate to Loyalty Spin"
-                width={500}
-                height={500}
-                className="rounded-xl -ml-3  w-[97.96px] h-[70.66px]"
-              />
-            </div>
-          </div>
-
-          {/* Step 3 */}
-          <div className="flex items-start justify-between gap-4 w-[600px] mx-auto">
-            <div>
-              <div className="flex  gap-4">
-                <h1 className="font-uni text-[25px] font-[900] uppercase leading-[100%] text-[#001931]">
-                  3.
-                </h1>
-                <div>
-                  <h2 className="font-uni text-[25px] font-[900] uppercase leading-[100%] text-[#001931]">
-                    Generate Code + Spin to Win!
+                    {step.title}
                   </h2>
                   <p
                     className="text-[#55778B] mt-1 w-[421.25px]"
@@ -258,21 +208,39 @@ function LoyaltySpinInner() {
                       fontWeight: "700",
                     }}
                   >
-                    After generating a code from the loyalty spin screen, enter
-                    your code in the kiosk to spin.
+                    {step.text}
                   </p>
                 </div>
               </div>
-            </div>
 
-            <Image
-              src="/images/kaos/code1.png"
-              alt="Navigate to Loyalty Spin"
-              width={180}
-              height={180}
-              className="rounded-xl border border-gray-200 w-[97.96px] h-[70.66px]"
-            />
-          </div>
+              {step.img2 ? (
+                <div className="flex items-center">
+                  <Image
+                    src={step.img}
+                    alt={step.title}
+                    width={500}
+                    height={500}
+                    className={`rounded-xl ${step.class}`}
+                  />
+                  <Image
+                    src={step.img2}
+                    alt={step.title}
+                    width={500}
+                    height={500}
+                    className={`rounded-xl -ml-3 ${step.class}`}
+                  />
+                </div>
+              ) : (
+                <Image
+                  src={step.img}
+                  alt={step.title}
+                  width={180}
+                  height={180}
+                  className={`rounded-xl border border-gray-200 ${step.class}`}
+                />
+              )}
+            </motion.div>
+          ))}
         </div>
       </div>
     </>
@@ -280,7 +248,13 @@ function LoyaltySpinInner() {
 }
 export default function LoyaltySpin() {
   return (
-    <Suspense fallback={<div className="text-center py-20">Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="text-center py-20">
+          <Skeleton className="h-[500px] " />
+        </div>
+      }
+    >
       <LoyaltySpinInner />
     </Suspense>
   );
