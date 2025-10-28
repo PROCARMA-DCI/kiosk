@@ -12,6 +12,7 @@ const MenuKaos = ({
   setDealerId,
   dealerModel,
   setDealerModel,
+  setInactive,
 }: any) => {
   const [dealers, setDealers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -36,6 +37,7 @@ const MenuKaos = ({
   }, []);
 
   useEffect(() => {
+    setInactive(true);
     setTimeout(() => setDealerModel(false), 1000);
   }, [dealer_id]);
 

@@ -4,14 +4,20 @@ import { fetchPostObj } from "@/action/function";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import LayoutSkeleton from "@/components/loader/LayoutSkeleton";
 import { usePathname } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import ShowImageHandle from "./ShowImageHandle";
 
 export function HeaderKaos() {
-  const { dealer_id, bannerData, setBannerData, setDealerModel }: any =
-    useContext(KaosContext);
+  const {
+    dealer_id,
+    bannerData,
+    setBannerData,
+    setDealerModel,
+    setGlobalLoading: setLoading,
+    globalLoading: loading,
+  }: any = useContext(KaosContext);
   const pathname = usePathname();
-  const [loading, setLoading] = useState(false);
+
   const today = new Date();
   const month = today.toLocaleString("default", { month: "long" });
   const date = today.getDate();
@@ -38,20 +44,29 @@ export function HeaderKaos() {
   return (
     <div>
       <div
-        className="  px-8 w-full flex items-center  h-20 shadow-lg  bg-cover bg-center bg-no-repeat text-white "
+        className="   w-full flex items-center  h-20 shadow-lg  bg-cover bg-center bg-no-repeat text-white "
         // style={{ backgroundImage: `url(${bannerData?.topBanner})` }}
         style={{
           backgroundImage: "linear-gradient(to right, #00BCFF, #023553)",
           backgroundBlendMode: "overlay",
         }}
       >
-        <div className="w-full flex items-center justify-between">
-          <div className="" onDoubleClick={() => setDealerModel(true)}>
+        <div className="w-full flex items-center justify-between ">
+          <div
+            className="relative pl-8 p-3"
+            onDoubleClick={() => setDealerModel(true)}
+          >
             <ShowImageHandle
               src={bannerData?.dealerLogo}
               alt={bannerData?.logoImgTone}
               height={70}
               width={70}
+            />
+            <div
+              className="absolute rounded-r-[200px] left-0 inset-0 pointer-events-none transition-opacity duration-500"
+              style={{
+                backgroundColor: "#FFFFFF52",
+              }}
             />
           </div>
           {pathname === "/" && (
@@ -60,7 +75,7 @@ export function HeaderKaos() {
             </h1>
           )}
           {/* Left - Date */}
-          <div className="me-4">
+          <div className=" pr-8">
             <p className="text-sm p-0 m-0 font-medium opacity-90">{month}</p>
             <p className="text-4xl p-0 m-0 font-bold">{date}</p>
           </div>
