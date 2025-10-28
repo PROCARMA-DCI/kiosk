@@ -3,7 +3,7 @@
 import { HeaderKaos } from "@/component/HeaderKaos";
 import MenuKaos from "@/component/MenuKaos";
 import { cn } from "@/lib/utils";
-import { ChevronLeft, Home } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
 
@@ -37,7 +37,7 @@ const LayoutInner = ({ children }: any) => {
     const resetTimer = () => {
       if (timerRef.current) clearTimeout(timerRef.current);
       setInactive(false);
-      timerRef.current = setTimeout(() => setInactive(true), 30000); // 10s inactivity
+      timerRef.current = setTimeout(() => setInactive(true), 30000); // 30s inactivity
     };
 
     // const events = ["mousemove", "keydown", "mousedown", "touchstart"];
@@ -79,18 +79,17 @@ const LayoutInner = ({ children }: any) => {
     >
       <div className="min-h-screen flex  justify-center bg-background">
         <div className="relative w-full max-w-[731px] min-h-[1300px] shadow-2xl overflow-hidden flex flex-col">
-          <div className="absolute top-0 right-0 ">
-            <MenuKaos
-              dealer_id={dealer_id}
-              setDealerId={setDealerID}
-              dealerModel={dealerModel}
-              setDealerModel={setDealerModel}
-            />
-          </div>
+          <MenuKaos
+            dealer_id={dealer_id}
+            setDealerId={setDealerID}
+            dealerModel={dealerModel}
+            setDealerModel={setDealerModel}
+          />
+
           {/* Back & Home Buttons */}
-          {!isKioskPage && (
+          {!isKioskPage && pathname !== "/" && (
             <div
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-50 flex items-center"
+              className="fixed left-2  top-1/2 -translate-y-1/2 z-50"
               onMouseEnter={() => setShowHome(true)}
               onMouseLeave={() => setShowHome(false)}
             >
@@ -98,16 +97,20 @@ const LayoutInner = ({ children }: any) => {
               <button
                 onClick={() => router.back()}
                 className={cn(
-                  "relative bg-[#00244C99] hover:bg-[#03295599] text-white hover:text-white p-1 h-20 rounded-r-full shadow-lg transition-all duration-300 w-4 flex items-center justify-center cursor-pointer"
+                  "relative bg-[#00244C99]  hover:bg-[#03295599] text-white hover:text-white shadow-lg transition-all duration-300 w-[77.31px] h-[21.19px] rounded-tl-[33.86px] rounded-tr-[33.86px]  flex items-center justify-center cursor-pointer"
                 )}
+                style={{
+                  transformOrigin: "left center",
+                  transform: "rotate(90deg)",
+                }}
               >
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronLeft className="h-6 w-6 -rotate-90" />
               </button>
 
               {/* Home Button (appears on hover) */}
-              {pathname !== "/" && (
+              {/* {pathname !== "/" && (
                 <button
-                  onClick={() => router.push("/kiosk")}
+                  onClick={() => router.push("/")}
                   className={`ml-1 cursor-pointer bg-[#00244C99] hover:bg-[#03295599] text-white hover:text-white p-2 h-10 rounded-full shadow-lg transition-all duration-500 ${
                     showHome
                       ? "opacity-100 translate-x-0"
@@ -116,7 +119,7 @@ const LayoutInner = ({ children }: any) => {
                 >
                   <Home className="h-4 w-4 " />
                 </button>
-              )}
+              )} */}
             </div>
           )}
           <HeaderKaos />
@@ -124,7 +127,7 @@ const LayoutInner = ({ children }: any) => {
           {children}
         </div>
         {/* 🔹 Screensaver Overlay */}
-        {inactive && bannerData?.splashVideo && (
+        {/* {inactive && bannerData?.splashVideo && (
           <div
             className="absolute inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700"
             onClick={() => setInactive(false)} // click to close video
@@ -138,7 +141,7 @@ const LayoutInner = ({ children }: any) => {
               className="max-w-[731px] min-h-[1300px] object-cover"
             />
           </div>
-        )}
+        )} */}
       </div>
     </KaosContext.Provider>
   );

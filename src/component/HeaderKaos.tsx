@@ -37,8 +37,12 @@ export function HeaderKaos() {
   return (
     <div>
       <div
-        className="  px-8 w-full flex items-center  h-20 shadow-lg  bg-cover bg-center bg-no-repeat text-white bg-gradient-to-r from-[#00BCFF] to-[#023553]"
+        className="  px-8 w-full flex items-center  h-20 shadow-lg  bg-cover bg-center bg-no-repeat text-white "
         // style={{ backgroundImage: `url(${bannerData?.topBanner})` }}
+        style={{
+          backgroundImage: "linear-gradient(to right, #00BCFF, #023553)",
+          backgroundBlendMode: "overlay",
+        }}
       >
         <div className="w-full flex items-center justify-between">
           <div className="" onDoubleClick={() => setDealerModel(true)}>
