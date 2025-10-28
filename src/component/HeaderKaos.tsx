@@ -2,14 +2,15 @@
 
 import { fetchPostObj } from "@/action/function";
 import { KaosContext } from "@/app/(kiosk)/layout";
-
 import LayoutSkeleton from "@/components/loader/LayoutSkeleton";
+import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import ShowImageHandle from "./ShowImageHandle";
 
 export function HeaderKaos() {
   const { dealer_id, bannerData, setBannerData, setDealerModel }: any =
     useContext(KaosContext);
+  const pathname = usePathname();
   const [loading, setLoading] = useState(false);
   const today = new Date();
   const month = today.toLocaleString("default", { month: "long" });
@@ -53,9 +54,11 @@ export function HeaderKaos() {
               width={70}
             />
           </div>
-          <h1 className="text-[50px]" style={{ fontWeight: "200" }}>
-            Welcome
-          </h1>
+          {pathname === "/" && (
+            <h1 className="text-[50px]" style={{ fontWeight: "200" }}>
+              Welcome
+            </h1>
+          )}
           {/* Left - Date */}
           <div className="me-4">
             <p className="text-sm p-0 m-0 font-medium opacity-90">{month}</p>

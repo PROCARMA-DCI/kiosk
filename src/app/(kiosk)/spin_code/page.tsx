@@ -40,8 +40,10 @@ function LoyaltySpinInner() {
     if (response.success == 1) {
       setSpinData(response?.wheel);
       setShowSpin(true);
+      setCode("");
     } else {
       toast.error(response.message);
+      setCode("");
     }
   };
   const handleSubmit = () => {
