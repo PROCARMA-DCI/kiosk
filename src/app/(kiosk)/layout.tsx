@@ -84,7 +84,7 @@ const LayoutInner = ({ children }: any) => {
       }}
     >
       <div className="min-h-screen flex  justify-center bg-background">
-        <div className="relative w-full max-w-[731px] min-h-[1300px] shadow-2xl overflow-hidden flex flex-col">
+        <div className="relative w-full max-w-[1080px] min-h-[1300px] shadow-2xl overflow-hidden flex flex-col">
           <MenuKaos
             dealer_id={dealer_id}
             setDealerId={setDealerID}
