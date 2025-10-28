@@ -54,7 +54,7 @@ function LoyaltySpinInner() {
         open={showSpin}
         close={() => setShowSpin(false)}
       />
-      <div className="mt-10 w-full flex flex-col items-center ">
+      <div className="mt-10 w-full h-screen flex flex-col items-center ">
         <h1 className="text-4xl font-bold text-primary mb-8 tracking-wider">
           LOYALTY SPIN
         </h1>
@@ -145,12 +145,12 @@ function LoyaltySpinInner() {
               className="absolute inset-0 pointer-events-none transition-opacity duration-500"
               style={{
                 backgroundImage:
-                  "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(247,247,247,0.95) 100%)",
+                  "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(233, 237, 239,0.95) 100%)",
               }}
             />
           )}
           {/* Step 1 */}
-          <div className="flex items-start justify-between gap-4 max-w-[600px] mx-auto">
+          <div className="flex items-start justify-between gap-4 w-[600px] mx-auto">
             <div>
               <div className="flex  gap-4">
                 <h1
@@ -194,7 +194,7 @@ function LoyaltySpinInner() {
           </div>
 
           {/* Step 2 */}
-          <div className="flex items-start justify-between max-w-[600px] mx-auto">
+          <div className="flex items-start justify-between w-[600px] mx-auto">
             <div>
               <div className="flex  gap-4 ">
                 <h1 className="font-uni text-[25px] font-[900] uppercase leading-[100%] text-[#001931]">
@@ -238,7 +238,7 @@ function LoyaltySpinInner() {
           </div>
 
           {/* Step 3 */}
-          <div className="flex items-start justify-between gap-4 max-w-[600px] mx-auto">
+          <div className="flex items-start justify-between gap-4 w-[600px] mx-auto">
             <div>
               <div className="flex  gap-4">
                 <h1 className="font-uni text-[25px] font-[900] uppercase leading-[100%] text-[#001931]">

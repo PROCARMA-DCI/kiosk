@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useCallback, useRef, useState } from "react";
 // const demoSegments = [
 //   {
@@ -161,20 +162,14 @@ export const SpinnerWheelGame = React.forwardRef(
           }}
         >
           {/* arrow button */}
-          <div
-            className="absolute top-0 left-1/2 z-20 transform -translate-x-1/2 "
-            style={{
-              width: `${size * 0.1}px`,
-              height: `${size * 0.08}px`,
-              background: pointerColor,
-              clipPath:
-                "polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%)",
-              transform: "translateX(-50%) rotate(270deg)", // rotate right arrow → down
-              borderRadius: `${size * 0.01}px`,
-              filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.5))",
-              marginTop: `-${size * 0.02}px`,
-            }}
-          />
+          <div className="absolute -mt-8 top-0 left-1/2 z-20 transform -translate-x-1/2">
+            <Image
+              src="/images/arrowspinner.png"
+              width={50}
+              height={50}
+              alt="arrow"
+            />
+          </div>
 
           <svg
             width={size}
@@ -217,7 +212,16 @@ export const SpinnerWheelGame = React.forwardRef(
             }}
           >
             <div className="w-full h-full bg-yellow-400 rounded-full flex items-center justify-center shadow-lg border-4 border-white">
-              <span className="text-white text-2xl">★</span>
+              <span>
+                <Image
+                  src="/images/star.png"
+                  width={40}
+                  height={40}
+                  alt="start"
+                  className="w-[39.44px] h-[39.44px]"
+                />
+              </span>
+              {/* <span className="text-white text-5xl">★</span> */}
             </div>
           </div>
 

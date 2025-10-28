@@ -66,14 +66,19 @@ export default function ShowSpinGame({ data, open, close }: any) {
         <ShadDialog
           open={open}
           onOpenChange={close}
-          headerClass={"bg-gradient-to-r from-[#30dab2] to-[#0c5ebf] "}
+          headerClass={"bg-gradient-to-r from-[#30dab2] to-[#0c5ebf] h-16"}
           title={"Spin the Wheel"}
-          className={"w-[700px] min-h-screen overflow-hidden p-0 m-0"}
+          className={
+            "w-[700px]  min-h-screen flex flex-col overflow-hidden p-0 m-0"
+          }
         >
-          <main className=" flex flex-col gap-4 bg-gradient-to-r from-[#30dab22f] to-[#0c5dbf1d]">
+          <main className=" flex flex-col gap-4 ">
             {/* Demo Section */}
             <div className=" mt-10  relative">
-              <h1 className="text-3xl font-bold text-cyan-600 text-center mb-10 uppercase">
+              <h1
+                className=" font-bold text-[#00BCFF] text-[50px] text-center mb-32 uppercase"
+                style={{ fontWeight: "400" }}
+              >
                 Loyalty Spin
               </h1>
 
@@ -81,7 +86,7 @@ export default function ShowSpinGame({ data, open, close }: any) {
                 <div className="relative z-10">
                   <SpinnerWheelGame
                     segments={segments}
-                    size={400}
+                    size={500}
                     spinDuration={5}
                     spinPower={5}
                     onSpinComplete={(s: any) => submitPinResult(s)}
@@ -95,7 +100,7 @@ export default function ShowSpinGame({ data, open, close }: any) {
                   />
                 </div>
                 {/* Spinner Support Base */}
-                <div className="absolute left-1/2 bottom-[-25%] -translate-x-1/2 z-0">
+                <div className="absolute left-1/2 bottom-[-20%] -translate-x-1/2 z-0">
                   <Image
                     src="/images/kaos/spinner-support.png"
                     alt="spinner-support"
@@ -132,10 +137,10 @@ export default function ShowSpinGame({ data, open, close }: any) {
               )}
             </div>
 
-            <div className="relative  h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
+            <div className="absolute bottom-[-25%]  h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
               {/* ↑ adds space so it doesn't touch the spinner */}
               <div className="animate-spinClockwise origin-center relative">
-                <div className="absolute inset-0 rounded-full bg-white/20 blur-2xl"></div>
+                <div className="absolute inset-0  rounded-full bg-white/20 blur-2xl"></div>
                 <Image
                   src="/images/kaos/maskgroup.png"
                   alt="maskgroup"
