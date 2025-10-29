@@ -70,6 +70,7 @@ const LayoutInner = ({ children }: any) => {
     }
   }, [dealer_id, pathname, router, searchParams]);
 
+  console.log(bannerData);
   return (
     <KaosContext.Provider
       value={{

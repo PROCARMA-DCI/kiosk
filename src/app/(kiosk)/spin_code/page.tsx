@@ -102,7 +102,7 @@ function LoyaltySpinInner() {
         </h1>
 
         <div
-          className="kiosk-gradient w-[523px] h-[514px]  rounded-[85px] p-[20px]  shadow-2xl flex justify-center items-center "
+          className="spin-code-gradient  w-[523px] h-[514px]  rounded-[85px] p-[20px]  shadow-2xl flex justify-center items-center "
           // style={{
           //   backgroundImage:
           //     "linear-gradient(to bottom right, #30dab2, #0c5ebf)",

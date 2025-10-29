@@ -3,7 +3,7 @@
 import { fetchPostObj } from "@/action/function";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import LayoutSkeleton from "@/components/loader/LayoutSkeleton";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 import ShowImageHandle from "./ShowImageHandle";
 
@@ -17,7 +17,7 @@ export function HeaderKaos() {
     globalLoading: loading,
   }: any = useContext(KaosContext);
   const pathname = usePathname();
-
+  const router = useRouter();
   const today = new Date();
   const month = today.toLocaleString("default", { month: "long" });
   const date = today.getDate();
@@ -41,33 +41,38 @@ export function HeaderKaos() {
     }
   }, [dealer_id]);
   if (loading) return <LayoutSkeleton header={true} />;
+
+  const homeRoute = () => {
+    router.push("/");
+  };
   return (
     <div>
       <div
         className="   w-full flex items-center  h-20 shadow-lg  bg-cover bg-center bg-no-repeat text-white "
         // style={{ backgroundImage: `url(${bannerData?.topBanner})` }}
         style={
-          bannerData?.topBanner
+          bannerData?.heroBackgroundType?.toLowerCase() === "image"
             ? {
                 backgroundImage: `url(${bannerData?.topBanner})`,
               }
-            : {
+            : bannerData?.heroBackgroundType?.toLowerCase() === "gradient"
+            ? {
                 background: `
-      -webkit-linear-gradient(to right, #00BCFF, #023553),
-      linear-gradient(to right, #00BCFF, #023553)
-    `,
+                linear-gradient(to right, ${bannerData?.startGradient}, ${bannerData?.endGradient}),
+                -webkit-linear-gradient(left, ${bannerData?.startGradient}, ${bannerData?.endGradient})
+          `,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundBlendMode: "overlay",
-                // backgroundImage: "linear-gradient(to right, #00BCFF, #023553)",
-                // backgroundBlendMode: "overlay",
               }
+            : {}
         }
       >
         <div className="w-full flex items-center justify-between ">
           <div
             className="relative pl-8 p-3"
+            onClick={homeRoute}
             onDoubleClick={() => setDealerModel(true)}
           >
             <ShowImageHandle
