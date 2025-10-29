@@ -129,9 +129,13 @@ const LayoutInner = ({ children }: any) => {
               )} */}
             </div>
           )}
-          <HeaderKaos />
+          {!inactive && (
+            <>
+              <HeaderKaos />
 
-          {children}
+              {children}
+            </>
+          )}
         </div>
         {/* 🔹 Screensaver Overlay */}
         {inactive && bannerData?.splashVideo && (
