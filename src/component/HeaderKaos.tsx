@@ -90,7 +90,7 @@ export function HeaderKaos() {
           </div>
           {pathname === "/" && (
             <h1 className="text-[50px]" style={{ fontWeight: "200" }}>
-              Welcome
+              {bannerData?.mainHeading}
             </h1>
           )}
           {/* Left - Date */}
