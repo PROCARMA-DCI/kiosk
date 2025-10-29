@@ -102,7 +102,7 @@ function LoyaltySpinInner() {
         </h1>
 
         <div className="spin-code-gradient  w-[523px] min-h-[504px]  rounded-[85px] shadow-2xl flex justify-center items-center ">
-          <Card className="  w-[463.71px] h-[455.85px] overflow-hidden rounded-[60px] flex items-center justify-center bg-white dark:bg-gray-900 border-none">
+          <Card className=" w-[463.71px] h-[455.85px] overflow-hidden rounded-[60px] flex items-center justify-center bg-white dark:bg-gray-900 border-none">
             <CardContent className="flex flex-col items-center justify-center p-8 space-y-8">
               <div
                 className="text-2xl font-semibold  bg-clip-text text-transparent"
