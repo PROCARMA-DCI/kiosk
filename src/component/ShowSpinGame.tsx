@@ -121,15 +121,15 @@ export default function ShowSpinGame({ data, open, close }: any) {
                     ✕
                   </button>
 
-                  <p className="text-sm font-semibold text-cyan-600 uppercase tracking-wide">
+                  <p className="text-xl font-semibold text-cyan-600 uppercase tracking-wide">
                     🎉 You Won!
                   </p>
-                  <p className="text-2xl font-bold text-blue-600 mt-2">
+                  <p className="text-3xl font-bold text-blue-600 mt-2">
                     {lastWinner}
                   </p>
 
                   {lastPoints && (
-                    <p className="text-xl font-bold text-yellow-500 mt-2">
+                    <p className="text-2xl font-bold text-yellow-500 mt-2">
                       +{lastPoints} Points ✨
                     </p>
                   )}

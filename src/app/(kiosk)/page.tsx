@@ -3,6 +3,7 @@
 import { Suspense, useContext } from "react";
 
 import FeatureCardKaos from "@/component/FeatureCard";
+import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { KaosContext } from "./layout";
 const KaosHomePage = () => {
@@ -26,13 +27,7 @@ const KaosHomePage = () => {
   // }
 
   return (
-    <Suspense
-      fallback={
-        <div className="h-screen w-full">
-          <img src="/images/loading.jpg" alt="loading" />
-        </div>
-      }
-    >
+    <Suspense fallback={<ScreenLoader />}>
       <div>
         {globalLoading && <Skeleton className="h-[500px] " />}
         {bannerData?.bannerType === "image" ? (

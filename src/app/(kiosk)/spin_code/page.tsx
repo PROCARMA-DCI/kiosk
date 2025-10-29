@@ -13,6 +13,8 @@ import { Suspense, useContext, useState } from "react";
 import { fetchPostObj } from "@/action/function";
 import ShowSpinGame from "@/component/ShowSpinGame";
 import { Button } from "@/components/ui/button";
+import { LoaderFive } from "@/components/ui/loader";
+import { MovingBorder } from "@/components/ui/moving-border";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -149,25 +151,32 @@ function LoyaltySpinInner() {
               </InputOTP>
 
               {/* Button */}
-              <Button
-                disabled={!isReady}
-                onClick={handleSubmit}
-                className={`w-full cursor-pointer py-5 text-lg font-semibold rounded-xl shadow-md transition-all ${
-                  isReady
-                    ? " hover:scale-105 text-white"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
-                style={
-                  isReady
-                    ? {
-                        backgroundImage:
-                          "linear-gradient(to bottom right, #30dab2, #0c5ebf)",
-                      }
-                    : {}
-                }
+              <MovingBorder
+                className="bg-white p-0 rounded-xl"
+                containerClassName="w-full"
+                borderClassName="h-1"
+                animate={loading}
               >
-                SPIN + WIN
-              </Button>
+                <Button
+                  disabled={!isReady}
+                  onClick={handleSubmit}
+                  className={`w-full cursor-pointer py-5 text-lg font-semibold  shadow-md transition-all ${
+                    isReady
+                      ? " hover:scale-105 text-white"
+                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  }`}
+                  style={
+                    isReady
+                      ? {
+                          backgroundImage:
+                            "linear-gradient(to bottom right, #30dab2, #0c5ebf)",
+                        }
+                      : {}
+                  }
+                >
+                  {loading ? <LoaderFive text="SPIN + WIN" /> : "SPIN + WIN"}
+                </Button>
+              </MovingBorder>
             </CardContent>
           </Card>
         </div>

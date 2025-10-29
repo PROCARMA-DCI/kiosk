@@ -13,10 +13,28 @@ const MenuKaos = ({
   dealerModel,
   setDealerModel,
   setInactive,
+  setBannerData,
 }: any) => {
   const [dealers, setDealers] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const fetchBanner = async (dealer_id: string) => {
+    const response = await fetchPostObj({
+      api: "StandingScreenCenter/dealerHeroScreenSettings",
+      method: "POST",
+      isValue: true,
+      showErrorToast: true,
+      setLoading,
+      data: { dealer_id },
+    });
+    if (response.success == 1) {
+      setBannerData(response.message);
+    }
+  };
+  useEffect(() => {
+    if (dealer_id) {
+      fetchBanner(dealer_id);
+    }
+  }, [dealer_id]);
   const getEnableDealers = async () => {
     const response = await fetchPostObj({
       api: "StandingScreenCenter/enabledStandingScreenDealer",

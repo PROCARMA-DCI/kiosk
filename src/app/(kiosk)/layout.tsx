@@ -2,6 +2,7 @@
 
 import { HeaderKaos } from "@/component/HeaderKaos";
 import MenuKaos from "@/component/MenuKaos";
+import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { cn } from "@/lib/utils";
 import { ChevronLeft } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -72,7 +73,6 @@ const LayoutInner = ({ children }: any) => {
     }
   }, [dealer_id, pathname, router, searchParams]);
 
-  console.log(bannerData);
   return (
     <KaosContext.Provider
       value={{
@@ -94,6 +94,8 @@ const LayoutInner = ({ children }: any) => {
             dealerModel={dealerModel}
             setDealerModel={setDealerModel}
             setInactive={setInactive}
+            setGlobalLoading={setGlobalLoading}
+            setBannerData={setBannerData}
           />
 
           {/* Back & Home Buttons */}
@@ -163,7 +165,7 @@ const LayoutInner = ({ children }: any) => {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <Suspense fallback={<div className="p-10 text-center">Loading...</div>}>
+    <Suspense fallback={<ScreenLoader />}>
       <LayoutInner>{children}</LayoutInner>
     </Suspense>
   );
