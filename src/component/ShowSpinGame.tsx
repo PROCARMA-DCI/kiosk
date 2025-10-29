@@ -137,7 +137,7 @@ export default function ShowSpinGame({ data, open, close }: any) {
               )}
             </div>
 
-            <div className="absolute bottom-[-25%]  h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
+            <div className="fixed bottom-0 -mb-[350px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
               {/* ↑ adds space so it doesn't touch the spinner */}
               <div className="animate-spinClockwise origin-center relative">
                 <div className="absolute inset-0  rounded-full bg-white/20 blur-2xl"></div>
