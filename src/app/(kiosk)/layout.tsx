@@ -37,24 +37,26 @@ const LayoutInner = ({ children }: any) => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // 🔹 Reset inactivity timer on user action
-  // useEffect(() => {
-  //   const resetTimer = () => {
-  //     if (timerRef.current) clearTimeout(timerRef.current);
-  //     setInactive(false);
-  //     timerRef.current = setTimeout(() => setInactive(true), 30000); // 30s inactivity
-  //   };
+  useEffect(() => {
+    const delayTime = Number(bannerData?.delayTime ?? 0) * 1000;
 
-  //   // const events = ["mousemove", "keydown", "mousedown", "touchstart"];
-  //   const events = ["click", "keydown"];
+    if (delayTime) {
+      const resetTimer = () => {
+        if (timerRef.current) clearTimeout(timerRef.current);
+        setInactive(false);
+        timerRef.current = setTimeout(() => setInactive(true), delayTime);
+      };
 
-  //   events.forEach((e) => window.addEventListener(e, resetTimer));
-  //   resetTimer();
+      const events = ["click", "keydown"];
+      events.forEach((e) => window.addEventListener(e, resetTimer));
+      resetTimer();
 
-  //   return () => {
-  //     events.forEach((e) => window.removeEventListener(e, resetTimer));
-  //     if (timerRef.current) clearTimeout(timerRef.current);
-  //   };
-  // }, []);
+      return () => {
+        events.forEach((e) => window.removeEventListener(e, resetTimer));
+        if (timerRef.current) clearTimeout(timerRef.current);
+      };
+    }
+  }, [bannerData?.delayTime]);
 
   const isKioskPage = pathname === "/kiosk";
 

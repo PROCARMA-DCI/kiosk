@@ -26,7 +26,13 @@ const KaosHomePage = () => {
   // }
 
   return (
-    <Suspense fallback={<div>Loading</div>}>
+    <Suspense
+      fallback={
+        <div className="h-screen w-full">
+          <img src="/images/loading.jpg" alt="loading" />
+        </div>
+      }
+    >
       <div>
         {globalLoading && <Skeleton className="h-[500px] " />}
         {bannerData?.bannerType === "image" ? (
