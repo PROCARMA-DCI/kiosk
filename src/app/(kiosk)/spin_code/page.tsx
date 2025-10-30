@@ -11,7 +11,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useContext, useState } from "react";
 
 import { fetchPostObj } from "@/action/function";
-import ShowSpinGame from "@/component/ShowSpinGame";
+import ShowSpinGame from "@/common/ShowSpinGame";
 import { Button } from "@/components/ui/button";
 import { LoaderFive } from "@/components/ui/loader";
 import { MovingBorder } from "@/components/ui/moving-border";

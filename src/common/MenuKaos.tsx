@@ -1,7 +1,7 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
-import { ShadDialog } from "@/components/dialog/ShadDialog";
+import SimpleModal from "@/components/modals/SimpleModal";
 import { FilterableSelect } from "@/components/select/FilterableSelect";
 
 import { useEffect, useState } from "react";
@@ -67,7 +67,27 @@ const MenuKaos = ({
           className="text-gray-500 cursor-pointer hover:text-gray-600 Transition"
         />
       </div> */}
-      <ShadDialog
+      <SimpleModal
+        title={"Select Dealer"}
+        className={"max-w-[400px]  m-0 "}
+        open={!dealer_id || dealerModel}
+        close={() => setDealerModel(false)}
+      >
+        <div className="w-full">
+          <FilterableSelect
+            className="w-full"
+            label={"Dealer"}
+            labelPosition="inside"
+            options={dealers ?? []}
+            keyValue={"DealerID"}
+            keyTitle={"DealerTitle"}
+            setvalue={setDealerId}
+            value={dealer_id}
+            placeholder={"Select Dealer"}
+          />
+        </div>
+      </SimpleModal>
+      {/* <ShadDialog
         open={!dealer_id || dealerModel}
         onOpenChange={(state) => {
           // Prevent closing if dealer is not selected
@@ -90,7 +110,7 @@ const MenuKaos = ({
             placeholder={"Select Dealer"}
           />
         </div>
-      </ShadDialog>
+      </ShadDialog> */}
     </div>
   );
 };

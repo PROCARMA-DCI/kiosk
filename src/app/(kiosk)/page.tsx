@@ -2,7 +2,7 @@
 
 import { Suspense, useContext } from "react";
 
-import FeatureCardKaos from "@/component/FeatureCard";
+import FeatureCardKaos from "@/common/FeatureCard";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { KaosContext } from "./layout";

@@ -32,6 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${avenir.variable} ${uniSans.variable} antialiased`}>
+        <div id="modal-root" />
         {children}
         <Toaster />
       </body>

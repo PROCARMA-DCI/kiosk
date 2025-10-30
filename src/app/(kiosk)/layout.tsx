@@ -1,8 +1,8 @@
 "use client";
 
-import BackButton from "@/component/BackButton";
-import { HeaderKaos } from "@/component/HeaderKaos";
-import MenuKaos from "@/component/MenuKaos";
+import BackButton from "@/common/BackButton";
+import { HeaderKaos } from "@/common/HeaderKaos";
+import MenuKaos from "@/common/MenuKaos";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
