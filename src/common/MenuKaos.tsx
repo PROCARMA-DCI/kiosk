@@ -67,6 +67,7 @@ const MenuKaos = ({
           className="text-gray-500 cursor-pointer hover:text-gray-600 Transition"
         />
       </div> */}
+
       <SimpleModal
         title={"Select Dealer"}
         className={"max-w-[400px]  m-0 "}

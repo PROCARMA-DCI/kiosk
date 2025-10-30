@@ -1,9 +1,9 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
-import { useParams } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
-import { KaosContext } from "../../layout";
+import { ScreenLoader } from "@/components/loader/ScreenLoader";
+import { useParams, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 import { useRef } from "react";
 
@@ -39,12 +39,13 @@ export function HtmlPreview({ html }: { html?: string }) {
   return <iframe ref={iframeRef} className="w-full min-h-screen border-0" />;
 }
 
-const DetailKaosHtmlPage = () => {
+const InnerDetailKaosHtmlPage = () => {
   const [data, setData] = useState(null);
   const params = useParams();
+  const searhParams = useSearchParams();
   const [loading, setLoading] = useState(false);
-  const { dealer_id }: any = useContext(KaosContext);
   const detail_id = params?.subslug;
+  const dealer_id = searhParams.get("dealer_id");
   const fetchCardDetail = async (dealer_id: string) => {
     const response = await fetchPostObj({
       api: "StandingScreenCenter/cardExplanation",
@@ -63,7 +64,7 @@ const DetailKaosHtmlPage = () => {
     if (dealer_id && detail_id) {
       fetchCardDetail(dealer_id);
     }
-  }, [dealer_id, params.slug]);
+  }, [dealer_id, detail_id]);
 
   return (
     <div className="  ">
@@ -83,4 +84,10 @@ const DetailKaosHtmlPage = () => {
   );
 };
 
-export default DetailKaosHtmlPage;
+export default function DetailKaosHtmlPage() {
+  return (
+    <Suspense fallback={<ScreenLoader />}>
+      <InnerDetailKaosHtmlPage />
+    </Suspense>
+  );
+}

@@ -1,21 +1,21 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
+import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
-import { KaosContext } from "../layout";
+import { Suspense, useEffect, useState } from "react";
 
-const DetailKaosPage = () => {
+const InnerDetailKaosPage = () => {
   const [data, setData] = useState<any>(null);
   const searhParams = useSearchParams();
   const params = useParams();
   const [loading, setLoading] = useState(false);
-  const { dealer_id }: any = useContext(KaosContext);
   const card_id = params?.slug;
   const title = searhParams.get("name");
+  const dealer_id = searhParams.get("dealer_id");
   const fetchCardDetail = async (dealer_id: string) => {
     const response = await fetchPostObj({
       api: "StandingScreenCenter/dealerCardDetail",
@@ -87,4 +87,10 @@ const DetailKaosPage = () => {
   );
 };
 
-export default DetailKaosPage;
+export default function DetailKaosPage() {
+  return (
+    <Suspense fallback={<ScreenLoader />}>
+      <InnerDetailKaosPage />
+    </Suspense>
+  );
+}

@@ -82,7 +82,7 @@ export function FilterableSelect({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
 
-        <SelectContent>
+        <SelectContent className="z-[1000]">
           <SelectGroup>
             {label && (
               <SelectLabel className="text-xs text-muted-foreground">

@@ -1,20 +1,21 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
-import { KaosContext } from "@/app/(kiosk)/layout";
 
 import { cn } from "@/lib/utils";
 
+import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import ShowImageHandle from "./ShowImageHandle";
 
-const FeatureCardKaos = () => {
-  const { dealer_id } = useContext(KaosContext) || {};
+const InnerFeatureCardKaos = () => {
+  const searhParams = useSearchParams();
   const [cards, setCards] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const dealer_id = searhParams.get("dealer_id");
 
   const handleClick = (feature: any) => {
     if (feature.type === "list") {
@@ -101,4 +102,10 @@ const FeatureCardKaos = () => {
   );
 };
 
-export default FeatureCardKaos;
+export default function FeatureCardKaos() {
+  return (
+    <Suspense fallback={<ScreenLoader />}>
+      <InnerFeatureCardKaos />
+    </Suspense>
+  );
+}

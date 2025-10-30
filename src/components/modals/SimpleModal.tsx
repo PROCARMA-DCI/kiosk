@@ -44,14 +44,14 @@ const SimpleModal = ({
       <div
         ref={closeOutside ? wrapperRef : null}
         className={twMerge(
-          "relative z-50 bg-card max-h-[calc(100vh-200px)] shadow-xl rounded-lg h-max overflow-auto w-full  mx-4  animate-modalIn",
+          "relative isolate z-[1000] bg-card max-h-[calc(100vh-200px)] shadow-xl rounded-lg h-max overflow-auto w-full  mx-4  animate-modalIn",
           className
         )}
       >
         {(title || headerCustom) && (
           <div
             className={twMerge(
-              "sticky top-0 left-0 right-0 z-50 border-b px-4 py-3 flex items-center justify-between bg-card",
+              "sticky top-0 left-0 right-0 z-[1001] border-b px-4 py-3 flex items-center justify-between bg-card",
               headerClass
             )}
           >
