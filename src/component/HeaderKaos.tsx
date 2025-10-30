@@ -1,10 +1,9 @@
 "use client";
 
-import { fetchPostObj } from "@/action/function";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import LayoutSkeleton from "@/components/loader/LayoutSkeleton";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import ShowImageHandle from "./ShowImageHandle";
 
 export function HeaderKaos() {
@@ -22,24 +21,24 @@ export function HeaderKaos() {
   const month = today.toLocaleString("default", { month: "long" });
   const date = today.getDate();
 
-  const fetchBanner = async (dealer_id: string) => {
-    const response = await fetchPostObj({
-      api: "StandingScreenCenter/dealerHeroScreenSettings",
-      method: "POST",
-      isValue: true,
-      showErrorToast: true,
-      setLoading,
-      data: { dealer_id },
-    });
-    if (response.success == 1) {
-      setBannerData(response.message);
-    }
-  };
-  useEffect(() => {
-    if (dealer_id) {
-      fetchBanner(dealer_id);
-    }
-  }, [dealer_id]);
+  // const fetchBanner = async (dealer_id: string) => {
+  //   const response = await fetchPostObj({
+  //     api: "StandingScreenCenter/dealerHeroScreenSettings",
+  //     method: "POST",
+  //     isValue: true,
+  //     showErrorToast: true,
+  //     setLoading,
+  //     data: { dealer_id },
+  //   });
+  //   if (response.success == 1) {
+  //     setBannerData(response.message);
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (dealer_id) {
+  //     fetchBanner(dealer_id);
+  //   }
+  // }, [dealer_id]);
   if (loading) return <LayoutSkeleton header={true} />;
 
   const homeRoute = () => {

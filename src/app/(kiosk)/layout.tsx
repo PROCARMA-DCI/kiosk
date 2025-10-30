@@ -1,10 +1,9 @@
 "use client";
 
+import BackButton from "@/component/BackButton";
 import { HeaderKaos } from "@/component/HeaderKaos";
 import MenuKaos from "@/component/MenuKaos";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
-import { cn } from "@/lib/utils";
-import { ChevronLeft } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
 
@@ -30,7 +29,7 @@ const LayoutInner = ({ children }: any) => {
     searchParams.get("dealer_id")
   );
   const [bannerData, setBannerData] = useState<any>(null);
-  const [showHome, setShowHome] = useState(false);
+
   const [dealerModel, setDealerModel] = useState<boolean>(false);
   const [inactive, setInactive] = useState(false);
   const [globalLoading, setGlobalLoading] = useState(false);
@@ -58,8 +57,6 @@ const LayoutInner = ({ children }: any) => {
   //     };
   //   }
   // }, [bannerData?.delayTime]);
-
-  const isKioskPage = pathname === "/kiosk";
 
   // ✅ Whenever dealer_id changes, sync it to the query
   useEffect(() => {
@@ -99,41 +96,7 @@ const LayoutInner = ({ children }: any) => {
           />
 
           {/* Back & Home Buttons */}
-          {!isKioskPage && pathname !== "/" && (
-            <div
-              className="absolute left-2  top-1/2 -translate-y-1/2 z-50"
-              onMouseEnter={() => setShowHome(true)}
-              onMouseLeave={() => setShowHome(false)}
-            >
-              {/* Back Button */}
-              <button
-                onClick={() => router.back()}
-                className={cn(
-                  "relative bg-[#00244C99]  hover:bg-[#03295599] text-white hover:text-white shadow-lg transition-all duration-300 w-[77.31px] h-[21.19px] rounded-tl-[33.86px] rounded-tr-[33.86px]  flex items-center justify-center cursor-pointer"
-                )}
-                style={{
-                  transformOrigin: "left center",
-                  transform: "rotate(90deg)",
-                }}
-              >
-                <ChevronLeft className="h-6 w-6 -rotate-90" />
-              </button>
-
-              {/* Home Button (appears on hover) */}
-              {/* {pathname !== "/" && (
-                <button
-                  onClick={() => router.push("/")}
-                  className={`ml-1 cursor-pointer bg-[#00244C99] hover:bg-[#03295599] text-white hover:text-white p-2 h-10 rounded-full shadow-lg transition-all duration-500 ${
-                    showHome
-                      ? "opacity-100 translate-x-0"
-                      : "opacity-0 -translate-x-10 pointer-events-none"
-                  }`}
-                >
-                  <Home className="h-4 w-4 " />
-                </button>
-              )} */}
-            </div>
-          )}
+          <BackButton />
           {!inactive && (
             <>
               <HeaderKaos />
