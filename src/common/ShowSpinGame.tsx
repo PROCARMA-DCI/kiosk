@@ -1,7 +1,7 @@
 "use client";
 
-import { ShadDialog } from "@/components/dialog/ShadDialog";
 import { AlertPopup } from "@/components/modals/AlertModal";
+import SimpleModal from "@/components/modals/SimpleModal";
 import { showConfetti } from "@/components/showConfetti";
 import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
 import Image from "next/image";
@@ -63,18 +63,18 @@ export default function ShowSpinGame({ data, open, close }: any) {
   return (
     <>
       {!alertShow && (
-        <ShadDialog
+        <SimpleModal
           open={open}
-          onOpenChange={close}
+          close={close}
           headerClass={"bg-gradient-to-r from-[#30dab2] to-[#0c5ebf] h-16"}
           title={"Spin the Wheel"}
           className={
-            "w-[700px]  min-h-screen flex flex-col overflow-hidden p-0 m-0"
+            "w-[600px] min-h-screen flex flex-col overflow-hidden p-0 m-0"
           }
         >
-          <main className=" flex flex-col gap-4 ">
+          <main className=" flex flex-col gap-4 min-h-screen ">
             {/* Demo Section */}
-            <div className=" mt-10  relative">
+            <div className=" mt-10  relative ">
               <h1
                 className=" font-bold text-[#00BCFF] text-[50px] text-center mb-32 uppercase"
                 style={{ fontWeight: "400" }}
@@ -137,7 +137,7 @@ export default function ShowSpinGame({ data, open, close }: any) {
               )}
             </div>
 
-            <div className="fixed bottom-0 -mb-[350px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
+            <div className="absolute bottom-0 -mb-[350px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
               {/* ↑ adds space so it doesn't touch the spinner */}
               <div className="animate-spinClockwise origin-center relative">
                 <div className="absolute inset-0  rounded-full bg-white/20 blur-2xl"></div>
@@ -151,7 +151,7 @@ export default function ShowSpinGame({ data, open, close }: any) {
               </div>
             </div>
           </main>
-        </ShadDialog>
+        </SimpleModal>
       )}
       {alertShow && (
         <AlertPopup
