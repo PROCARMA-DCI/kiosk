@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   InputOTP,
@@ -18,11 +19,10 @@ import { MovingBorder } from "@/components/ui/moving-border";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { KaosContext } from "../layout";
 
 function LoyaltySpinInner() {
+  const router = useRouter();
   const [code, setCode] = useState("");
-  const { dealer_id }: any = useContext(KaosContext);
   const [spinData, setSpinData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showSpin, setShowSpin] = useState(false);
@@ -31,27 +31,28 @@ function LoyaltySpinInner() {
 
   const isReady = code.length === 5;
 
-  const fetchCardDetail = async () => {
-    const response = await fetchPostObj({
-      api: "spinroulette/checkspinweelcode",
-      method: "POST",
-      setLoading,
-      isValue: true,
-      showErrorToast: true,
-      data: { code },
-    });
+  // const fetchCardDetail = async () => {
+  //   const response = await fetchPostObj({
+  //     api: "spinroulette/checkspinweelcode",
+  //     method: "POST",
+  //     setLoading,
+  //     isValue: true,
+  //     showErrorToast: true,
+  //     data: { code },
+  //   });
 
-    if (response.success == 1) {
-      setSpinData(response?.wheel);
-      setShowSpin(true);
-      setCode("");
-    } else {
-      toast.error(response.message);
-      setCode("");
-    }
-  };
+  //   if (response.success == 1) {
+  //     setSpinData(response?.wheel);
+  //     router.push("/wheel-spinner");
+  //     // setShowSpin(true);
+  //     setCode("");
+  //   } else {
+  //     toast.error(response.message);
+  //     setCode("");
+  //   }
+  // };
   const handleSubmit = () => {
-    fetchCardDetail();
+    router.push(`/wheel-spinner?code=${code}`);
   };
 
   const steps = [
@@ -91,6 +92,7 @@ function LoyaltySpinInner() {
       },
     }),
   };
+
   return (
     <>
       <ShowSpinGame
