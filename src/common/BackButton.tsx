@@ -1,5 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
+import { playWheelSound } from "@/utils/helpers";
 import { ChevronLeft, Home } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,6 +19,7 @@ const BackButton = () => {
           onMouseEnter={() => setShowHome(true)}
           onMouseLeave={() => setShowHome(false)}
           onClick={() => {
+            playWheelSound("/sound/BUTTON-NAVAGATION.wav");
             if (!showHome) setShowHome(true);
             else router.back();
           }}
@@ -35,7 +37,10 @@ const BackButton = () => {
         {/* Home Button (appears on hover) */}
         {pathname !== "/" && (
           <button
-            onClick={() => router.push("/")}
+            onClick={() => {
+              playWheelSound("/sound/BUTTON-NAVAGATION.wav");
+              router.push("/");
+            }}
             className={cn(
               "mt-2 cursor-pointer bg-[#00244C99] hover:bg-[#03295599] text-white hover:text-white p-2 w-[30px] h-[40px] flex items-center justify-center rounded-full shadow-lg transition-all duration-500 ml-4",
               showHome

@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import ShowImageHandle from "./ShowImageHandle";
+import { playWheelSound } from "@/utils/helpers";
 
 const InnerFeatureCardKaos = () => {
   const searhParams = useSearchParams();
@@ -71,6 +72,9 @@ const InnerFeatureCardKaos = () => {
         : // 🔹 Show actual cards when loaded
           cards.map((feature, index) => (
             <Link
+              onClick={() => {
+                playWheelSound("/sound/MAIN-BUTTON-CLICK.mp3");
+              }}
               key={index}
               href={
                 feature.type === "list"

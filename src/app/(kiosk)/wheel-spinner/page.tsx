@@ -5,6 +5,7 @@ import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { AlertPopup } from "@/components/modals/AlertModal";
 import { showConfetti } from "@/components/showConfetti";
 import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
+import { playWheelSound } from "@/utils/helpers";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
@@ -65,7 +66,7 @@ function InnerWheelSpinnerPage() {
   const submitPinResult = async (seg: any) => {
     const segment = data?.wheel_options?.find((s: any) => s.id === seg.id);
     handleWinningSegment(segment);
-
+    playWheelSound("/sound/AFTER-SPIN-WHEEL.mp3");
     // const apiData = {
     //   ContractID: data?.ContractID,
     //   IsGuest: data?.IsGuest,

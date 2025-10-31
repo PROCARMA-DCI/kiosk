@@ -4,6 +4,7 @@ import BackButton from "@/common/BackButton";
 import { HeaderKaos } from "@/common/HeaderKaos";
 import MenuKaos from "@/common/MenuKaos";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
+import { playWheelSound } from "@/utils/helpers";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
 
@@ -109,7 +110,10 @@ const LayoutInner = ({ children }: any) => {
         {inactive && bannerData?.splashVideo && (
           <div
             className="absolute inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700"
-            onClick={() => setInactive(false)} // click to close video
+            onClick={() => {
+              playWheelSound("/sound/SPLASHPAGE-SOUND.mp3");
+              setInactive(false);
+            }} // click to close video
           >
             <video
               src={bannerData?.splashVideo}
