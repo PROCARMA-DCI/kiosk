@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import React, { useCallback, useRef, useState } from "react";
 // const demoSegments = [
 //   {
 //     id: "1",
@@ -49,6 +47,10 @@ import React, { useCallback, useRef, useState } from "react";
 //     },
 //   },
 // ];
+
+import Image from "next/image";
+import React, { useCallback, useRef, useState } from "react";
+
 export const SpinnerWheelGame = React.forwardRef(
   (
     {
@@ -162,7 +164,14 @@ export const SpinnerWheelGame = React.forwardRef(
           }}
         >
           {/* arrow button */}
-          <div className="absolute -mt-8 top-0 left-1/2 z-20 transform -translate-x-1/2">
+          <div
+            className="absolute z-20"
+            style={{
+              top: "-40px", // adjust as needed
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
+          >
             <Image
               src="/images/arrowspinner.png"
               width={50}
@@ -204,11 +213,15 @@ export const SpinnerWheelGame = React.forwardRef(
 
           {/* Center Button */}
           <div
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer"
+            className="absolute z-10 cursor-pointer flex items-center justify-center"
             onClick={spin}
             style={{
               width: size * 0.15,
               height: size * 0.15,
+              top: "50%",
+              left: "50%",
+              marginLeft: `-${(size * 0.15) / 2}px`,
+              marginTop: `-${(size * 0.15) / 2}px`,
             }}
           >
             <div className="w-full h-full bg-yellow-400 rounded-full flex items-center justify-center shadow-lg border-4 border-white">
@@ -338,14 +351,6 @@ export const SpinnerWheelGame = React.forwardRef(
             })}
           </div>
         </div>
-
-        {/* <button
-          onClick={spin}
-          disabled={isSpinning}
-          className="px-10 py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold text-lg rounded-full hover:shadow-2xl transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed hover:scale-110 active:scale-95 shadow-lg border-2 border-white"
-        >
-          {isSpinning ? "🎡 Spinning..." : "🎯 SPIN NOW"}
-        </button> */}
       </div>
     );
   }

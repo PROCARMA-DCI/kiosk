@@ -31,7 +31,10 @@ const BackButton = () => {
             transform: "rotate(90deg)",
           }}
         >
-          <ChevronLeft className="h-6 w-6 -rotate-90" />
+          <ChevronLeft
+            className="h-6 w-6"
+            style={{ transform: "rotate(-90deg)" }}
+          />
         </button>
 
         {/* Home Button (appears on hover) */}
