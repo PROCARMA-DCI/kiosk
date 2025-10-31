@@ -87,10 +87,12 @@ function InnerWheelSpinnerPage() {
   };
   console.log(alertShow, "alert");
   if (data?.length === 0) return null;
-
+  if (loading) {
+    return <ScreenLoader />;
+  }
   return (
     <>
-      {!alertShow && (
+      {!alertShow && data && (
         <div>
           <main className=" flex flex-col gap-4 min-h-screen ">
             {/* Demo Section */}
