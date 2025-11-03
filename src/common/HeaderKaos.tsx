@@ -26,7 +26,18 @@ const weatherIcons: any = {
   snow: <Snowflake />,
   mist: <CloudFog />,
 };
+function convertTemperature(tempStr: string): string {
+  // Extract number from string (e.g. "9.67 °C" → 9.67)
+  const celsius = parseFloat(tempStr);
 
+  if (isNaN(celsius)) return "Invalid";
+
+  // Convert to Fahrenheit
+  const fahrenheit = (celsius * 9) / 5 + 32;
+
+  // Return nicely formatted
+  return `${fahrenheit.toFixed(1)} °F`;
+}
 export function HeaderKaos() {
   const {
     dealer_id,
@@ -124,9 +135,9 @@ export function HeaderKaos() {
               {weatherIcon}
               <div className="flex items-center flex-col">
                 <p className="text-sm font-medium">
-                  {todayWeather?.temperature ?? "66°F"}
+                  {convertTemperature(todayWeather?.temperature ?? "12 °C")}
                 </p>
-                <p className="text-xs opacity-80">
+                <p className="text-sm opacity-80">
                   {todayWeather?.humidity ? `${todayWeather.humidity}` : "20%"}
                 </p>
               </div>
