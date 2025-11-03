@@ -1,6 +1,7 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
+import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
@@ -90,6 +91,7 @@ const InnerDetailKaosPage = () => {
 export default function DetailKaosPage() {
   return (
     <Suspense fallback={<ScreenLoader />}>
+      <BackButton backRoute="/" />
       <InnerDetailKaosPage />
     </Suspense>
   );

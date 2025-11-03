@@ -1,17 +1,20 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
+import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { AlertPopup } from "@/components/modals/AlertModal";
 import { showConfetti } from "@/components/showConfetti";
 import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
 import { playWheelSound } from "@/utils/helpers";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+
 function InnerWheelSpinnerPage() {
   const searhParams = useSearchParams();
+  const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [lastWinner, setLastWinner] = useState("");
   const [lastPoints, setLastPoints] = useState(0);
@@ -21,7 +24,7 @@ function InnerWheelSpinnerPage() {
   const [winningSegment, setWinningSegment] = useState(null);
 
   const code = searhParams.get("code");
-
+  const hasFetched = useRef(false);
   const fetchCardDetail = async (code: any) => {
     const response = await fetchPostObj({
       api: "spinroulette/checkspinweelcode",
@@ -35,10 +38,13 @@ function InnerWheelSpinnerPage() {
     if (response.success == 1) {
       setData(response?.wheel);
     } else {
+      router.push("/spin_code");
       toast.error(response.message);
     }
   };
   useEffect(() => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
     fetchCardDetail(code);
   }, []);
 
@@ -94,6 +100,7 @@ function InnerWheelSpinnerPage() {
     <>
       {!alertShow && data && (
         <div>
+          <BackButton backRoute="/spin_code" />
           <main className=" flex flex-col gap-4 min-h-screen ">
             {/* Demo Section */}
             <div className=" mt-16  relative ">

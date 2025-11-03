@@ -5,11 +5,12 @@ import { ChevronLeft, Home } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
-const BackButton = () => {
+const BackButton = ({ backRoute }: any) => {
   const [showHome, setShowHome] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const isKioskPage = pathname === "/kiosk";
+  console.log(window.history);
   return (
     !isKioskPage &&
     pathname !== "/" && (
@@ -20,8 +21,15 @@ const BackButton = () => {
           onMouseLeave={() => setShowHome(false)}
           onClick={() => {
             playWheelSound("/sound/BUTTON-NAVAGATION.wav");
-            if (!showHome) setShowHome(true);
-            else router.back();
+            if (!showHome) {
+              setShowHome(true);
+            } else {
+              if (!backRoute) {
+                router.back();
+              } else {
+                router.push(backRoute);
+              }
+            }
           }}
           className={cn(
             " bg-[#00244C99] hover:bg-[#03295599] text-white hover:text-white shadow-lg transition-all duration-300 w-[77.31px] h-[21.19px] rounded-tl-[33.86px] rounded-tr-[33.86px] flex items-center justify-center cursor-pointer"

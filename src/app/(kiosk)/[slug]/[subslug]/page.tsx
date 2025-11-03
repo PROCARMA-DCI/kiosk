@@ -1,6 +1,7 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
+import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { useParams, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
@@ -87,6 +88,7 @@ const InnerDetailKaosHtmlPage = () => {
 export default function DetailKaosHtmlPage() {
   return (
     <Suspense fallback={<ScreenLoader />}>
+      <BackButton />
       <InnerDetailKaosHtmlPage />
     </Suspense>
   );

@@ -1,24 +1,23 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useRouter } from "next/navigation";
 
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useContext, useState } from "react";
+import { Suspense, useState } from "react";
 
-import { fetchPostObj } from "@/action/function";
+import BackButton from "@/common/BackButton";
 import ShowSpinGame from "@/common/ShowSpinGame";
 import { Button } from "@/components/ui/button";
 import { LoaderFive } from "@/components/ui/loader";
 import { MovingBorder } from "@/components/ui/moving-border";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
-import { toast } from "sonner";
 
 function LoyaltySpinInner() {
   const router = useRouter();
@@ -104,6 +103,7 @@ function LoyaltySpinInner() {
         <h1 className="text-4xl font-bold text-primary mb-8 tracking-wider">
           LOYALTY SPIN
         </h1>
+        <BackButton backRoute="/" />
 
         <div className="spin-code-gradient  w-[523px] min-h-[504px]  rounded-[85px] shadow-2xl flex justify-center items-center ">
           <Card className=" w-[463.71px] h-[455.85px] overflow-hidden rounded-[60px] flex items-center justify-center bg-white dark:bg-gray-900 border-none">

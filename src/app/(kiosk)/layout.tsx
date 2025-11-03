@@ -1,6 +1,5 @@
 "use client";
 
-import BackButton from "@/common/BackButton";
 import { HeaderKaos } from "@/common/HeaderKaos";
 import MenuKaos from "@/common/MenuKaos";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
@@ -97,7 +96,7 @@ const LayoutInner = ({ children }: any) => {
           />
 
           {/* Back & Home Buttons */}
-          <BackButton />
+          {/* <BackButton /> */}
           {!inactive && (
             <>
               <HeaderKaos />
