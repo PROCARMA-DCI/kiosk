@@ -1,16 +1,36 @@
 "use client";
 
+import { fetchPostObj } from "@/action/function";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import LayoutSkeleton from "@/components/loader/LayoutSkeleton";
+import {
+  Cloud,
+  CloudFog,
+  CloudLightning,
+  CloudRain,
+  Snowflake,
+  Sun,
+} from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import ShowImageHandle from "./ShowImageHandle";
+
+const weatherIcons: any = {
+  "clear sky": <Sun />,
+  "few clouds": <Cloud />,
+  "scattered clouds": <Cloud />,
+  "broken clouds": <Cloud />,
+  "shower rain": <CloudRain />,
+  rain: <CloudRain />,
+  thunderstorm: <CloudLightning />,
+  snow: <Snowflake />,
+  mist: <CloudFog />,
+};
 
 export function HeaderKaos() {
   const {
     dealer_id,
     bannerData,
-    setBannerData,
     setDealerModel,
     setGlobalLoading: setLoading,
     globalLoading: loading,
@@ -20,25 +40,30 @@ export function HeaderKaos() {
   const today = new Date();
   const month = today.toLocaleString("default", { month: "long" });
   const date = today.getDate();
+  const [todayWeather, setTodayWeather] = useState<any>(null);
 
-  // const fetchBanner = async (dealer_id: string) => {
-  //   const response = await fetchPostObj({
-  //     api: "StandingScreenCenter/dealerHeroScreenSettings",
-  //     method: "POST",
-  //     isValue: true,
-  //     showErrorToast: true,
-  //     setLoading,
-  //     data: { dealer_id },
-  //   });
-  //   if (response.success == 1) {
-  //     setBannerData(response.message);
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (dealer_id) {
-  //     fetchBanner(dealer_id);
-  //   }
-  // }, [dealer_id]);
+  const fetchBanner = async (dealer_id: string) => {
+    const response = await fetchPostObj({
+      api: "StandingScreenCenter/dealerWeatherDetail",
+      method: "POST",
+      isValue: true,
+      showErrorToast: true,
+      setLoading,
+      data: { dealer_id },
+    });
+    if (response.success == 1) {
+      const todayWeather = response?.data?.current;
+      setTodayWeather(todayWeather);
+    }
+  };
+  const weatherIcon = weatherIcons[
+    todayWeather?.description?.toLowerCase()
+  ] || <Sun />;
+  useEffect(() => {
+    if (dealer_id) {
+      fetchBanner(dealer_id);
+    }
+  }, [dealer_id]);
   if (loading) return <LayoutSkeleton header={true} />;
 
   const homeRoute = () => {
@@ -95,7 +120,10 @@ export function HeaderKaos() {
           {/* Left - Date */}
           <div className=" pr-8">
             <p className="text-sm p-0 m-0 font-medium opacity-90">{month}</p>
-            <p className="text-4xl p-0 m-0 font-bold">{date}</p>
+            <div className="flex items-center gap-2">
+              <p className="text-4xl p-0 m-0 font-bold">{date}</p>
+              {weatherIcon}
+            </div>
           </div>
         </div>
       </div>

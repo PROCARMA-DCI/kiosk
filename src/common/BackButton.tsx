@@ -10,7 +10,6 @@ const BackButton = ({ backRoute }: any) => {
   const router = useRouter();
   const pathname = usePathname();
   const isKioskPage = pathname === "/kiosk";
-  console.log(window.history);
   return (
     !isKioskPage &&
     pathname !== "/" && (
