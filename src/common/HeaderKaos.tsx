@@ -117,12 +117,23 @@ export function HeaderKaos() {
               {bannerData?.mainHeading}
             </h1>
           )}
-          {/* Left - Date */}
-          <div className=" pr-8">
-            <p className="text-sm p-0 m-0 font-medium opacity-90">{month}</p>
+          {/* {weatherIcon} */}
+          {/* Right - Weather box */}
+          <div className="flex  items-center gap-3 justify-center bg-[#ffffff22] rounded-2xl px-5  backdrop-blur-md">
             <div className="flex items-center gap-2">
-              <p className="text-4xl p-0 m-0 font-bold">{date}</p>
               {weatherIcon}
+              <div className="flex items-center flex-col">
+                <p className="text-sm font-medium">
+                  {todayWeather?.temperature ?? "66°F"}
+                </p>
+                <p className="text-xs opacity-80">
+                  {todayWeather?.humidity ? `${todayWeather.humidity}` : "20%"}
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col items-center">
+              <p className="text-xl font-semibold mt-1">{month?.slice(0, 3)}</p>
+              <p className="text-3xl font-bold leading-none">{date}</p>
             </div>
           </div>
         </div>
