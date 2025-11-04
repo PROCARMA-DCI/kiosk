@@ -83,7 +83,7 @@ export function HeaderKaos() {
   return (
     <div>
       <div
-        className="   w-full flex items-center  h-20 shadow-lg  bg-cover bg-center bg-no-repeat text-white "
+        className={`   w-full flex items-center  h-20 shadow-lg  bg-cover bg-center bg-no-repeat text-white `}
         // style={{ backgroundImage: `url(${bannerData?.topBanner})` }}
         style={
           bannerData?.heroBackgroundType?.toLowerCase() === "image"
@@ -113,15 +113,16 @@ export function HeaderKaos() {
             <ShowImageHandle
               src={bannerData?.dealerLogo}
               alt={bannerData?.logoImgTone}
-              height={70}
-              width={70}
+              className={"h-[90.39px] w-[121.58px]"}
+              height={150}
+              width={150}
             />
-            <div
+            {/* <div
               className="absolute rounded-r-[200px] left-0 inset-0 pointer-events-none transition-opacity duration-500"
               style={{
                 backgroundColor: "#FFFFFF52",
               }}
-            />
+            /> */}
           </div>
           {pathname === "/" && (
             <h1 className="text-[50px]" style={{ fontWeight: "200" }}>
