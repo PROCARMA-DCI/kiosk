@@ -175,11 +175,9 @@ export function WeatherBox({ todayWeather, weatherIcon }: any) {
         className="bg-black/80 text-white px-4 py-3 rounded-xl shadow-md border-none w-auto text-center"
       >
         <p className="text-sm font-medium">
-          city: {todayWeather?.city ?? "Unknown City"}
+          {todayWeather?.city ?? "Unknown City"}
         </p>
-        <p className="text-xs opacity-80 mt-1">
-          zip: {todayWeather?.zip ?? "N/A"}
-        </p>
+        <p className="text-xs opacity-80 mt-1">{todayWeather?.zip ?? "N/A"}</p>
       </PopoverContent>
     </Popover>
   );
