@@ -4,6 +4,11 @@ import { fetchPostObj } from "@/action/function";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import LayoutSkeleton from "@/components/loader/LayoutSkeleton";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   Cloud,
   CloudFog,
   CloudLightning,
@@ -63,7 +68,7 @@ export function HeaderKaos() {
       data: { dealer_id },
     });
     if (response.success == 1) {
-      const todayWeather = response?.data?.current;
+      const todayWeather = response?.data;
       setTodayWeather(todayWeather);
     }
   };
@@ -132,17 +137,8 @@ export function HeaderKaos() {
           {/* {weatherIcon} */}
           {/* Right - Weather box */}
           <div className="flex  items-center gap-3 justify-center bg-[#ffffff22] rounded-2xl px-5  backdrop-blur-md">
-            <div className="flex items-center gap-2">
-              {weatherIcon}
-              <div className="flex items-center flex-col">
-                <p className="text-sm font-medium">
-                  {convertTemperature(todayWeather?.temperature ?? "12 °C")}
-                </p>
-                <p className="text-sm opacity-80">
-                  {todayWeather?.humidity ? `${todayWeather.humidity}` : "20%"}
-                </p>
-              </div>
-            </div>
+            <WeatherBox todayWeather={todayWeather} weatherIcon={weatherIcon} />
+
             <div className="flex flex-col items-center">
               <p className="text-xl font-semibold mt-1">{month?.slice(0, 3)}</p>
               <p className="text-3xl font-bold leading-none">{date}</p>
@@ -151,5 +147,40 @@ export function HeaderKaos() {
         </div>
       </div>
     </div>
+  );
+}
+
+export function WeatherBox({ todayWeather, weatherIcon }: any) {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <div className="flex items-center gap-2 cursor-pointer select-none active:scale-95 transition-transform">
+          {weatherIcon}
+          <div className="flex flex-col items-center">
+            <p className="text-sm font-medium">
+              {convertTemperature(
+                todayWeather?.current?.temperature ?? "12 °C"
+              )}
+            </p>
+            <p className="text-sm opacity-80">
+              {todayWeather?.current?.humidity ?? "20%"}
+            </p>
+          </div>
+        </div>
+      </PopoverTrigger>
+
+      <PopoverContent
+        side="bottom"
+        align="center"
+        className="bg-black/80 text-white px-4 py-3 rounded-xl shadow-md border-none w-auto text-center"
+      >
+        <p className="text-sm font-medium">
+          city: {todayWeather?.city ?? "Unknown City"}
+        </p>
+        <p className="text-xs opacity-80 mt-1">
+          zip: {todayWeather?.zip ?? "N/A"}
+        </p>
+      </PopoverContent>
+    </Popover>
   );
 }
