@@ -3,15 +3,19 @@
 import { fetchPostObj } from "@/action/function";
 import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
+import { playWheelSound } from "@/utils/helpers";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
+import { KaosContext } from "../layout";
 
 const InnerDetailKaosPage = () => {
   const [data, setData] = useState<any>(null);
   const searhParams = useSearchParams();
+  const { selectedCard } = useContext(KaosContext);
+
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const card_id = params?.slug;
@@ -40,26 +44,56 @@ const InnerDetailKaosPage = () => {
   return (
     <div className="w-full mt-10 flex flex-col gap-4">
       <div className="w-full flex justify-center items-center gap-4">
-        <ChevronDown className="text-primary" />
+        <ChevronDown
+          style={{
+            color: selectedCard?.gradient_start_color,
+          }}
+        />
         <h1
-          className="text-center text-[#00BCFF] text-[50px] uppercase leading-loose"
-          style={{ fontWeight: "400" }}
+          className="text-center text-[50px] uppercase leading-loose bg-clip-text text-transparent"
+          style={{
+            fontWeight: 400,
+            backgroundImage: `linear-gradient(90deg, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color})`,
+          }}
         >
           {title}
         </h1>
-        <ChevronDown className="text-primary" />
+        <ChevronDown
+          style={{
+            color: selectedCard?.gradient_start_color,
+          }}
+        />
       </div>
 
       {!loading &&
         (data ? (
           data?.map((item: any, index: number) => (
-            <Link key={index} href={`/${card_id}/${item.detailId}`}>
-              <div className="rounded-[27.08px] bg-[#0093c8]  shadow-md m-auto w-[622.94px] h-[152.28px] text-white">
+            <Link
+              onClick={() => {
+                playWheelSound("/sound/MAIN-BUTTON-CLICK.mp3");
+              }}
+              key={index}
+              href={`/${card_id}/${item.detailId}`}
+              className=""
+            >
+              <div
+                className="rounded-[27.08px]  bg-red-800 shadow-md m-auto w-[622.94px]  text-white"
+                style={{
+                  background: `
+                      linear-gradient(to right, ${item?.gradient_start_color}, ${item?.gradient_end_color}),
+                      -webkit-linear-gradient(left, ${item?.gradient_start_color}, ${item?.gradient_end_color})
+                `,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundBlendMode: "overlay",
+                }}
+              >
                 <div className="flex items-center gap-4 ">
                   <Image
                     src={item.image}
                     alt="kiosk slug"
-                    className="w-[179.79px] h-[152.28px]  rounded-[27.08px]   "
+                    className="w-[179.79px] h-full  rounded-[25px] object-cover  "
                     height={300}
                     width={300}
                   />

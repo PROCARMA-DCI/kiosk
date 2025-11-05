@@ -17,6 +17,8 @@ interface KaosContextType {
   globalLoading: boolean;
   setGlobalLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setInactive: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedCard: React.Dispatch<React.SetStateAction<any>>;
+  selectedCard: any;
 }
 
 export const KaosContext = createContext<KaosContextType>(
@@ -34,6 +36,7 @@ const LayoutInner = ({ children }: any) => {
   const [dealerModel, setDealerModel] = useState<boolean>(false);
   const [inactive, setInactive] = useState(false);
   const [globalLoading, setGlobalLoading] = useState(false);
+  const [selectedCard, setSelectedCard] = useState<any>(null);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -84,6 +87,8 @@ const LayoutInner = ({ children }: any) => {
         globalLoading,
         setGlobalLoading,
         setInactive,
+        setSelectedCard,
+        selectedCard,
       }}
     >
       <div className="min-h-screen flex  justify-center bg-background">

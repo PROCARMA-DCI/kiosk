@@ -4,15 +4,17 @@ import { fetchPostObj } from "@/action/function";
 
 import { cn } from "@/lib/utils";
 
+import { KaosContext } from "@/app/(kiosk)/layout";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
+import { playWheelSound } from "@/utils/helpers";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import ShowImageHandle from "./ShowImageHandle";
-import { playWheelSound } from "@/utils/helpers";
 
 const InnerFeatureCardKaos = () => {
   const searhParams = useSearchParams();
+  const { setSelectedCard } = useContext(KaosContext);
   const [cards, setCards] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -74,6 +76,7 @@ const InnerFeatureCardKaos = () => {
             <Link
               onClick={() => {
                 playWheelSound("/sound/MAIN-BUTTON-CLICK.mp3");
+                setSelectedCard(feature);
               }}
               key={index}
               href={
