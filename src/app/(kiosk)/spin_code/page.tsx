@@ -12,7 +12,6 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 
 import BackButton from "@/common/BackButton";
-import ShowSpinGame from "@/common/ShowSpinGame";
 import { Button } from "@/components/ui/button";
 import { LoaderFive } from "@/components/ui/loader";
 import { MovingBorder } from "@/components/ui/moving-border";
@@ -94,11 +93,6 @@ function LoyaltySpinInner() {
 
   return (
     <>
-      <ShowSpinGame
-        data={spinData}
-        open={showSpin}
-        close={() => setShowSpin(false)}
-      />
       <div className="mt-10 w-full h-screen flex flex-col items-center ">
         <h1 className="text-4xl font-bold text-primary mb-8 tracking-wider">
           LOYALTY SPIN

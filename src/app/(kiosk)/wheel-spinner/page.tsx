@@ -141,7 +141,10 @@ function InnerWheelSpinnerPage() {
               </div>
               {/* Selected segment display */}
               {lastWinner && !isSpinning && (
-                <div className="absolute left-1/2 z-20 -translate-x-1/2 w-[400px] mt-4 p-6 bg-gradient-to-br from-cyan-50/50 to-blue-50/50 rounded-xl border-2 border-cyan-300/50 shadow-md text-center">
+                <div
+                  className="absolute left-1/2 z-20 -translate-x-1/2 w-[400px] mt-4 p-6 bg-gradient-to-br from-cyan-50/50 to-blue-50/50 rounded-xl border-2 border-cyan-300/50 shadow-md text-center"
+                  style={{ position: "absolute" }}
+                >
                   {/* Close (X) Button */}
                   <button
                     onClick={() => setIsSpinning(true)}

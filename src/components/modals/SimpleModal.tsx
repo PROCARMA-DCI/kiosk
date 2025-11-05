@@ -27,7 +27,7 @@ const SimpleModal = ({
   headerCustom,
 }: SimpleModalProps) => {
   const wrapperRef = useClickOutside(close); // adapt if your hook signature differs
-  if (!open || typeof window === "undefined") return null;
+  if (!open) return null;
 
   const modalRoot = document.getElementById("modal-root") ?? document.body;
 
