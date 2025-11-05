@@ -1,5 +1,6 @@
 "use client";
 
+import { useRedirectOnRefresh } from "@/@core/hooks/useRedirectOnRefresh";
 import { HeaderKaos } from "@/common/HeaderKaos";
 import MenuKaos from "@/common/MenuKaos";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
@@ -39,7 +40,7 @@ const LayoutInner = ({ children }: any) => {
   const [selectedCard, setSelectedCard] = useState<any>(null);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-
+  useRedirectOnRefresh();
   // 🔹 Reset inactivity timer on user action
   useEffect(() => {
     const delayTime = Number(bannerData?.delayTime ?? 0) * 1000;
