@@ -88,30 +88,6 @@ const MenuKaos = ({
           />
         </div>
       </SimpleModal>
-      {/* <ShadDialog
-        open={!dealer_id || dealerModel}
-        onOpenChange={(state) => {
-          // Prevent closing if dealer is not selected
-          if (!dealer_id) return;
-          setDealerModel(state);
-        }}
-        title={"Select Dealer"}
-        className={"max-w-[400px] m-0"}
-      >
-        <div className="w-full">
-          <FilterableSelect
-            className="w-full"
-            label={"Dealer"}
-            labelPosition="inside"
-            options={dealers ?? []}
-            keyValue={"DealerID"}
-            keyTitle={"DealerTitle"}
-            setvalue={setDealerId}
-            value={dealer_id}
-            placeholder={"Select Dealer"}
-          />
-        </div>
-      </ShadDialog> */}
     </div>
   );
 };

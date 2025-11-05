@@ -16,10 +16,11 @@ interface KaosContextType {
   setDealerModel: React.Dispatch<React.SetStateAction<boolean>>;
   globalLoading: boolean;
   setGlobalLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setInactive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const KaosContext = createContext<KaosContextType | undefined>(
-  undefined
+export const KaosContext = createContext<KaosContextType>(
+  {} as KaosContextType
 );
 const LayoutInner = ({ children }: any) => {
   const searchParams = useSearchParams();
@@ -47,7 +48,8 @@ const LayoutInner = ({ children }: any) => {
         timerRef.current = setTimeout(() => setInactive(true), delayTime);
       };
 
-      const events = ["click", "keydown"];
+      const events = ["keydown"];
+
       events.forEach((e) => window.addEventListener(e, resetTimer));
       resetTimer();
 
@@ -81,6 +83,7 @@ const LayoutInner = ({ children }: any) => {
         setDealerModel,
         globalLoading,
         setGlobalLoading,
+        setInactive,
       }}
     >
       <div className="min-h-screen flex  justify-center bg-background">
@@ -95,8 +98,6 @@ const LayoutInner = ({ children }: any) => {
             setBannerData={setBannerData}
           />
 
-          {/* Back & Home Buttons */}
-          {/* <BackButton /> */}
           {!inactive && (
             <>
               <HeaderKaos />

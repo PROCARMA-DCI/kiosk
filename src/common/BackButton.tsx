@@ -1,68 +1,94 @@
 "use client";
+import useClickOutside from "@/@core/hooks/useClickOutside";
+import { KaosContext } from "@/app/(kiosk)/layout";
 import { cn } from "@/lib/utils";
-import { playWheelSound } from "@/utils/helpers";
-import { ChevronLeft, Home } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft, ChevronLeft, ChevronRight, Home, Play } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
-const BackButton = ({ backRoute }: any) => {
-  const [showHome, setShowHome] = useState(false);
+const BackButton = ({ backRoute }: { backRoute?: string }) => {
+  const [expanded, setExpanded] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const isKioskPage = pathname === "/kiosk";
+  const ref = useClickOutside(() => setExpanded(false));
+
+  const { setInactive } = useContext(KaosContext);
+
+  const handleToggle = () => setExpanded((prev) => !prev);
+
+  const handleBack = () => {
+    if (backRoute) router.push(backRoute);
+    else router.back();
+  };
+
   return (
-    !isKioskPage &&
-    pathname !== "/" && (
-      <div className="absolute left-2 top-1/2 translate-y-1/2 z-50 ">
-        {/* Back Button */}
+    <div
+      ref={ref}
+      className="absolute left-0 top-1/2 -translate-y-1/2 z-50 -ml-4"
+    >
+      <div
+        className={cn(
+          "flex items-center justify-between bg-[#00244C99] h-[100px] duration-500 transition-all rounded-tr-[30px] rounded-br-[30px] shadow-lg overflow-hidden ",
+          expanded ? "max-w-max" : "w-[40px]"
+        )}
+      >
+        {/* Chevron toggle */}
         <button
-          onMouseEnter={() => setShowHome(true)}
-          onMouseLeave={() => setShowHome(false)}
-          onClick={() => {
-            playWheelSound("/sound/BUTTON-NAVAGATION.wav");
-            if (!showHome) {
-              setShowHome(true);
-            } else {
-              if (!backRoute) {
-                router.back();
-              } else {
-                router.push(backRoute);
-              }
-            }
-          }}
-          className={cn(
-            " bg-[#00244C99] hover:bg-[#03295599] text-white hover:text-white shadow-lg transition-all duration-300 w-[77.31px] h-[21.19px] rounded-tl-[33.86px] rounded-tr-[33.86px] flex items-center justify-center cursor-pointer"
-          )}
-          style={{
-            transformOrigin: "left center",
-            transform: "rotate(90deg)",
-          }}
+          onClick={handleToggle}
+          className="flex items-center justify-center w-[52px] h-[52px] text-white transition-all ml-2"
         >
-          <ChevronLeft
-            className="h-6 w-6"
-            style={{ transform: "rotate(-90deg)" }}
-          />
+          {expanded ? (
+            <ChevronRight className="h-6 w-6 ml-2" />
+          ) : (
+            <ChevronLeft className="h-6 w-6 ml-2" />
+          )}
         </button>
 
-        {/* Home Button (appears on hover) */}
-        {pathname !== "/" && (
-          <button
-            onClick={() => {
-              playWheelSound("/sound/BUTTON-NAVAGATION.wav");
-              router.push("/");
-            }}
-            className={cn(
-              "mt-2 cursor-pointer bg-[#00244C99] hover:bg-[#03295599] text-white hover:text-white p-2 w-[30px] h-[40px] flex items-center justify-center rounded-full shadow-lg transition-all duration-500 ml-4",
-              showHome
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 -translate-x-10 pointer-events-none"
-            )}
-          >
-            <Home className="h-4 w-4 " />
-          </button>
-        )}
+        {/* Animated icon group */}
+        <AnimatePresence>
+          {expanded && (
+            <motion.div
+              className="flex items-center justify-center gap-4 pr-4 ="
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            >
+              {/* Back Button */}
+              {pathname !== "/" && (
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  onClick={handleBack}
+                  className="text-white hover:text-blue-200 transition"
+                >
+                  <ArrowLeft className="h-6 w-6" />
+                </motion.button>
+              )}
+              {/* Home Button */}
+              {pathname !== "/" && (
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  onClick={() => router.push("/")}
+                  className="text-white hover:text-blue-200 transition"
+                >
+                  <Home className="h-6 w-6" />
+                </motion.button>
+              )}
+
+              {/* Play Button */}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                onClick={() => setInactive(true)}
+                className="text-white hover:text-blue-200 transition"
+              >
+                <Play className="h-6 w-6" />
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    )
+    </div>
   );
 };
 

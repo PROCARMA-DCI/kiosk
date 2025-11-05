@@ -2,6 +2,7 @@
 
 import { Suspense, useContext } from "react";
 
+import BackButton from "@/common/BackButton";
 import FeatureCardKaos from "@/common/FeatureCard";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -9,25 +10,9 @@ import { KaosContext } from "./layout";
 const KaosHomePage = () => {
   const { bannerData, globalLoading }: any = useContext(KaosContext);
 
-  // if (!bannerData) {
-  //   return (
-  //     <div className="min-h-screen flex  justify-center bg-background">
-  //       <video
-  //         src={
-  //           "https://mypcp.us/assets/images/standing_screen/splash-video.mp4"
-  //         }
-  //         autoPlay
-  //         muted
-  //         loop
-  //         playsInline
-  //         className="max-w-[731px] min-h-[1300px] object-cover"
-  //       />
-  //     </div>
-  //   );
-  // }
-
   return (
     <Suspense fallback={<ScreenLoader />}>
+      <BackButton backRoute="/" />
       <div>
         {globalLoading && <Skeleton className="h-[500px] " />}
         {bannerData?.bannerType === "image" ? (
