@@ -14,27 +14,31 @@ const KaosHomePage = () => {
     <Suspense fallback={<ScreenLoader />}>
       <BackButton backRoute="/" />
       <div>
-        {globalLoading && <Skeleton className="h-[500px] " />}
-        {bannerData?.bannerType === "image" ? (
-          <img
-            className="w-full  h-[500px]"
-            src={bannerData?.bannerLink}
-            alt="banner"
-            height={500}
-            width={500}
-          />
+        {globalLoading ? (
+          <Skeleton className="h-[500px] " />
         ) : (
-          bannerData?.bannerType === "video" && (
-            <iframe
-              className="w-full h-[500px]"
-              src={bannerData.splashVideo}
-              title="YouTube video"
-              allow="autoplay; fullscreen"
-              allowFullScreen={false}
-            />
-          )
+          <>
+            {bannerData?.bannerType === "image" ? (
+              <img
+                className="w-full  h-[500px]"
+                src={bannerData?.bannerLink}
+                alt="banner"
+                height={500}
+                width={500}
+              />
+            ) : (
+              bannerData?.bannerType === "video" && (
+                <iframe
+                  className="w-full h-[500px]"
+                  src={bannerData.splashVideo}
+                  title="YouTube video"
+                  allow="autoplay; fullscreen"
+                  allowFullScreen={false}
+                />
+              )
+            )}
+          </>
         )}
-
         {/* Feature Card */}
         <div className="flex mx-[50px] -mt-20">
           <FeatureCardKaos />
