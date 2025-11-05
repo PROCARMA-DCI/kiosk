@@ -8,8 +8,7 @@ import {
 import { useRouter } from "next/navigation";
 
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useContext, useState } from "react";
 
 import BackButton from "@/common/BackButton";
 import { Button } from "@/components/ui/button";
@@ -17,15 +16,14 @@ import { LoaderFive } from "@/components/ui/loader";
 import { MovingBorder } from "@/components/ui/moving-border";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
+import { KaosContext } from "../layout";
 
 function LoyaltySpinInner() {
   const router = useRouter();
+  const { selectedCard } = useContext(KaosContext);
   const [code, setCode] = useState("");
-  const [spinData, setSpinData] = useState([]);
+
   const [loading, setLoading] = useState(false);
-  const [showSpin, setShowSpin] = useState(false);
-  const params = useSearchParams();
-  const id = params.get("id");
 
   const isReady = code.length === 5;
 
@@ -94,7 +92,13 @@ function LoyaltySpinInner() {
   return (
     <>
       <div className="mt-10 w-full h-screen flex flex-col items-center ">
-        <h1 className="text-4xl font-bold text-primary mb-8 tracking-wider">
+        <h1
+          className="text-[50px] font-bold  mb-8 tracking-wider bg-clip-text text-transparent"
+          style={{
+            fontWeight: 700,
+            backgroundImage: `linear-gradient(90deg, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color})`,
+          }}
+        >
           LOYALTY SPIN
         </h1>
         <BackButton backRoute="/" />

@@ -9,11 +9,13 @@ import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
 import { playWheelSound } from "@/utils/helpers";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useContext, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { KaosContext } from "../layout";
 
 function InnerWheelSpinnerPage() {
   const searhParams = useSearchParams();
+  const { selectedCard } = useContext(KaosContext);
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [lastWinner, setLastWinner] = useState("");
@@ -105,8 +107,11 @@ function InnerWheelSpinnerPage() {
             {/* Demo Section */}
             <div className=" mt-16  relative ">
               <h1
-                className=" font-bold text-[#00BCFF] text-[50px] text-center mb-10 uppercase"
-                style={{ fontWeight: "400" }}
+                className=" font-bold  text-[50px] text-center mb-10 uppercase bg-clip-text text-transparent"
+                style={{
+                  fontWeight: 400,
+                  backgroundImage: `linear-gradient(90deg, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color})`,
+                }}
               >
                 Loyalty Spin
               </h1>
