@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import Clock from "react-live-clock";
 import ShowImageHandle from "./ShowImageHandle";
 
 const weatherIcons: any = {
@@ -138,10 +139,12 @@ export function HeaderKaos() {
           {/* Right - Weather box */}
           <div className="flex  items-center gap-3 justify-center bg-[#ffffff22] rounded-2xl px-5  backdrop-blur-md">
             <WeatherBox todayWeather={todayWeather} weatherIcon={weatherIcon} />
-
             <div className="flex flex-col items-center">
-              <p className="text-xl font-semibold mt-1">{month?.slice(0, 3)}</p>
-              <p className="text-3xl font-bold leading-none">{date}</p>
+              <Clock format={"HH:mm:ss"} ticking={true} />
+              <div className="flex  items-center gap-1">
+                <p className="text-xl font-semibold ">{month?.slice(0, 3)}</p>
+                <p className="text-xl font-bold leading-none">{date}</p>
+              </div>
             </div>
           </div>
         </div>
