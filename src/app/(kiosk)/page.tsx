@@ -28,12 +28,16 @@ const KaosHomePage = () => {
               />
             ) : (
               bannerData?.bannerType === "video" && (
-                <iframe
-                  className="w-full h-[500px]"
+                <video
+                  className="w-full  bg-black/90 shadow-md aspect-video "
                   src={bannerData.splashVideo}
                   title="YouTube video"
-                  allow="autoplay; fullscreen"
-                  allowFullScreen={false}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  // allow="autoplay; fullscreen"
+                  // allowFullScreen={false}
                 />
               )
             )}
