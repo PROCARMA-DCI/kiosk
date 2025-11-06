@@ -119,7 +119,7 @@ export function HeaderKaos() {
             <ShowImageHandle
               src={bannerData?.dealerLogo}
               alt={bannerData?.logoImgTone}
-              className={"h-[90.39px] w-[121.58px]"}
+              className={"max-h-[90.39px] max-w-[121.58px] bg-cover"}
               height={150}
               width={150}
             />
