@@ -207,9 +207,9 @@ function InnerWheelSpinnerPage() {
           open={alertShow}
           onClose={() => setAlertShow(false)}
           // @ts-ignore
-          imageUrl={winningSegment?.image}
+          imageUrl={winningSegment?.win_image ?? winningSegment?.image}
         >
-          <div className="flex flex-col justify-center items-center gap-4 max-w-sm mx-auto">
+          <div className="flex flex-col justify-center items-center gap-4 max-w-sm mx-auto mt-2">
             <h1 className="text-5xl font-extrabold text-center">
               {lastWinner}
             </h1>

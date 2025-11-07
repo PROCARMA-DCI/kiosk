@@ -34,7 +34,7 @@ export function AlertPopup({
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
             className={twMerge(
-              "relative bg-card text-card-foreground rounded-2xl shadow-2xl border border-border max-w-xl w-full mx-4 p-6 pt-16 overflow-visible",
+              "relative bg-card text-card-foreground rounded-3xl shadow-2xl border border-border max-w-xl w-full mx-4 p-6 pt-16 overflow-visible",
               className
             )}
             onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside card
@@ -46,11 +46,11 @@ export function AlertPopup({
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -20, opacity: 0 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="absolute -top-14 inset-x-0 flex justify-center z-30 overflow-visible"
+                className="absolute -top-24 inset-x-0 flex justify-center z-30 overflow-visible"
               >
                 <div
                   className="
-                    relative w-28 h-28 rounded-full
+                    relative w-[150px] h-[150px] rounded-full
                     border-4 border-card
                     bg-gradient-to-br from-primary to-primary/70
                     shadow-xl flex items-center justify-center
@@ -61,7 +61,7 @@ export function AlertPopup({
                     alt={imageAlt}
                     width={96}
                     height={96}
-                    className="object-contain drop-shadow-md"
+                    className="object-contain drop-shadow-md w-[90px]"
                     priority
                   />
                 </div>
