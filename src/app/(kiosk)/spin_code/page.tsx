@@ -202,6 +202,7 @@ function LoyaltySpinInner() {
                   <p
                     className="text-[#55778B] mt-1 w-[421.25px]"
                     style={{
+                      fontFamily: "var(--font-roboto)",
                       fontSize: "10.83px",
                       lineHeight: "15.57px",
                       fontWeight: "700",

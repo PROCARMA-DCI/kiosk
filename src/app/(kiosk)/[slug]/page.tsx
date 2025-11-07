@@ -105,8 +105,13 @@ const InnerDetailKaosPage = () => {
                       {item.subTitle}
                     </p>
                     <p
-                      className="text-[10.83px] "
-                      style={{ fontWeight: "700" }}
+                      style={{
+                        fontFamily: "var(--font-roboto)",
+                        fontWeight: 700,
+                        fontSize: "10.83px",
+                        lineHeight: "15.57px",
+                        letterSpacing: "0em",
+                      }}
                     >
                       {item.description}
                     </p>
