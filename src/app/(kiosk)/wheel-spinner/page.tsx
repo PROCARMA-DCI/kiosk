@@ -187,7 +187,7 @@ function InnerWheelSpinnerPage() {
             <div className="absolute bottom-0  -mb-[380px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
               {/* ↑ adds space so it doesn't touch the spinner */}
 
-              <div className="animate-spinClockwise origin-center relative">
+              <div className="animate-spinClockwise origin-center relative ">
                 <div className="absolute inset-0  rounded-full bg-white/20 blur-2xl"></div>
 
                 <Image
@@ -195,7 +195,7 @@ function InnerWheelSpinnerPage() {
                   alt="maskgroup"
                   width={1000}
                   height={1000}
-                  className="rounded-full object-contain relative"
+                  className="rounded-full object-contain relative "
                 />
               </div>
             </div>
