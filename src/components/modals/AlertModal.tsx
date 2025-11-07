@@ -53,11 +53,12 @@ export function AlertPopup({
                   className="
                     relative w-[150px] h-[150px] rounded-full
                     border-4 border-card
-                    bg-gradient-to-br from-primary to-primary/70
                     shadow-xl flex items-center justify-center
                   "
                   style={{
-                    background: imageBackground ?? "white",
+                    background: imageBackground
+                      ? `linear-gradient(135deg, #ffffff 0%, ${imageBackground} 100%)`
+                      : "white",
                   }}
                 >
                   <Image
