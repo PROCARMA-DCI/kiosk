@@ -120,7 +120,7 @@ function InnerWheelSpinnerPage() {
                 <div className="relative z-10">
                   <SpinnerWheelGame
                     segments={segments}
-                    size={500}
+                    size={600}
                     spinDuration={5}
                     spinPower={5}
                     onSpinComplete={(s: any) => submitPinResult(s)}

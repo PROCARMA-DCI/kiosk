@@ -167,16 +167,17 @@ export const SpinnerWheelGame = React.forwardRef(
           <div
             className="absolute z-20"
             style={{
-              top: "-40px", // adjust as needed
+              top: "-10px", // adjust as needed
               left: "50%",
               transform: "translateX(-50%)",
             }}
           >
             <Image
               src="/images/arrowspinner.png"
-              width={50}
-              height={50}
+              width={100}
+              height={100}
               alt="arrow"
+              className="w-[58.62px] h-[58.82px]"
             />
           </div>
 
