@@ -103,7 +103,7 @@ function InnerWheelSpinnerPage() {
       {!alertShow && data && (
         <div>
           <BackButton backRoute="/spin_code" />
-          <main className=" flex flex-col gap-4 min-h-screen ">
+          <main className=" flex flex-col gap-4 h-[calc(100vh-100px]">
             {/* Demo Section */}
             <div className=" mt-16  relative ">
               <h1
@@ -126,7 +126,7 @@ function InnerWheelSpinnerPage() {
                     onSpinComplete={(s: any) => submitPinResult(s)}
                     pointerColor="#FFD700"
                     borderColor="#f5f5f5"
-                    borderWidth={0.01}
+                    borderWidth={0.005}
                     textColor="#fff"
                     showLabels={true}
                     isSpinning={isSpinning}
@@ -134,23 +134,30 @@ function InnerWheelSpinnerPage() {
                   />
                 </div>
                 {/* Spinner Support Base */}
-                <div className="absolute left-1/2 bottom-[-20%] -translate-x-1/2 z-0">
+                <div
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    bottom: "-130px",
+                    zIndex: 0,
+                  }}
+                >
                   <Image
                     src="/images/kaos/spinner-support.png"
                     alt="spinner-support"
                     width={200}
                     height={200}
-                    className="w-20 h-32"
+                    className="w-[157px] h-[190px]"
                   />
                 </div>
               </div>
               {/* Selected segment display */}
-              {lastWinner && !isSpinning && (
+              {/* {lastWinner && !isSpinning && (
                 <div
                   className="absolute left-1/2 z-20 -translate-x-1/2 w-[400px] mt-4 p-6 bg-gradient-to-br from-cyan-50/50 to-blue-50/50 rounded-xl border-2 border-cyan-300/50 shadow-md text-center"
                   style={{ position: "absolute" }}
                 >
-                  {/* Close (X) Button */}
                   <button
                     onClick={() => setIsSpinning(true)}
                     className="absolute z-[9999]  top-2 cursor-pointer right-2 text-cyan-600 hover:text-cyan-800  transition-colors"
@@ -171,10 +178,10 @@ function InnerWheelSpinnerPage() {
                     </p>
                   )}
                 </div>
-              )}
+              )} */}
             </div>
 
-            <div className="absolute bottom-0 -mb-[350px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
+            <div className="absolute bottom-0 -mb-[380px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
               {/* ↑ adds space so it doesn't touch the spinner */}
               <div className="animate-spinClockwise origin-center relative">
                 <div className="absolute inset-0  rounded-full bg-white/20 blur-2xl"></div>
@@ -201,14 +208,43 @@ function InnerWheelSpinnerPage() {
             <h1 className="text-5xl font-extrabold text-center">
               {lastWinner}
             </h1>
-            <p className="text-center text-light text-xl text-muted-foreground mt-2 ">
+            <p
+              className="text-center text-[#55778B] mt-2"
+              style={{
+                fontFamily: "var(--font-roboto)",
+                fontWeight: 500,
+                fontSize: "20px",
+                lineHeight: "26px",
+                letterSpacing: "0em",
+              }}
+            >
               Congratulations! You won free {lastWinner} of your selection. This
               will be added to your rewards in the loyalty section of your
               Dealer&apos;s app.
             </p>
-            <div className="flex flex-col">
-              <p>Please see a store representative to redeem.</p>
-              <p>You next spin will be available in 24hrs.</p>
+            <div className="flex flex-col items-center text-center mt-2">
+              <p
+                style={{
+                  fontFamily: "var(--font-roboto)",
+                  fontWeight: 700,
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  letterSpacing: "0em",
+                }}
+              >
+                Please see a store representative to redeem.
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--font-roboto)",
+                  fontWeight: 700,
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  letterSpacing: "0em",
+                }}
+              >
+                Your next spin will be available in 24 hrs.
+              </p>
             </div>
           </div>
         </AlertPopup>

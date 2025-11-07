@@ -183,32 +183,38 @@ export const SpinnerWheelGame = React.forwardRef(
           <svg
             width={size}
             height={size}
-            viewBox={`0 0 ${size} ${size}`}
+            viewBox={`-${size * 0.05} -${size * 0.05} ${size * 1.1} ${
+              size * 1.1
+            }`} // extra space for shadow
             style={{
               transform: `rotate(${rotation}deg)`,
               transition: isSpinning ? "none" : "transform 0.3s ease-out",
-
-              filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.4))",
             }}
-            className="rounded-full"
+            className="rounded-full overflow-visible" // make sure shadow isn't clipped
           >
-            {validSegments.map((segment, index) => (
-              <path
-                key={segment.id}
-                d={createSegmentPath(index)}
-                fill={
-                  segment.color ||
-                  `hsl(${(index * 360) / validSegments.length}, 70%, 60%)`
-                }
-                stroke={borderColor}
-                strokeWidth={size * borderWidth} // ⬅️ dynamic thick border based on wheel size
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                style={{
-                  filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.4))",
-                }}
-              />
-            ))}
+            {validSegments.map((segment, index) => {
+              const segmentColor =
+                segment.color ||
+                `hsl(${(index * 360) / validSegments.length}, 70%, 60%)`;
+
+              return (
+                <path
+                  key={segment.id}
+                  d={createSegmentPath(index)}
+                  fill={segmentColor}
+                  stroke={borderColor}
+                  strokeWidth={size * borderWidth}
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  // style={{
+                  //   // 👇 shadow OUTSIDE each slice, using same color
+                  //   filter: `drop-shadow(0 ${size * 0.05}px ${
+                  //     size * 0.2
+                  //   }px ${segmentColor}80)`,
+                  // }}
+                />
+              );
+            })}
           </svg>
 
           {/* Center Button */}
@@ -224,7 +230,12 @@ export const SpinnerWheelGame = React.forwardRef(
               marginTop: `-${(size * 0.15) / 2}px`,
             }}
           >
-            <div className="w-full h-full bg-yellow-400 rounded-full flex items-center justify-center shadow-lg border-4 border-white">
+            <div
+              className="w-full h-full bg-yellow-400 rounded-full flex items-center justify-center border-4 border-white"
+              style={{
+                boxShadow: "0 0 30px 10px rgba(255, 204, 0, 0.8)", // yellow glow
+              }}
+            >
               <span>
                 <Image
                   src="/images/star.png"
@@ -234,7 +245,6 @@ export const SpinnerWheelGame = React.forwardRef(
                   className="w-[39.44px] h-[39.44px]"
                 />
               </span>
-              {/* <span className="text-white text-5xl">★</span> */}
             </div>
           </div>
 
@@ -256,7 +266,7 @@ export const SpinnerWheelGame = React.forwardRef(
               return (
                 <div
                   key={`content-${segment.id}`}
-                  className="absolute flex flex-col items-center gap-1"
+                  className="absolute flex flex-col items-center gap-1 "
                   style={{
                     transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotate(${-rotation}deg)`,
                     left: "50%",
@@ -272,7 +282,7 @@ export const SpinnerWheelGame = React.forwardRef(
                         <>
                           {segment.content.type === "text" && (
                             <div
-                              className="font-bold text-center"
+                              className="font-bold text-center "
                               style={{
                                 color: textColor,
                                 fontSize: `${Math.max(12, radius * 0.15)}px`,
@@ -286,12 +296,12 @@ export const SpinnerWheelGame = React.forwardRef(
                             <img
                               src={segment.content.value || "/placeholder.svg"}
                               alt={segment.content.alt || segment.label}
-                              className="w-14 h-14 object-cover rounded-full"
-                              style={{
-                                filter:
-                                  "drop-shadow(0 2px 4px rgba(0,0,0,0.4))",
-                                border: "2px solid rgba(255,255,255,0.4)",
-                              }}
+                              className="max-w-max max-h-10  object-cover rounded-full"
+                              // style={{
+                              //   filter:
+                              //     "drop-shadow(0 2px 4px rgba(0,0,0,0.4))",
+                              //   border: "2px solid rgba(255,255,255,0.4)",
+                              // }}
                             />
                           )}
                           {segment.content.type === "icon" && (

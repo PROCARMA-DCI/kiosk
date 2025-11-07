@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
+import { Roboto } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-
 const avenir = localFont({
   src: [
     { path: "../fonts/AvenirLTProLight.otf", weight: "300" },
@@ -24,6 +24,12 @@ const uniSans = localFont({
   display: "swap",
 });
 
+const roboto = Roboto({
+  subsets: ["latin"],
+  variable: "--font-roboto",
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: {
@@ -31,7 +37,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${avenir.variable} ${uniSans.variable} antialiased`}>
+      <body
+        className={`${avenir.variable} ${uniSans.variable} ${roboto.variable} antialiased`}
+      >
         <div id="modal-root" />
         {children}
         <Toaster />
