@@ -117,7 +117,7 @@ function InnerWheelSpinnerPage() {
               </h1>
 
               <div className="relative ">
-                <div className="relative z-10">
+                <div className="relative z-10 mt-20">
                   <SpinnerWheelGame
                     segments={segments}
                     size={600}
@@ -139,7 +139,7 @@ function InnerWheelSpinnerPage() {
                     position: "absolute",
                     left: "50%",
                     transform: "translateX(-50%)",
-                    bottom: "-130px",
+                    bottom: "-90px",
                     zIndex: 0,
                   }}
                 >
@@ -148,7 +148,7 @@ function InnerWheelSpinnerPage() {
                     alt="spinner-support"
                     width={200}
                     height={200}
-                    className="w-[157px] h-[190px]"
+                    className="w-[157px] h-[150px]"
                   />
                 </div>
               </div>
@@ -180,11 +180,16 @@ function InnerWheelSpinnerPage() {
                 </div>
               )} */}
             </div>
-
-            <div className="absolute bottom-0 -mb-[380px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
+            <div
+              className="absolute bottom-0 -mb-[135%] rotate-180  w-[210%] -ml-[55%]  h-full border-4 border-gra rounded-full"
+              style={{ clipPath: "circle(97.6% at 49% 100%)" }}
+            ></div>
+            <div className="absolute bottom-0  -mb-[380px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
               {/* ↑ adds space so it doesn't touch the spinner */}
+
               <div className="animate-spinClockwise origin-center relative">
                 <div className="absolute inset-0  rounded-full bg-white/20 blur-2xl"></div>
+
                 <Image
                   src="/images/kaos/maskgroup.png"
                   alt="maskgroup"

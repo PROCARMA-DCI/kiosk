@@ -234,7 +234,7 @@ export const SpinnerWheelGame = React.forwardRef(
             <div
               className="w-full h-full bg-yellow-400 rounded-full flex items-center justify-center border-4 border-white"
               style={{
-                boxShadow: "0 0 30px 10px rgba(255, 204, 0, 0.8)", // yellow glow
+                boxShadow: "0 0 30px 10px rgba(255, 204, 0, 0.5)", // yellow glow
               }}
             >
               <span>
