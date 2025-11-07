@@ -77,7 +77,7 @@ export function AlertPopup({
             <button
               type="button"
               onClick={onClose}
-              className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition focus:outline-none z-40"
+              className="absolute cursor-pointer top-3 right-3 text-muted-foreground hover:text-foreground transition focus:outline-none z-40"
             >
               <X className="h-5 w-5" />
             </button>
