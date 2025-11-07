@@ -23,7 +23,7 @@ function InnerWheelSpinnerPage() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alertShow, setAlertShow] = useState(false);
-  const [winningSegment, setWinningSegment] = useState(null);
+  const [winningSegment, setWinningSegment] = useState<any>(null);
 
   const code = searhParams.get("code");
   const hasFetched = useRef(false);
@@ -208,6 +208,7 @@ function InnerWheelSpinnerPage() {
           onClose={() => setAlertShow(false)}
           // @ts-ignore
           imageUrl={winningSegment?.win_image ?? winningSegment?.image}
+          imageBackground={winningSegment?.color}
         >
           <div className="flex flex-col justify-center items-center gap-4 max-w-sm mx-auto mt-2">
             <h1 className="text-5xl font-extrabold text-center">

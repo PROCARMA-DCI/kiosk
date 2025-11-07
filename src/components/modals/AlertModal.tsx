@@ -14,6 +14,7 @@ export function AlertPopup({
   imageAlt = "Alert image",
   className,
   children,
+  imageBackground,
 }: any) {
   return (
     <AnimatePresence>
@@ -55,6 +56,9 @@ export function AlertPopup({
                     bg-gradient-to-br from-primary to-primary/70
                     shadow-xl flex items-center justify-center
                   "
+                  style={{
+                    background: imageBackground ?? "white",
+                  }}
                 >
                   <Image
                     src={imageUrl}
