@@ -6,6 +6,7 @@ import BackButton from "@/common/BackButton";
 import FeatureCardKaos from "@/common/FeatureCard";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { Skeleton } from "@/components/ui/skeleton";
+import { VideoPlayer } from "@/components/videoPlayer";
 import { KaosContext } from "./layout";
 const KaosHomePage = () => {
   const { bannerData, globalLoading }: any = useContext(KaosContext);
@@ -13,6 +14,8 @@ const KaosHomePage = () => {
   return (
     <Suspense fallback={<ScreenLoader />}>
       <BackButton backRoute="/" />
+      {/* <VideoPlayer url={"https://player.vimeo.com/video/1122886183"} /> */}
+
       <div>
         {globalLoading ? (
           <Skeleton className="h-[500px] " />
@@ -28,17 +31,23 @@ const KaosHomePage = () => {
               />
             ) : (
               bannerData?.bannerType === "video" && (
-                <video
-                  className="w-full  bg-black/90 shadow-md aspect-video "
-                  src={bannerData.splashVideo}
-                  title="YouTube video"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  // allow="autoplay; fullscreen"
-                  // allowFullScreen={false}
-                />
+                <>
+                  {bannerData.splashVideo?.includes("vimeo.com") ? (
+                    // ✅ Handle Vimeo embed
+                    <VideoPlayer url={bannerData.splashVideo} />
+                  ) : (
+                    // ✅ Handle direct video file
+                    <video
+                      className="w-full bg-black/90 shadow-md aspect-video"
+                      src={bannerData.splashVideo}
+                      title="Video"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  )}
+                </>
               )
             )}
           </>
