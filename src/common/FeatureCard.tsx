@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { playWheelSound } from "@/utils/helpers";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useContext, useEffect, useState } from "react";
 import ShowImageHandle from "./ShowImageHandle";
@@ -21,10 +20,16 @@ const InnerFeatureCardKaos = () => {
   const dealer_id = searhParams.get("dealer_id");
 
   const handleClick = (feature: any) => {
+    playWheelSound("/sound/MAIN-BUTTON-CLICK.mp3");
+    setSelectedCard(feature);
+
+    // Navigate based on type
     if (feature.type === "list") {
-      router.push(`/${feature.id}`);
+      router.push(`/${feature.id}?name=${feature.title}`);
     } else if (feature.type === "spinwheel") {
-      router.push(`/spin_code`);
+      router.push(`/spin_code?id=${feature.id}`);
+    } else if (feature.type === "external") {
+      window.open(feature.external_url, "_blank", "noopener,noreferrer");
     }
   };
   const fetchWeatherApi = async (dealer_id: string) => {
@@ -73,37 +78,29 @@ const InnerFeatureCardKaos = () => {
             ))
         : // 🔹 Show actual cards when loaded
           cards.map((feature, index) => (
-            <Link
-              onClick={() => {
-                playWheelSound("/sound/MAIN-BUTTON-CLICK.mp3");
-                setSelectedCard(feature);
-              }}
-              key={index}
-              href={
-                feature.type === "list"
-                  ? `/${feature.id}?name=${feature.title}`
-                  : feature.type === "spinwheel"
-                  ? `/spin_code?id=${feature.id}`
-                  : "#"
-              }
-            >
-              <button onClick={() => handleClick(feature)} className={cn("  ")}>
-                <div className="mb-4">
-                  {feature.icon && (
-                    <ShowImageHandle
-                      src={feature.icon}
-                      alt={feature.title}
-                      className="w-[176.73px] h-[178.08px] rounded-[14.9px] transition-all duration-300 hover:scale-105 cursor-pointer "
-                      width={500}
-                      height={500}
-                    />
-                  )}
-                </div>
-                {/* <h3 className=" text-[13.54px] leading-[13.54px] tracking-[0] uppercase text-center text-[#455D69]">
+            <>
+              <div>
+                <button
+                  onClick={() => handleClick(feature)}
+                  className={cn("  ")}
+                >
+                  <div className="mb-4">
+                    {feature.icon && (
+                      <ShowImageHandle
+                        src={feature.icon}
+                        alt={feature.title}
+                        className="w-[176.73px] h-[178.08px] rounded-[14.9px] transition-all duration-300 hover:scale-105 cursor-pointer object-cover"
+                        width={500}
+                        height={500}
+                      />
+                    )}
+                  </div>
+                  {/* <h3 className=" text-[13.54px] leading-[13.54px] tracking-[0] uppercase text-center text-[#455D69]">
                   {feature.title}
                 </h3> */}
-              </button>
-            </Link>
+                </button>
+              </div>
+            </>
           ))}
     </div>
   );
