@@ -137,7 +137,7 @@ export function HeaderKaos() {
           )}
           {/* {weatherIcon} */}
           {/* Right - Weather box */}
-          <div className="flex  items-center gap-3 justify-center bg-[#ffffff22] rounded-2xl px-5  backdrop-blur-md">
+          <div className="flex  items-center gap-3 justify-center bg-[#ffffff22] rounded-2xl rounded-r-none px-5  backdrop-blur-md">
             <WeatherBox todayWeather={todayWeather} weatherIcon={weatherIcon} />
             <div className="flex flex-col items-center">
               <Clock format={"HH:mm:ss"} ticking={true} />
