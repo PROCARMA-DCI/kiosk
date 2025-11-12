@@ -47,26 +47,28 @@ export const HtmlVideoEmbed = ({ html }: { html: string }) => {
 
   // 3️⃣ Render sanitized HTML
   return (
-    <div className="relative flex justify-center items-center w-full max-w-[731px] h-screen ">
+    <div className="w-full relative flex justify-center items-center  overflow-hidden ">
       <div
         onClick={() => setInactive(false)}
         className="absolute inset-0 z-10 cursor-pointer"
       />
-      <div className="" dangerouslySetInnerHTML={{ __html: sanitized }} />
+      <div
+        className="h-screen max-w-[731px] overflow-hidden"
+        dangerouslySetInnerHTML={{ __html: sanitized }}
+      />
     </div>
   );
 };
 
 export default function TestVideo() {
-  const backendHtml = `<div style="padding:177.78% 0 0 0;position:relative;width:100vw;height:100vh;">
+  const backendHtml = `
     <iframe src="https://player.vimeo.com/video/1130997022?autoplay=1&muted=1&loop=1&controls=0" 
       frameborder="0" 
       allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
       style="position:absolute;top:0;left:0;width:100%;height:100%;" 
       title="SPITZER-GAME-CENTER-VIDEO-4K">
     </iframe>
-  </div>
-  <script src="https://player.vimeo.com/api/player.js"></script>`;
+  `;
 
   return <HtmlVideoEmbed html={backendHtml} />;
 }
