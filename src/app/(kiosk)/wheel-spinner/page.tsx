@@ -91,7 +91,7 @@ function InnerWheelSpinnerPage() {
     //   handleWinningSegment(segment);
     // }
   };
-  console.log(alertShow, "alert");
+
   if (data?.length === 0) return null;
   if (loading) {
     return <ScreenLoader />;

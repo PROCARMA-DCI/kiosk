@@ -211,7 +211,7 @@ function LoyaltySpinInner() {
                   </p>
                 </div>
               </div>
-              <div className="flex justify-center items-center w-[150px]">
+              <div className="flex justify-center  items-center w-[200px]">
                 {step.img2 ? (
                   <div className="flex items-center">
                     <Image
