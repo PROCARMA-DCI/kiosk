@@ -16,6 +16,7 @@ import { LoaderFive } from "@/components/ui/loader";
 import { MovingBorder } from "@/components/ui/moving-border";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { KaosContext } from "../layout";
 
 function LoyaltySpinInner() {
@@ -54,10 +55,10 @@ function LoyaltySpinInner() {
   const steps = [
     {
       id: 1,
-      title: "Download the Spitzer Via App",
-      text: "Download the app from either the Apple App Store or Google Play Store...",
+      title: "Download the Spitzer Vip App",
+      text: "Download the app from either the Apple App Store or Google Play Store. If you already have an account, make sure you are signed in. If you are new, please scan the QR code to become a Spitzer VIP member!",
       img: "/images/kaos/qrcode.png",
-      class: "w-[87.14px] h-[87.14px]",
+      class: "w-[90.14px] h-[90.14px] bg-white rounded-lg p-2",
     },
     {
       id: 2,
@@ -91,33 +92,29 @@ function LoyaltySpinInner() {
 
   return (
     <>
-      <div className="mt-10 w-full h-screen flex flex-col items-center ">
-        <h1
+      <div className="mt-10 w-full flex flex-col items-center ">
+        <h4
           className="text-[50px] font-bold  mb-8 tracking-wider bg-clip-text text-transparent"
           style={{
-            fontWeight: 700,
+            fontWeight: 400,
             backgroundImage: `linear-gradient(90deg, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color})`,
           }}
         >
           LOYALTY SPIN
-        </h1>
+        </h4>
         <BackButton backRoute="/" />
 
         <div className="spin-code-gradient  w-[523px] min-h-[504px]  rounded-[85px] shadow-2xl flex justify-center items-center ">
           <Card className=" w-[463.71px] h-[455.85px] overflow-hidden rounded-[60px] flex items-center justify-center bg-white dark:bg-gray-900 border-none">
-            <CardContent className="flex flex-col items-center justify-center p-8 space-y-8">
+            <CardContent className="flex w-[321.51px]  flex-col items-center justify-center p-8 space-y-8">
               <div
-                className="text-2xl font-semibold  bg-clip-text text-transparent"
+                className="  font-semibold  bg-clip-text text-transparent flex flex-col items-center justify-center"
                 style={{
-                  backgroundImage:
-                    "linear-gradient(to bottom right, #30dab2, #0c5ebf)",
-                  backgroundColor: "#30dab2", // solid fallback if gradient fails
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
+                  color: "#00BCFF",
                 }}
               >
-                ENTER CODE HERE
+                <h4 style={{ fontSize: "20px" }}>ENTER CODE HERE</h4>
+                <ChevronDown />
               </div>
 
               {/* OTP Input */}
@@ -126,26 +123,26 @@ function LoyaltySpinInner() {
                 value={code}
                 onChange={(val) => setCode(val)}
               >
-                <InputOTPGroup className={""}>
+                <InputOTPGroup className={"flex gap-2"}>
                   <InputOTPSlot
                     index={0}
-                    className="text-3xl font-semibold h-12 w-12"
+                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-100 first:rounded-xl first:border-0 "
                   />
                   <InputOTPSlot
                     index={1}
-                    className="text-3xl font-semibold h-12 w-12"
+                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-100 "
                   />
                   <InputOTPSlot
                     index={2}
-                    className="text-3xl font-semibold h-12 w-12"
+                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-100 "
                   />
                   <InputOTPSlot
                     index={3}
-                    className="text-3xl font-semibold h-12 w-12"
+                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-100 "
                   />
                   <InputOTPSlot
                     index={4}
-                    className="text-3xl font-semibold h-12 w-12"
+                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-100 last:border-0 last:rounded-xl "
                   />
                 </InputOTPGroup>
               </InputOTP>
@@ -160,10 +157,10 @@ function LoyaltySpinInner() {
                 <Button
                   disabled={!isReady}
                   onClick={handleSubmit}
-                  className={`w-full cursor-pointer py-5 text-lg font-semibold  shadow-md transition-all ${
+                  className={`w-full h-[60px] rounded-[18.6px]  cursor-pointer py-5 text-lg font-semibold  shadow-md transition-all ${
                     isReady
                       ? " hover:scale-105 text-white"
-                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-gray-300  cursor-not-allowed"
                   }`}
                   style={
                     isReady
@@ -174,33 +171,35 @@ function LoyaltySpinInner() {
                       : {}
                   }
                 >
-                  {loading ? <LoaderFive text="SPIN + WIN" /> : "SPIN + WIN"}
+                  <h1 className="text-[27.78px]" style={{ lineHeight: 0 }}>
+                    {loading ? <LoaderFive text="SPIN + WIN" /> : "SPIN + WIN"}
+                  </h1>
                 </Button>
               </MovingBorder>
             </CardContent>
           </Card>
         </div>
-        <div className="relative flex flex-col gap-8 w-full mx-auto mt-20">
+        <div className="relative flex flex-col gap-8 w-full  min-h-96 mx-auto mt-20 ">
           {steps.map((step, i) => (
             <motion.div
               key={step.id}
-              className="flex items-start justify-between gap-4 w-[600px] mx-auto"
+              className="flex items-center gap-4 w-[600px] mx-auto"
               variants={variants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
               custom={i}
             >
-              <div className="flex gap-4">
-                <h1 className="font-uni text-[25px] font-[900] uppercase leading-[100%] text-[#001931]">
+              <div className="flex gap-4 ">
+                <h1 className=" text-[25px] uppercase leading-[100%] text-[#001931]">
                   {step.id}.
                 </h1>
-                <div>
-                  <h2 className="font-uni text-[25px] font-[900] uppercase leading-[100%] text-[#001931]">
+                <div className="">
+                  <h2 className="w-[380px] text-[25px]  uppercase leading-[100%] text-[#001931]">
                     {step.title}
                   </h2>
                   <p
-                    className="text-[#55778B] mt-1 w-[421.25px]"
+                    className="w-[370px] text-[#55778B] mt-1 "
                     style={{
                       fontFamily: "var(--font-roboto)",
                       fontSize: "10.83px",
@@ -212,33 +211,34 @@ function LoyaltySpinInner() {
                   </p>
                 </div>
               </div>
-
-              {step.img2 ? (
-                <div className="flex items-center">
+              <div className="flex justify-center items-center w-[150px]">
+                {step.img2 ? (
+                  <div className="flex items-center">
+                    <Image
+                      src={step.img}
+                      alt={step.title}
+                      width={500}
+                      height={500}
+                      className={`rounded-xl ${step.class}`}
+                    />
+                    <Image
+                      src={step.img2}
+                      alt={step.title}
+                      width={500}
+                      height={500}
+                      className={`rounded-xl -ml-3 ${step.class}`}
+                    />
+                  </div>
+                ) : (
                   <Image
                     src={step.img}
                     alt={step.title}
-                    width={500}
-                    height={500}
-                    className={`rounded-xl ${step.class}`}
+                    width={200}
+                    height={200}
+                    className={`rounded-xl border border-gray-200 ${step.class}`}
                   />
-                  <Image
-                    src={step.img2}
-                    alt={step.title}
-                    width={500}
-                    height={500}
-                    className={`rounded-xl -ml-3 ${step.class}`}
-                  />
-                </div>
-              ) : (
-                <Image
-                  src={step.img}
-                  alt={step.title}
-                  width={180}
-                  height={180}
-                  className={`rounded-xl border border-gray-200 ${step.class}`}
-                />
-              )}
+                )}
+              </div>
             </motion.div>
           ))}
         </div>

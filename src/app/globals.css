@@ -170,7 +170,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground w-[731px];
   }
 }
 body {
@@ -182,6 +182,13 @@ h2,
 h3 {
   font-family: var(--font-uni-sans), sans-serif;
   font-weight: 900;
+  text-transform: uppercase;
+}
+h4,
+h5,
+h6 {
+  font-family: var(--font-uni-sans), sans-serif;
+  font-weight: 400;
   text-transform: uppercase;
 }
 
