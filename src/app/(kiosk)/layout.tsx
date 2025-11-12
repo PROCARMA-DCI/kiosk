@@ -4,7 +4,7 @@ import { useRedirectOnRefresh } from "@/@core/hooks/useRedirectOnRefresh";
 import { HeaderKaos } from "@/common/HeaderKaos";
 import MenuKaos from "@/common/MenuKaos";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
-import { VideoPlayer } from "@/components/videoPlayer";
+import { HtmlVideoEmbed } from "@/components/videoPlayer";
 import { playWheelSound } from "@/utils/helpers";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
@@ -124,7 +124,10 @@ const LayoutInner = ({ children }: any) => {
           >
             {bannerData.splashVideo?.includes("vimeo.com") ? (
               // ✅ Handle Vimeo embed
-              <VideoPlayer url={bannerData.splashVideo} />
+              <>
+                {/* <TestVideo /> */}
+                <HtmlVideoEmbed html={bannerData.splashVideo} />
+              </>
             ) : (
               // ✅ Handle direct video file
               <video

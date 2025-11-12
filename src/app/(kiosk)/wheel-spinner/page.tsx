@@ -38,9 +38,10 @@ function InnerWheelSpinnerPage() {
 
     if (response.success == 1) {
       setData(response?.wheel);
-    } else {
-      router.push("/spin_code");
     }
+    //  else {
+    //   router.push("/spin_code");
+    // }
   };
   useEffect(() => {
     if (hasFetched.current) return;
@@ -98,7 +99,7 @@ function InnerWheelSpinnerPage() {
   }
   return (
     <>
-      {!alertShow && data && (
+      {!alertShow && !data && (
         <div>
           <BackButton backRoute="/spin_code" />
           <main className=" flex flex-col gap-4 h-[calc(100vh-100px]">
@@ -179,7 +180,7 @@ function InnerWheelSpinnerPage() {
               )} */}
             </div>
             <div
-              className="absolute bottom-0 -mb-[135%] rotate-180  w-[210%] -ml-[55%]  h-full border-4 border-gra rounded-full"
+              className="absolute bottom-0 -mb-[135%] rotate-180  w-[210%] h-full -ml-[55%]  border-4 border-gra rounded-full"
               style={{ clipPath: "circle(97.6% at 49% 100%)" }}
             ></div>
             <div className="absolute bottom-0  -mb-[380px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
