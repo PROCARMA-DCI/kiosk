@@ -10,7 +10,6 @@ import { playWheelSound } from "@/utils/helpers";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useContext, useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 import { KaosContext } from "../layout";
 
 function InnerWheelSpinnerPage() {
@@ -41,7 +40,6 @@ function InnerWheelSpinnerPage() {
       setData(response?.wheel);
     } else {
       router.push("/spin_code");
-      toast.error(response.message);
     }
   };
   useEffect(() => {

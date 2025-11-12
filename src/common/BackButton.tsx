@@ -115,7 +115,10 @@ const BackButton = ({ backRoute }: { backRoute?: string }) => {
   };
 
   return (
-    <div ref={ref} className="fixed left-0 top-1/2 -translate-y-1/2 z-50">
+    <div
+      ref={ref}
+      className="fixed md:absolute left-0 top-1/2 -translate-y-1/2 z-50"
+    >
       <div className="relative flex items-center">
         <motion.button
           onClick={handleToggle}

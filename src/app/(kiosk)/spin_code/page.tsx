@@ -114,7 +114,7 @@ function LoyaltySpinInner() {
                 }}
               >
                 <h4 style={{ fontSize: "20px" }}>ENTER CODE HERE</h4>
-                <ChevronDown />
+                <ChevronDown className="animate-bounce" />
               </div>
 
               {/* OTP Input */}
