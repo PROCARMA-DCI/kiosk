@@ -30,6 +30,8 @@ const InnerFeatureCardKaos = () => {
       router.push(`/spin_code?id=${feature.id}`);
     } else if (feature.type === "external") {
       window.open(feature.external_url, "_blank", "noopener,noreferrer");
+    } else if (feature.type === "pagebuilder") {
+      router.push(`/${feature.id}/${feature.card_detail_id}`);
     }
   };
   const fetchWeatherApi = async (dealer_id: string) => {
