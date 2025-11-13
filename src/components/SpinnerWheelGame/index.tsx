@@ -1,53 +1,54 @@
 "use client";
 
-// const demoSegments = [
-//   {
-//     id: "1",
-//     // label: "Prize 1",
-//     // points: 100,
-//     color: "#FF6B6B",
-//     //   content: { type: "image", value: "/gift-box-icon.png" },
-//   },
-//   {
-//     id: "2",
-//     // label: "Prize 2",
-//     // points: 200,
-//     color: "#4ECDC4",
-//     content: { type: "icon", value: <Star className="w-8 h-8 text-white" /> },
-//   },
-//   {
-//     id: "3",
-//     // label: "Prize 3",
-//     // points: 300,
-//     color: "#FFE66D",
-//     //   content: { type: "image", value: "/diamond-gem-icon.jpg" },
-//   },
-//   {
-//     id: "4",
-//     // label: "Prize 4",
-//     // points: 100,
-//     color: "#95E1D3",
-//     content: { type: "icon", value: <Zap className="w-8 h-8 text-white" /> },
-//   },
-//   {
-//     id: "5",
-//     // label: "Prize 5",
-//     // points: 200,
-//     color: "#F38181",
-//     //   content: { type: "image", value: "/trophy-award-icon.jpg" },
-//   },
-//   {
-//     id: "6",
-//     // label: "Prize 6",
-//     //   points: 300,
-//     color: "#AA96DA",
-//     content: {
-//       type: "icon",
-//       value: <Sparkles className="w-8 h-8 text-white" />,
-//     },
-//   },
-// ];
+const demoSegments = [
+  {
+    id: "1",
+    // label: "Prize 1",
+    // points: 100,
+    color: "#FF6B6B",
+    //   content: { type: "image", value: "/gift-box-icon.png" },
+  },
+  {
+    id: "2",
+    // label: "Prize 2",
+    // points: 200,
+    color: "#4ECDC4",
+    content: { type: "icon", value: <Star className="w-8 h-8 text-white" /> },
+  },
+  {
+    id: "3",
+    // label: "Prize 3",
+    // points: 300,
+    color: "#FFE66D",
+    //   content: { type: "image", value: "/diamond-gem-icon.jpg" },
+  },
+  {
+    id: "4",
+    // label: "Prize 4",
+    // points: 100,
+    color: "#95E1D3",
+    content: { type: "icon", value: <Zap className="w-8 h-8 text-white" /> },
+  },
+  {
+    id: "5",
+    // label: "Prize 5",
+    // points: 200,
+    color: "#F38181",
+    //   content: { type: "image", value: "/trophy-award-icon.jpg" },
+  },
+  {
+    id: "6",
+    // label: "Prize 6",
+    //   points: 300,
+    color: "#AA96DA",
+    content: {
+      type: "icon",
+      value: <Sparkles className="w-8 h-8 text-white" />,
+    },
+  },
+];
 
+import { Sparkles, Star, Zap } from "lucide-react";
 import Image from "next/image";
 import React, { useCallback, useRef, useState } from "react";
 

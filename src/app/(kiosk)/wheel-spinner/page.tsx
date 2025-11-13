@@ -179,7 +179,7 @@ function InnerWheelSpinnerPage() {
               )} */}
           </div>
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none z-0">
-            <div className="relative flex items-center justify-center overflow-hidden w-[2200px] h-[100vh]">
+            <div className="relative flex items-center justify-center overflow-hidden w-[2200px] h-[60vh]">
               <div className="ellipse-bottom"></div>
             </div>
           </div>
@@ -187,7 +187,7 @@ function InnerWheelSpinnerPage() {
           <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex justify-center items-end pointer-events-none  overflow-hidden">
             {/* Wrapper: handles size + scaling */}
             <div
-              className="relative flex items-center justify-center overflow-hidden   tall-screen origin-center h-[800px] w-[800px]"
+              className="relative flex items-center justify-center overflow-hidden   tall-screen origin-center "
               style={{
                 // width: "150vw", // responsive width
                 // height: "150vh", // keep it square

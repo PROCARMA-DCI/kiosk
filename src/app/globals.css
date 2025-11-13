@@ -271,7 +271,7 @@ h6 {
 /* wheel spinner bottom image */
 @media (min-height: 1250px) {
   .tall-screen {
-    width: 1400px !important;
-    height: 1400px !important;
+    width: 750px !important;
+    height: 750px !important;
   }
 }
