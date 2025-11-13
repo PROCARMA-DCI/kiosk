@@ -99,11 +99,11 @@ function InnerWheelSpinnerPage() {
   }
   return (
     <>
-      <div>
+      <div className="">
         <BackButton backRoute="/spin_code" />
-        <main className=" flex flex-col gap-4 h-[calc(100vh-100px]">
+        <main className="relative  h-[calc(100vh-100px)]  flex flex-col gap-4 ">
           {/* Demo Section */}
-          <div className=" mt-16  relative ">
+          <div className=" mt-16   ">
             <h1
               className=" font-bold  text-[50px] text-center mb-10 uppercase bg-clip-text text-transparent"
               style={{
@@ -178,22 +178,33 @@ function InnerWheelSpinnerPage() {
                 </div>
               )} */}
           </div>
-          <div
-            className="absolute bottom-0 -mb-[135%] rotate-180  w-[210%] h-full -ml-[55%]  border-4 border-gra rounded-full"
-            style={{ clipPath: "circle(97.6% at 49% 100%)" }}
-          ></div>
-          <div className="absolute bottom-0  -mb-[380px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
-            {/* ↑ adds space so it doesn't touch the spinner */}
+          <div className="fixed bottom-0  left-1/2 -translate-x-1/2  pointer-events-none z-0">
+            <div className="ellipse-bottom"></div>
+          </div>
 
-            <div className="animate-spinClockwise origin-center relative ">
-              <div className="absolute inset-0  rounded-full bg-white/20 blur-2xl"></div>
-
+          <div className=" fixed bottom-0  left-1/2 -translate-x-1/2 flex justify-center items-end pointer-events-none z-30">
+            {/* wrapper: controls size and scale (keeps transform separate from rotation) */}
+            <div
+              className="w-screen h-screen flex items-center justify-center overflow-hidden origin-center"
+              style={{
+                transform: "scale(1.5) translateY(37%) ",
+              }} // scale + small vertical nudge if you want it lower
+            >
+              {/* rotating element: only rotation transform applied here */}
               <Image
                 src="/images/kaos/maskgroup.png"
                 alt="maskgroup"
-                width={1000}
-                height={1000}
-                className="rounded-full object-contain relative "
+                width={2000}
+                height={2000}
+                style={{
+                  transformOrigin: "center center",
+                  // custom animation: rotate 20s linear infinite
+                  animation: "spin 20s linear infinite",
+                  display: "block",
+                  width: "100%", // scale handled by parent
+                  height: "auto",
+                }}
+                className="will-change-transform"
               />
             </div>
           </div>

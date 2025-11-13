@@ -239,3 +239,30 @@ h6 {
 .animate-modalIn {
   animation: modalIn 0.25s ease-out;
 }
+
+.ellipse-bottom {
+  position: relative;
+  width: 300vw;
+  height: 100vh;
+  border-radius: 50%;
+  filter: blur(2px);
+  transform: translateY(60%) rotate(180deg);
+  overflow: hidden; /* clip inner pseudo element */
+}
+
+.ellipse-bottom::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    90deg,
+    rgba(69, 93, 105, 0) 22.12%,
+    rgba(205, 221, 228, 1) 49.18%,
+    rgba(69, 93, 105, 0) 81.73%
+  );
+  padding: 4px; /* thickness of border */
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
