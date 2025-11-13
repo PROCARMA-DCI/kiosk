@@ -99,9 +99,9 @@ function InnerWheelSpinnerPage() {
   }
   return (
     <>
-      <div className="">
+      <div className="overflow-hidden">
         <BackButton backRoute="/spin_code" />
-        <main className="relative  h-[calc(100vh-100px)]  flex flex-col gap-4 ">
+        <main className="relative  min-h-[731px] h-[calc(100vh-100px)] flex flex-col gap-4 ">
           {/* Demo Section */}
           <div className=" mt-16   ">
             <h1
@@ -178,35 +178,42 @@ function InnerWheelSpinnerPage() {
                 </div>
               )} */}
           </div>
-          <div className="fixed bottom-0  left-1/2 -translate-x-1/2  pointer-events-none z-0">
+          <div className="fixed bottom-0  left-1/2 -translate-x-1/2  pointer-events-none z-0 overflow-hidden">
             <div className="ellipse-bottom"></div>
           </div>
 
-          <div className=" fixed bottom-0  left-1/2 -translate-x-1/2 flex justify-center items-end pointer-events-none z-30">
-            {/* wrapper: controls size and scale (keeps transform separate from rotation) */}
+          <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex justify-center items-end pointer-events-none  overflow-hidden">
+            {/* Wrapper: handles size + scaling */}
             <div
-              className="w-screen h-screen flex items-center justify-center overflow-hidden origin-center"
+              className="relative flex items-center justify-center overflow-hidden   tall-screen origin-center h-[800px] w-[800px]"
               style={{
-                transform: "scale(1.5) translateY(37%) ",
-              }} // scale + small vertical nudge if you want it lower
+                // width: "150vw", // responsive width
+                // height: "150vh", // keep it square
+                transform: "translateY(55%)", // vertical adjust
+              }}
             >
-              {/* rotating element: only rotation transform applied here */}
+              {/* Rotating Image */}
               <Image
                 src="/images/kaos/maskgroup.png"
                 alt="maskgroup"
-                width={2000}
-                height={2000}
+                fill
                 style={{
+                  objectFit: "contain",
                   transformOrigin: "center center",
-                  // custom animation: rotate 20s linear infinite
-                  animation: "spin 20s linear infinite",
-                  display: "block",
-                  width: "100%", // scale handled by parent
-                  height: "auto",
+                  animation: "spin 25s linear infinite",
                 }}
                 className="will-change-transform"
               />
             </div>
+
+            {/* Spin keyframes */}
+            <style jsx>{`
+              @keyframes spin {
+                to {
+                  transform: rotate(360deg);
+                }
+              }
+            `}</style>
           </div>
         </main>
       </div>

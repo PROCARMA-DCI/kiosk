@@ -240,6 +240,7 @@ h6 {
   animation: modalIn 0.25s ease-out;
 }
 
+/* Wheel Spinner */
 .ellipse-bottom {
   position: relative;
   width: 300vw;
@@ -265,4 +266,11 @@ h6 {
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
+}
+/* wheel spinner bottom image */
+@media (min-height: 1250px) {
+  .tall-screen {
+    width: 1400px !important;
+    height: 1400px !important;
+  }
 }
