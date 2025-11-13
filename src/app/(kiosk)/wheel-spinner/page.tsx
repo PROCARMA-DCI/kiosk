@@ -178,8 +178,10 @@ function InnerWheelSpinnerPage() {
                 </div>
               )} */}
           </div>
-          <div className="fixed bottom-0  left-1/2 -translate-x-1/2  pointer-events-none z-0 overflow-hidden">
-            <div className="ellipse-bottom"></div>
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none z-0">
+            <div className="relative flex items-center justify-center overflow-hidden w-[2200px] h-[100vh]">
+              <div className="ellipse-bottom"></div>
+            </div>
           </div>
 
           <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex justify-center items-end pointer-events-none  overflow-hidden">

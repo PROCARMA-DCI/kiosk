@@ -244,6 +244,7 @@ h6 {
 .ellipse-bottom {
   position: relative;
   width: 300vw;
+
   height: 100vh;
   border-radius: 50%;
   filter: blur(2px);
@@ -259,7 +260,7 @@ h6 {
   background: linear-gradient(
     90deg,
     rgba(69, 93, 105, 0) 22.12%,
-    rgba(205, 221, 228, 1) 49.18%,
+    rgba(205, 221, 228, 0.5) 49.18%,
     rgba(69, 93, 105, 0) 81.73%
   );
   padding: 4px; /* thickness of border */
