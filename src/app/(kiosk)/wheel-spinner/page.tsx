@@ -99,60 +99,59 @@ function InnerWheelSpinnerPage() {
   }
   return (
     <>
-      {!alertShow && !data && (
-        <div>
-          <BackButton backRoute="/spin_code" />
-          <main className=" flex flex-col gap-4 h-[calc(100vh-100px]">
-            {/* Demo Section */}
-            <div className=" mt-16  relative ">
-              <h1
-                className=" font-bold  text-[50px] text-center mb-10 uppercase bg-clip-text text-transparent"
+      <div>
+        <BackButton backRoute="/spin_code" />
+        <main className=" flex flex-col gap-4 h-[calc(100vh-100px]">
+          {/* Demo Section */}
+          <div className=" mt-16  relative ">
+            <h1
+              className=" font-bold  text-[50px] text-center mb-10 uppercase bg-clip-text text-transparent"
+              style={{
+                fontWeight: 400,
+                backgroundImage: `linear-gradient(90deg, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color})`,
+              }}
+            >
+              Loyalty Spin
+            </h1>
+
+            <div className="relative ">
+              <div className="relative z-10 mt-20">
+                <SpinnerWheelGame
+                  segments={segments}
+                  size={600}
+                  spinDuration={5}
+                  spinPower={5}
+                  onSpinComplete={(s: any) => submitPinResult(s)}
+                  pointerColor="#FFD700"
+                  borderColor="#f5f5f5"
+                  borderWidth={0.005}
+                  textColor="#fff"
+                  showLabels={true}
+                  isSpinning={isSpinning}
+                  setIsSpinning={setIsSpinning}
+                />
+              </div>
+              {/* Spinner Support Base */}
+              <div
                 style={{
-                  fontWeight: 400,
-                  backgroundImage: `linear-gradient(90deg, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color})`,
+                  position: "absolute",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  bottom: "-90px",
+                  zIndex: 0,
                 }}
               >
-                Loyalty Spin
-              </h1>
-
-              <div className="relative ">
-                <div className="relative z-10 mt-20">
-                  <SpinnerWheelGame
-                    segments={segments}
-                    size={600}
-                    spinDuration={5}
-                    spinPower={5}
-                    onSpinComplete={(s: any) => submitPinResult(s)}
-                    pointerColor="#FFD700"
-                    borderColor="#f5f5f5"
-                    borderWidth={0.005}
-                    textColor="#fff"
-                    showLabels={true}
-                    isSpinning={isSpinning}
-                    setIsSpinning={setIsSpinning}
-                  />
-                </div>
-                {/* Spinner Support Base */}
-                <div
-                  style={{
-                    position: "absolute",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    bottom: "-90px",
-                    zIndex: 0,
-                  }}
-                >
-                  <Image
-                    src="/images/kaos/spinner-support.png"
-                    alt="spinner-support"
-                    width={200}
-                    height={200}
-                    className="w-[157px] h-[150px]"
-                  />
-                </div>
+                <Image
+                  src="/images/kaos/spinner-support.png"
+                  alt="spinner-support"
+                  width={200}
+                  height={200}
+                  className="w-[157px] h-[150px]"
+                />
               </div>
-              {/* Selected segment display */}
-              {/* {lastWinner && !isSpinning && (
+            </div>
+            {/* Selected segment display */}
+            {/* {lastWinner && !isSpinning && (
                 <div
                   className="absolute left-1/2 z-20 -translate-x-1/2 w-[400px] mt-4 p-6 bg-gradient-to-br from-cyan-50/50 to-blue-50/50 rounded-xl border-2 border-cyan-300/50 shadow-md text-center"
                   style={{ position: "absolute" }}
@@ -178,29 +177,29 @@ function InnerWheelSpinnerPage() {
                   )}
                 </div>
               )} */}
-            </div>
-            <div
-              className="absolute bottom-0 -mb-[135%] rotate-180  w-[210%] h-full -ml-[55%]  border-4 border-gra rounded-full"
-              style={{ clipPath: "circle(97.6% at 49% 100%)" }}
-            ></div>
-            <div className="absolute bottom-0  -mb-[380px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
-              {/* ↑ adds space so it doesn't touch the spinner */}
+          </div>
+          <div
+            className="absolute bottom-0 -mb-[135%] rotate-180  w-[210%] h-full -ml-[55%]  border-4 border-gra rounded-full"
+            style={{ clipPath: "circle(97.6% at 49% 100%)" }}
+          ></div>
+          <div className="absolute bottom-0  -mb-[380px] h-auto flex justify-center items-center overflow-hidden pt-10 selection:none">
+            {/* ↑ adds space so it doesn't touch the spinner */}
 
-              <div className="animate-spinClockwise origin-center relative ">
-                <div className="absolute inset-0  rounded-full bg-white/20 blur-2xl"></div>
+            <div className="animate-spinClockwise origin-center relative ">
+              <div className="absolute inset-0  rounded-full bg-white/20 blur-2xl"></div>
 
-                <Image
-                  src="/images/kaos/maskgroup.png"
-                  alt="maskgroup"
-                  width={1000}
-                  height={1000}
-                  className="rounded-full object-contain relative "
-                />
-              </div>
+              <Image
+                src="/images/kaos/maskgroup.png"
+                alt="maskgroup"
+                width={1000}
+                height={1000}
+                className="rounded-full object-contain relative "
+              />
             </div>
-          </main>
-        </div>
-      )}
+          </div>
+        </main>
+      </div>
+
       {alertShow && (
         <AlertPopup
           open={alertShow}
