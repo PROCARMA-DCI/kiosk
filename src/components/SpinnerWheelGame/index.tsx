@@ -43,6 +43,48 @@ const demoSegments = [
     color: "#AA96DA",
     content: { type: "image", value: "/images/kaos/kaos1.png" },
   },
+  {
+    id: "4",
+    // label: "Prize 4",
+    // points: 100,
+    color: "#95E1D3",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "5",
+    // label: "Prize 5",
+    // points: 200,
+    color: "#F38181",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "6",
+    // label: "Prize 6",
+    //   points: 300,
+    color: "#AA96DA",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "4",
+    // label: "Prize 4",
+    // points: 100,
+    color: "#95E1D3",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "5",
+    // label: "Prize 5",
+    // points: 200,
+    color: "#F38181",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "6",
+    // label: "Prize 6",
+    //   points: 300,
+    color: "#AA96DA",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
 ];
 
 import { playWheelSound } from "@/utils/helpers";
