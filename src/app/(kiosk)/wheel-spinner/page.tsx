@@ -4,7 +4,6 @@ import { fetchPostObj } from "@/action/function";
 import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { AlertPopup } from "@/components/modals/AlertModal";
-import { showConfetti } from "@/components/showConfetti";
 import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
 import { playWheelSound } from "@/utils/helpers";
 import Image from "next/image";
@@ -64,8 +63,6 @@ function InnerWheelSpinnerPage() {
     setLastWinner(winningSegment.label || winningSegment.id);
     setLastPoints(winningSegment.points || 0);
 
-    // Confetti explosion effect
-    showConfetti();
     setWinningSegment(winningSegment);
     setAlertShow(true);
   };
