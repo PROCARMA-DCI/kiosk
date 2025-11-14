@@ -89,7 +89,7 @@ export function HeaderKaos() {
   return (
     <div>
       <div
-        className={`   w-full flex items-center  h-20 shadow-lg  bg-cover bg-center bg-no-repeat text-white `}
+        className={`   w-full flex items-center  h-[131px] shadow-lg  bg-cover bg-center bg-no-repeat text-white `}
         // style={{ backgroundImage: `url(${bannerData?.topBanner})` }}
         style={
           bannerData?.heroBackgroundType?.toLowerCase() === "image"

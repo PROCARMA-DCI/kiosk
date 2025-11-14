@@ -63,6 +63,8 @@ function InnerWheelSpinnerPage() {
     setLastWinner(winningSegment.label || winningSegment.id);
     setLastPoints(winningSegment.points || 0);
 
+    // Confetti explosion effect
+    // showConfetti();
     setWinningSegment(winningSegment);
     setAlertShow(true);
   };

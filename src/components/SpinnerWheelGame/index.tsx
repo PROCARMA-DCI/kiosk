@@ -6,50 +6,151 @@ const demoSegments = [
     // label: "Prize 1",
     // points: 100,
     color: "#FF6B6B",
-    //   content: { type: "image", value: "/gift-box-icon.png" },
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
   },
   {
     id: "2",
     // label: "Prize 2",
     // points: 200,
     color: "#4ECDC4",
-    content: { type: "icon", value: <Star className="w-8 h-8 text-white" /> },
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
   },
   {
     id: "3",
     // label: "Prize 3",
     // points: 300,
     color: "#FFE66D",
-    //   content: { type: "image", value: "/diamond-gem-icon.jpg" },
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
   },
   {
     id: "4",
     // label: "Prize 4",
     // points: 100,
     color: "#95E1D3",
-    content: { type: "icon", value: <Zap className="w-8 h-8 text-white" /> },
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
   },
   {
     id: "5",
     // label: "Prize 5",
     // points: 200,
     color: "#F38181",
-    //   content: { type: "image", value: "/trophy-award-icon.jpg" },
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
   },
   {
     id: "6",
     // label: "Prize 6",
     //   points: 300,
     color: "#AA96DA",
-    content: {
-      type: "icon",
-      value: <Sparkles className="w-8 h-8 text-white" />,
-    },
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "2",
+    // label: "Prize 2",
+    // points: 200,
+    color: "#4ECDC4",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "3",
+    // label: "Prize 3",
+    // points: 300,
+    color: "#FFE66D",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "4",
+    // label: "Prize 4",
+    // points: 100,
+    color: "#95E1D3",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "5",
+    // label: "Prize 5",
+    // points: 200,
+    color: "#F38181",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "6",
+    // label: "Prize 6",
+    //   points: 300,
+    color: "#AA96DA",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "2",
+    // label: "Prize 2",
+    // points: 200,
+    color: "#4ECDC4",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "3",
+    // label: "Prize 3",
+    // points: 300,
+    color: "#FFE66D",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "4",
+    // label: "Prize 4",
+    // points: 100,
+    color: "#95E1D3",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "5",
+    // label: "Prize 5",
+    // points: 200,
+    color: "#F38181",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "6",
+    // label: "Prize 6",
+    //   points: 300,
+    color: "#AA96DA",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "2",
+    // label: "Prize 2",
+    // points: 200,
+    color: "#4ECDC4",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "3",
+    // label: "Prize 3",
+    // points: 300,
+    color: "#FFE66D",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "4",
+    // label: "Prize 4",
+    // points: 100,
+    color: "#95E1D3",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "5",
+    // label: "Prize 5",
+    // points: 200,
+    color: "#F38181",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
+  },
+  {
+    id: "6",
+    // label: "Prize 6",
+    //   points: 300,
+    color: "#AA96DA",
+    content: { type: "image", value: "/images/kaos/kaos1.png" },
   },
 ];
 
 import { playWheelSound } from "@/utils/helpers";
-import { Sparkles, Star, Zap } from "lucide-react";
 import Image from "next/image";
 import React, { useCallback, useRef, useState } from "react";
 import { showConfetti } from "../showConfetti";
@@ -303,12 +404,7 @@ export const SpinnerWheelGame = React.forwardRef(
                             <img
                               src={segment.content.value || "/placeholder.svg"}
                               alt={segment.content.alt || segment.label}
-                              className="max-w-max max-h-10  object-cover rounded-full"
-                              // style={{
-                              //   filter:
-                              //     "drop-shadow(0 2px 4px rgba(0,0,0,0.4))",
-                              //   border: "2px solid rgba(255,255,255,0.4)",
-                              // }}
+                              className="max-w-max max-h-20  object-cover rounded-full"
                             />
                           )}
                           {segment.content.type === "icon" && (
