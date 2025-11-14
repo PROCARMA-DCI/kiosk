@@ -139,7 +139,7 @@ export function HeaderKaos() {
           {/* Right - Weather box */}
           <div className="flex  items-center gap-3 justify-center bg-[#ffffff22] rounded-2xl rounded-r-none px-5  backdrop-blur-md">
             <WeatherBox todayWeather={todayWeather} weatherIcon={weatherIcon} />
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center p-1">
               <Clock format={"HH:mm:ss"} ticking={true} />
               <div className="flex  items-center gap-1">
                 <p className="text-xl font-semibold ">{month?.slice(0, 3)}</p>

@@ -100,7 +100,7 @@ function InnerWheelSpinnerPage() {
     <>
       <div className="overflow-hidden">
         <BackButton backRoute="/spin_code" />
-        <main className="relative  min-h-[731px] h-[calc(100vh-100px)] flex flex-col gap-4 ">
+        <main className="relative  min-h-[731px] h-[calc(100vh-131px)] flex flex-col gap-4 ">
           {/* Demo Section */}
           <div className=" mt-16   ">
             <h1
