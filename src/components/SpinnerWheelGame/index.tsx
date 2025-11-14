@@ -48,6 +48,7 @@ const demoSegments = [
   },
 ];
 
+import { playWheelSound } from "@/utils/helpers";
 import { Sparkles, Star, Zap } from "lucide-react";
 import Image from "next/image";
 import React, { useCallback, useRef, useState } from "react";
@@ -83,6 +84,7 @@ export const SpinnerWheelGame = React.forwardRef(
     const radius = size / 2;
 
     const spin = useCallback(() => {
+      playWheelSound("/sound/SpinningPrizeWheelSoundEffect.mp3");
       if (isSpinning || validSegments.length === 0) return;
 
       setIsSpinning(true);
