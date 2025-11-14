@@ -43,111 +43,6 @@ const demoSegments = [
     color: "#AA96DA",
     content: { type: "image", value: "/images/kaos/kaos1.png" },
   },
-  {
-    id: "2",
-    // label: "Prize 2",
-    // points: 200,
-    color: "#4ECDC4",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "3",
-    // label: "Prize 3",
-    // points: 300,
-    color: "#FFE66D",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "4",
-    // label: "Prize 4",
-    // points: 100,
-    color: "#95E1D3",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "5",
-    // label: "Prize 5",
-    // points: 200,
-    color: "#F38181",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "6",
-    // label: "Prize 6",
-    //   points: 300,
-    color: "#AA96DA",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "2",
-    // label: "Prize 2",
-    // points: 200,
-    color: "#4ECDC4",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "3",
-    // label: "Prize 3",
-    // points: 300,
-    color: "#FFE66D",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "4",
-    // label: "Prize 4",
-    // points: 100,
-    color: "#95E1D3",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "5",
-    // label: "Prize 5",
-    // points: 200,
-    color: "#F38181",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "6",
-    // label: "Prize 6",
-    //   points: 300,
-    color: "#AA96DA",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "2",
-    // label: "Prize 2",
-    // points: 200,
-    color: "#4ECDC4",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "3",
-    // label: "Prize 3",
-    // points: 300,
-    color: "#FFE66D",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "4",
-    // label: "Prize 4",
-    // points: 100,
-    color: "#95E1D3",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "5",
-    // label: "Prize 5",
-    // points: 200,
-    color: "#F38181",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
-  {
-    id: "6",
-    // label: "Prize 6",
-    //   points: 300,
-    color: "#AA96DA",
-    content: { type: "image", value: "/images/kaos/kaos1.png" },
-  },
 ];
 
 import { playWheelSound } from "@/utils/helpers";
@@ -158,7 +53,7 @@ import { showConfetti } from "../showConfetti";
 export const SpinnerWheelGame = React.forwardRef(
   (
     {
-      segments = demoSegments,
+      segments = [],
       onSpinComplete,
       onSpinStart,
       size = 400,
@@ -404,7 +299,18 @@ export const SpinnerWheelGame = React.forwardRef(
                             <img
                               src={segment.content.value || "/placeholder.svg"}
                               alt={segment.content.alt || segment.label}
-                              className="max-w-max max-h-20  object-cover rounded-full"
+                              style={{
+                                // dynamic size based on radius + segment count
+                                width: `${Math.min(
+                                  radius * 0.35,
+                                  radius * (3 / validSegments.length)
+                                )}px`,
+                                height: `${Math.min(
+                                  radius * 0.35,
+                                  radius * (3 / validSegments.length)
+                                )}px`,
+                              }}
+                              className="object-cover rounded-full"
                             />
                           )}
                           {segment.content.type === "icon" && (
