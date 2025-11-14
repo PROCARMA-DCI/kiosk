@@ -55,7 +55,7 @@ import React, { useCallback, useRef, useState } from "react";
 export const SpinnerWheelGame = React.forwardRef(
   (
     {
-      segments = [],
+      segments = demoSegments,
       onSpinComplete,
       onSpinStart,
       size = 400,

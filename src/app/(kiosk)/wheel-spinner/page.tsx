@@ -119,7 +119,7 @@ function InnerWheelSpinnerPage() {
                 <SpinnerWheelGame
                   segments={segments}
                   size={600}
-                  spinDuration={5}
+                  spinDuration={8}
                   spinPower={5}
                   onSpinComplete={(s: any) => submitPinResult(s)}
                   pointerColor="#FFD700"

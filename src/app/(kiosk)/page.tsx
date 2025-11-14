@@ -1,12 +1,12 @@
 "use client";
 
-import { Suspense, useContext } from "react";
-
 import BackButton from "@/common/BackButton";
+import { CarouselBanner } from "@/common/CarouselBanner";
 import FeatureCardKaos from "@/common/FeatureCard";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { VideoPlayer } from "@/components/videoPlayer";
+import { Suspense, useContext } from "react";
 import { KaosContext } from "./layout";
 const KaosHomePage = () => {
   const { bannerData, globalLoading }: any = useContext(KaosContext);
@@ -21,15 +21,16 @@ const KaosHomePage = () => {
           <Skeleton className="h-[500px] " />
         ) : (
           <>
-            {bannerData?.bannerType === "image" ? (
-              <img
-                className="w-full  h-[500px]"
-                src={bannerData?.bannerLink}
-                alt="banner"
-                height={500}
-                width={500}
-              />
+            {Array.isArray(bannerData?.carousal) ? (
+              <CarouselBanner data={bannerData?.carousal} />
             ) : (
+              // <img
+              //   className="w-full  h-[500px]"
+              //   src={bannerData?.bannerLink}
+              //   alt="banner"
+              //   height={500}
+              //   width={500}
+              // />
               bannerData?.bannerType === "video" && (
                 <>
                   {bannerData.splashVideo?.includes("vimeo.com") ? (
@@ -52,8 +53,9 @@ const KaosHomePage = () => {
             )}
           </>
         )}
+
         {/* Feature Card */}
-        <div className="flex mx-[50px] -mt-20">
+        <div className="flex mx-[50px]  -mt-20">
           <FeatureCardKaos />
         </div>
       </div>

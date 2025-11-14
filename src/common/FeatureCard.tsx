@@ -65,7 +65,7 @@ const InnerFeatureCardKaos = () => {
 
   return (
     <div
-      className="w-full grid grid-cols-3 gap-6 font-uni"
+      className="w-full grid grid-cols-3 gap-6 font-uni z-[1]"
       style={{ fontFamily: '"Uni Sans", sans-serif' }}
     >
       {loading
