@@ -28,26 +28,6 @@ function LoyaltySpinInner() {
 
   const isReady = code.length === 5;
 
-  // const fetchCardDetail = async () => {
-  //   const response = await fetchPostObj({
-  //     api: "spinroulette/checkspinweelcode",
-  //     method: "POST",
-  //     setLoading,
-  //     isValue: true,
-  //     showErrorToast: true,
-  //     data: { code },
-  //   });
-
-  //   if (response.success == 1) {
-  //     setSpinData(response?.wheel);
-  //     router.push("/wheel-spinner");
-  //     // setShowSpin(true);
-  //     setCode("");
-  //   } else {
-  //     toast.error(response.message);
-  //     setCode("");
-  //   }
-  // };
   const handleSubmit = () => {
     router.push(`/wheel-spinner?code=${code}`);
   };

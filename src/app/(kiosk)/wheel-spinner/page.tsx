@@ -38,9 +38,6 @@ function InnerWheelSpinnerPage() {
     if (response.success == 1) {
       setData(response?.wheel);
     }
-    //  else {
-    //   router.push("/spin_code");
-    // }
   };
   useEffect(() => {
     if (hasFetched.current) return;
@@ -71,25 +68,25 @@ function InnerWheelSpinnerPage() {
 
   const submitPinResult = async (seg: any) => {
     const segment = data?.wheel_options?.find((s: any) => s.id === seg.id);
-    handleWinningSegment(segment);
-    playWheelSound("/sound/AFTER-SPIN-WHEEL.mp3");
-    // const apiData = {
-    //   ContractID: data?.ContractID,
-    //   IsGuest: data?.IsGuest,
-    //   code: data?.code,
-    //   option_id: segment?.id,
-    // };
-    // const response = await fetchPostObj({
-    //   api: "spinroulette/savespinresult",
-    //   setLoading,
-    //   isValue: true,
-    //   showErrorToast: true,
-    //   data: apiData,
-    // });
 
-    // if (response?.success == 1) {
-    //   handleWinningSegment(segment);
-    // }
+    playWheelSound("/sound/AFTER-SPIN-WHEEL.mp3");
+    const apiData = {
+      ContractID: data?.ContractID,
+      IsGuest: data?.IsGuest,
+      code: data?.code,
+      option_id: segment?.id,
+    };
+    const response = await fetchPostObj({
+      api: "spinroulette/savespinresult",
+      setLoading,
+      isValue: true,
+      showErrorToast: true,
+      data: apiData,
+    });
+
+    if (response?.success == 1) {
+      handleWinningSegment(segment);
+    }
   };
 
   if (data?.length === 0) return null;
