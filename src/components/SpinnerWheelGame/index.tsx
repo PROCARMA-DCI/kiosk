@@ -90,7 +90,6 @@ const demoSegments = [
 import { playWheelSound } from "@/utils/helpers";
 import Image from "next/image";
 import React, { useCallback, useRef, useState } from "react";
-import { showConfetti } from "../showConfetti";
 
 export const SpinnerWheelGame = React.forwardRef(
   (
@@ -145,8 +144,6 @@ export const SpinnerWheelGame = React.forwardRef(
         if (progress < 1) {
           requestAnimationFrame(animate);
         } else {
-          // Confetti explosion effect
-          showConfetti();
           setRotation(newRotation);
           setIsSpinning(false);
 

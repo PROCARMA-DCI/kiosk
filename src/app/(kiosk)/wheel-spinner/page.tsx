@@ -4,6 +4,7 @@ import { fetchPostObj } from "@/action/function";
 import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { AlertPopup } from "@/components/modals/AlertModal";
+import { showConfetti } from "@/components/showConfetti";
 import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
 import { playWheelSound } from "@/utils/helpers";
 import Image from "next/image";
@@ -37,6 +38,8 @@ function InnerWheelSpinnerPage() {
 
     if (response.success == 1) {
       setData(response?.wheel);
+    } else {
+      router.back();
     }
   };
   useEffect(() => {
@@ -61,7 +64,7 @@ function InnerWheelSpinnerPage() {
     setLastPoints(winningSegment.points || 0);
 
     // Confetti explosion effect
-    // showConfetti();
+    showConfetti();
     setWinningSegment(winningSegment);
     setAlertShow(true);
   };
@@ -87,15 +90,17 @@ function InnerWheelSpinnerPage() {
     if (response?.success == 1) {
       handleWinningSegment(segment);
     }
+    setTimeout(() => {
+      router.push("/spin_code");
+    }, 3000);
   };
 
   if (data?.length === 0) return null;
-  if (loading) {
-    return <ScreenLoader />;
-  }
+
   return (
     <>
       <div className="overflow-hidden">
+        {loading && <ScreenLoader />}
         <BackButton backRoute="/spin_code" />
         <main className="relative  min-h-[731px] h-[calc(100vh-131px)] flex flex-col gap-4 ">
           {/* Demo Section */}
