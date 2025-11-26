@@ -3,10 +3,10 @@
 import { fetchPostObj } from "@/action/function";
 import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
-import { AlertPopup } from "@/components/modals/AlertModal";
 import { showConfetti } from "@/components/showConfetti";
 import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
 import { playWheelSound } from "@/utils/helpers";
+import { X } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useContext, useEffect, useRef, useState } from "react";
@@ -58,6 +58,7 @@ function InnerWheelSpinnerPage() {
       value: item?.image,
     },
   }));
+  console.log(winningSegment, "winningSegment");
 
   const handleWinningSegment = (winningSegment: any) => {
     setLastWinner(winningSegment.label || winningSegment.id);
@@ -92,11 +93,15 @@ function InnerWheelSpinnerPage() {
     }
     setTimeout(() => {
       router.push("/spin_code");
-    }, 3000);
+    }, 5000);
   };
 
   if (data?.length === 0) return null;
 
+  const win_image =
+    "https://mypcp.us/wheel_icon/9d5b40987a726c1b2b456c33036e13e3.jpg";
+  const banner_image =
+    "https://mypcp.us/wheel_icon/4197ef6310edb99f4eb16fca951dd10a.jpg";
   return (
     <>
       <div className="overflow-hidden">
@@ -104,7 +109,7 @@ function InnerWheelSpinnerPage() {
         <BackButton backRoute="/spin_code" />
         <main className="relative  min-h-[731px] h-[calc(100vh-131px)] flex flex-col gap-4 ">
           {/* Demo Section */}
-          <div className=" mt-16   ">
+          <div className="mt-16">
             <h1
               className=" font-bold  text-[50px] text-center mb-10 uppercase bg-clip-text text-transparent"
               style={{
@@ -151,33 +156,6 @@ function InnerWheelSpinnerPage() {
                 />
               </div>
             </div>
-            {/* Selected segment display */}
-            {/* {lastWinner && !isSpinning && (
-                <div
-                  className="absolute left-1/2 z-20 -translate-x-1/2 w-[400px] mt-4 p-6 bg-gradient-to-br from-cyan-50/50 to-blue-50/50 rounded-xl border-2 border-cyan-300/50 shadow-md text-center"
-                  style={{ position: "absolute" }}
-                >
-                  <button
-                    onClick={() => setIsSpinning(true)}
-                    className="absolute z-[9999]  top-2 cursor-pointer right-2 text-cyan-600 hover:text-cyan-800  transition-colors"
-                  >
-                    ✕
-                  </button>
-
-                  <p className="text-xl font-semibold text-cyan-600 uppercase tracking-wide">
-                    🎉 You Won!
-                  </p>
-                  <p className="text-3xl font-bold text-blue-600 mt-2">
-                    {lastWinner}
-                  </p>
-
-                  {lastPoints && (
-                    <p className="text-2xl font-bold text-yellow-500 mt-2">
-                      +{lastPoints} Points ✨
-                    </p>
-                  )}
-                </div>
-              )} */}
           </div>
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none z-0">
             <div className="relative flex items-center justify-center overflow-hidden w-[2200px] h-[60vh]">
@@ -220,12 +198,116 @@ function InnerWheelSpinnerPage() {
           </div>
         </main>
       </div>
-
       {alertShow && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          {/* Alert Card Container */}
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[630px]  overflow-hidden">
+            {/* Banner Section - No padding, full width image */}
+            {winningSegment.popup_banner_image && (
+              <div className="relative w-full h-[588.73px] overflow-hidden">
+                {/* Content Section - Children content passed by user */}
+                <div
+                  className={`relative  ${
+                    winningSegment.popup_banner_image
+                      ? "pt-6 pb-6 px-6"
+                      : "pt-8 pb-6 px-6"
+                  }`}
+                >
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setAlertShow(false)}
+                    className="absolute top-0 right-4 text-white z-50 hover:text-gray-600 transition-colors"
+                    aria-label="Close alert"
+                  >
+                    <X size={40} />
+                  </button>
+                </div>
+                <Image
+                  src={winningSegment?.popup_banner_image}
+                  alt="Alert banner"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            )}
+            {/* Icon Circle - Positioned to overlap banner and content */}
+            <div
+              className="relative flex justify-center"
+              style={{
+                marginTop: winningSegment?.popup_banner_image ? "-50px" : "0",
+              }}
+            >
+              <div
+                className={` rounded-full p-2 shadow-lg border-4 border-white relative z-50`}
+              >
+                {winningSegment?.win_image ? (
+                  <div className="relative w-24 h-24 rounded-full overflow-hidden">
+                    <Image
+                      src={winningSegment?.win_image}
+                      alt="Alert icon"
+                      fill
+                      className="object-cover"
+                      priority
+                      unoptimized
+                    />
+                  </div>
+                ) : (
+                  <div className="w-24 h-24" />
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col justify-center items-center gap-4 max-w-sm mx-auto mt-2 pb-5">
+              <h1 className="text-5xl font-extrabold text-center">
+                {lastWinner}
+              </h1>
+              <p
+                className="text-center text-[#55778B] mt-2"
+                style={{
+                  fontFamily: "var(--font-roboto)",
+                  fontWeight: 500,
+                  fontSize: "20px",
+                  lineHeight: "26px",
+                  letterSpacing: "0em",
+                }}
+              >
+                Congratulations! You won free {lastWinner} of your selection.
+                This will be added to your rewards in the loyalty section of
+                your Dealer&apos;s app.
+              </p>
+              <div className="flex flex-col items-center text-center mt-2">
+                <p
+                  style={{
+                    fontFamily: "var(--font-roboto)",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "26px",
+                    letterSpacing: "0em",
+                  }}
+                >
+                  Please see a store representative to redeem.
+                </p>
+                <p
+                  style={{
+                    fontFamily: "var(--font-roboto)",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "26px",
+                    letterSpacing: "0em",
+                  }}
+                >
+                  Your next spin will be available in 24 hrs.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* {alertShow && (
         <AlertPopup
           open={alertShow}
           onClose={() => setAlertShow(false)}
-          // @ts-ignore
+
           imageUrl={winningSegment?.win_image ?? winningSegment?.image}
           imageBackground={winningSegment?.color}
         >
@@ -273,10 +355,11 @@ function InnerWheelSpinnerPage() {
             </div>
           </div>
         </AlertPopup>
-      )}
+      )} */}
     </>
   );
 }
+
 export default function WheelSpinnerPage() {
   return (
     <Suspense fallback={<ScreenLoader />}>
