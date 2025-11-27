@@ -17,7 +17,7 @@ function InnerWheelSpinnerPage() {
   const { selectedCard } = useContext(KaosContext);
   const router = useRouter();
   const [data, setData] = useState<any>(null);
-  const [lastWinner, setLastWinner] = useState("");
+  const [lastWinner, setLastWinner] = useState("No User");
   const [lastPoints, setLastPoints] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -98,10 +98,11 @@ function InnerWheelSpinnerPage() {
 
   if (data?.length === 0) return null;
 
-  const win_image =
-    "https://mypcp.us/wheel_icon/9d5b40987a726c1b2b456c33036e13e3.jpg";
-  const banner_image =
-    "https://mypcp.us/wheel_icon/4197ef6310edb99f4eb16fca951dd10a.jpg";
+  // const win_image =
+  //   "https://mypcp.us/wheel_icon/9d5b40987a726c1b2b456c33036e13e3.jpg";
+  // const popup_banner_image =
+  //   "https://mypcp.us/wheel_icon/4197ef6310edb99f4eb16fca951dd10a.jpg";
+  // const color = "#19b324";
   return (
     <>
       <div className="overflow-hidden">
@@ -198,13 +199,17 @@ function InnerWheelSpinnerPage() {
           </div>
         </main>
       </div>
+      {/* popup winner start################################################################################3
+      #####################################################################33
+      ############################3 */}
       {alertShow && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50  flex items-center justify-center z-50 p-4">
           {/* Alert Card Container */}
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[630px]  overflow-hidden">
+
+          <div className="bg-white rounded-2xl  shadow-2xl w-full max-w-[630px]  ">
             {/* Banner Section - No padding, full width image */}
             {winningSegment.popup_banner_image && (
-              <div className="relative w-full h-[588.73px] overflow-hidden">
+              <div className="relative w-full rounded-t-2xl h-[588.73px] overflow-hidden">
                 {/* Content Section - Children content passed by user */}
                 <div
                   className={`relative  ${
@@ -223,7 +228,7 @@ function InnerWheelSpinnerPage() {
                   </button>
                 </div>
                 <Image
-                  src={winningSegment?.popup_banner_image}
+                  src={winningSegment.popup_banner_image}
                   alt="Alert banner"
                   fill
                   className="object-cover"
@@ -235,16 +240,21 @@ function InnerWheelSpinnerPage() {
             <div
               className="relative flex justify-center"
               style={{
-                marginTop: winningSegment?.popup_banner_image ? "-50px" : "0",
+                marginTop: winningSegment.popup_banner_image
+                  ? "-100px"
+                  : "-100px",
               }}
             >
               <div
-                className={` rounded-full p-2 shadow-lg border-4 border-white relative z-50`}
+                className={` rounded-full  w-[170px] h-[170px] shadow-lg flex items-center justify-center   relative z-50`}
+                style={{
+                  backgroundImage: `linear-gradient(90deg, ${winningSegment?.color}, #fff)`,
+                }}
               >
                 {winningSegment?.win_image ? (
-                  <div className="relative w-24 h-24 rounded-full overflow-hidden">
+                  <div className="relative w-[115px] h-[116px] rounded-full overflow-hidden border border-border">
                     <Image
-                      src={winningSegment?.win_image}
+                      src={winningSegment.win_image}
                       alt="Alert icon"
                       fill
                       className="object-cover"
@@ -257,7 +267,7 @@ function InnerWheelSpinnerPage() {
                 )}
               </div>
             </div>
-            <div className="flex flex-col justify-center items-center gap-4 max-w-sm mx-auto mt-2 pb-5">
+            <div className=" flex flex-col justify-center items-center gap-4 max-w-lg mx-auto mt-6 pb-5">
               <h1 className="text-5xl font-extrabold text-center">
                 {lastWinner}
               </h1>
@@ -303,6 +313,10 @@ function InnerWheelSpinnerPage() {
           </div>
         </div>
       )}
+      {/* end################################################################################3
+      #####################################################################33
+      ############################3 */}
+
       {/* {alertShow && (
         <AlertPopup
           open={alertShow}

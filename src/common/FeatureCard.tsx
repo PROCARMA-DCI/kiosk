@@ -16,6 +16,7 @@ const InnerFeatureCardKaos = () => {
   const { setSelectedCard } = useContext(KaosContext);
   const [cards, setCards] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [iframeUrl, setIframeUrl] = useState<string | null>(null);
   const router = useRouter();
   const dealer_id = searhParams.get("dealer_id");
 
@@ -29,7 +30,10 @@ const InnerFeatureCardKaos = () => {
     } else if (feature.type === "spinwheel") {
       router.push(`/spin_code?id=${feature.id}`);
     } else if (feature.type === "external") {
-      window.open(feature.url, "_blank", "noopener,noreferrer");
+      router.push(`/external_url?url=${feature.url}`);
+
+      // setIframeUrl(feature.url);
+      // window.open(feature.url, "_blank", "noopener,noreferrer");
     } else if (feature.type === "pagebuilder") {
       router.push(`/${feature.id}/${feature.card_detail_id}`);
     }
@@ -62,8 +66,26 @@ const InnerFeatureCardKaos = () => {
 
     fetchData();
   }, [dealer_id]);
+  return iframeUrl ? (
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] flex flex-col">
+      <div className="bg-black text-white p-4 flex items-center justify-between">
+        <button
+          onClick={() => setIframeUrl(null)}
+          className="text-white px-4 py-2 rounded bg-[#19b324] hover:bg-[#148d1f] text-lg"
+        >
+          ← Back
+        </button>
+        <span className="text-lg font-semibold">External Page</span>
+        <div className="w-[60px]" />
+      </div>
 
-  return (
+      <iframe
+        src={iframeUrl}
+        className="w-full flex-1 bg-white"
+        sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+      />
+    </div>
+  ) : (
     <div
       className="w-full grid grid-cols-3 gap-6 font-uni z-[1]"
       style={{ fontFamily: '"Uni Sans", sans-serif' }}
