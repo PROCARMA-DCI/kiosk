@@ -17,7 +17,7 @@ export default function IframeUrl() {
   }
 
   return (
-    <div className="w-full h-screen p-0 m-0">
+    <div className="w-full h-[calc(100vh-131px)] p-0 m-0 overflow-y-auto">
       <iframe src={url} className="w-full h-full border-0" allow="fullscreen" />
     </div>
   );
