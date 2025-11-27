@@ -246,13 +246,13 @@ function InnerWheelSpinnerPage() {
               }}
             >
               <div
-                className={` rounded-full  w-[170px] h-[170px] shadow-lg flex items-center justify-center   relative z-50`}
-                style={{
-                  backgroundImage: `linear-gradient(90deg, ${winningSegment?.color}, #fff)`,
-                }}
+                className={` rounded-full w-[170px] h-[170px]  shadow-lg flex items-center justify-center   relative z-50`}
+                // style={{
+                //   backgroundImage: `linear-gradient(90deg, ${winningSegment?.color}, #fff)`,
+                // }}
               >
                 {winningSegment?.win_image ? (
-                  <div className="relative w-[115px] h-[116px] rounded-full overflow-hidden border border-border">
+                  <div className="relative w-[170px] h-[170px] rounded-full overflow-hidden border border-border">
                     <Image
                       src={winningSegment.win_image}
                       alt="Alert icon"
