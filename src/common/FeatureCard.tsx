@@ -30,7 +30,11 @@ const InnerFeatureCardKaos = () => {
     } else if (feature.type === "spinwheel") {
       router.push(`/spin_code?id=${feature.id}`);
     } else if (feature.type === "external") {
-      router.push(`/external_url?url=${feature.url}`);
+      if (feature.urliframe == 1) {
+        router.push(`/external_url?url=${feature.url}`);
+      } else {
+        window.open(feature.url, "_blank", "noopener,noreferrer");
+      }
 
       // setIframeUrl(feature.url);
       // window.open(feature.url, "_blank", "noopener,noreferrer");
