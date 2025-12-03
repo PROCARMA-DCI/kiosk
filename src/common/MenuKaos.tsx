@@ -1,10 +1,11 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
+import { KaosContext } from "@/app/(kiosk)/layout";
 import SimpleModal from "@/components/modals/SimpleModal";
 import { FilterableSelect } from "@/components/select/FilterableSelect";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const MenuKaos = ({
@@ -15,7 +16,7 @@ const MenuKaos = ({
   setInactive,
   setBannerData,
 }: any) => {
-  const [dealers, setDealers] = useState([]);
+  const { dealers, setDealers }: any = useContext(KaosContext);
   const [loading, setLoading] = useState(false);
   const fetchBanner = async (dealer_id: string) => {
     const response = await fetchPostObj({

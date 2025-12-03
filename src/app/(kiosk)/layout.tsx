@@ -12,6 +12,8 @@ import { createContext, Suspense, useEffect, useRef, useState } from "react";
 interface KaosContextType {
   dealer_id: string | undefined | null;
   setDealerID: React.Dispatch<React.SetStateAction<string | undefined | null>>;
+  dealers: Record<string, any>[];
+  setDealers: React.Dispatch<React.SetStateAction<Record<string, any>[]>>;
   bannerData: any;
   setBannerData: React.Dispatch<React.SetStateAction<any>>;
   dealerModel: boolean;
@@ -30,6 +32,7 @@ const LayoutInner = ({ children }: any) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const [dealers, setDealers] = useState<Record<string, any>[]>([]);
   const [dealer_id, setDealerID] = useState<string | undefined | null>(
     searchParams.get("dealer_id")
   );
@@ -82,6 +85,8 @@ const LayoutInner = ({ children }: any) => {
       value={{
         dealer_id,
         setDealerID,
+        setDealers,
+        dealers,
         bannerData,
         setBannerData,
         dealerModel,

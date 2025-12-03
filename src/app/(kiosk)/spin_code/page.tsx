@@ -21,7 +21,7 @@ import { KaosContext } from "../layout";
 
 function LoyaltySpinInner() {
   const router = useRouter();
-  const { selectedCard } = useContext(KaosContext);
+  const { selectedCard, dealers, dealer_id } = useContext(KaosContext);
   const [code, setCode] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ function LoyaltySpinInner() {
   const steps = [
     {
       id: 1,
-      title: "Download the Spitzer Vip App",
+      title: `Download the YOUR DEALER APP`,
       text: "Download the app from either the Apple App Store or Google Play Store. If you already have an account, make sure you are signed in. If you are new, please scan the QR code to become a Spitzer VIP member!",
       img: "/images/kaos/qrcode.png",
       class: "w-[90.14px] h-[90.14px] bg-white rounded-lg p-2",
@@ -77,14 +77,19 @@ function LoyaltySpinInner() {
           className="text-[50px] font-bold  mb-8 tracking-wider bg-clip-text text-transparent"
           style={{
             fontWeight: 400,
-            backgroundImage: `linear-gradient(90deg, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color})`,
+            backgroundImage: `linear-gradient(90deg, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color}`,
           }}
         >
           LOYALTY SPIN
         </h4>
         <BackButton backRoute="/" />
 
-        <div className="spin-code-gradient  w-[523px] min-h-[504px]  rounded-[85px] shadow-2xl flex justify-center items-center ">
+        <div
+          className="spin-code-gradient  w-[523px] min-h-[504px]  rounded-[85px] shadow-2xl flex justify-center items-center "
+          style={{
+            background: `linear-gradient(90deg, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color}`,
+          }}
+        >
           <Card className=" w-[463.71px] h-[455.85px] overflow-hidden rounded-[60px] flex items-center justify-center bg-white dark:bg-gray-900 border-none">
             <CardContent className="flex w-[321.51px]  flex-col items-center justify-center p-8 space-y-8">
               <div
@@ -93,8 +98,21 @@ function LoyaltySpinInner() {
                   color: "#00BCFF",
                 }}
               >
-                <h4 style={{ fontSize: "20px" }}>ENTER CODE HERE</h4>
-                <ChevronDown className="animate-bounce" />
+                <h4
+                  className=" bg-clip-text text-transparent"
+                  style={{
+                    fontSize: "20px",
+                    backgroundImage: `linear-gradient(90deg, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color}`,
+                  }}
+                >
+                  ENTER CODE HERE
+                </h4>
+                <ChevronDown
+                  className="animate-bounce"
+                  style={{
+                    color: selectedCard?.gradient_end_color,
+                  }}
+                />
               </div>
 
               {/* OTP Input */}
