@@ -35,7 +35,7 @@ function LoyaltySpinInner() {
   const steps = [
     {
       id: 1,
-      title: `Download the YOUR DEALER APP`,
+      title: `Download YOUR DEALER APP`,
       text: "Download the app from either the Apple App Store or Google Play Store. If you already have an account, make sure you are signed in. If you are new, please scan the QR code to become a Spitzer VIP member!",
       img: "/images/kaos/qrcode.png",
       class: "w-[90.14px] h-[90.14px] bg-white rounded-lg p-2",
