@@ -225,10 +225,13 @@ function InnerWheelSpinnerPage() {
                   {/* Close Button */}
                   <button
                     onClick={handleWinningClose}
-                    className="absolute top-0 right-4 text-white z-50 hover:text-gray-600 transition-colors"
+                    className="absolute top-0 right-4 mt-2 bg-white p-2 rounded-full z-50 hover:text-gray-600 transition-colors"
                     aria-label="Close alert"
                   >
-                    <X size={40} />
+                    <X
+                      size={20}
+                      className="text-gray-400 hover:text-gray-600"
+                    />
                   </button>
                 </div>
                 <Image
@@ -276,10 +279,10 @@ function InnerWheelSpinnerPage() {
               <div className="relative w-full">
                 <button
                   onClick={handleWinningClose}
-                  className="absolute top-0 cursor-pointer right-4 -mt-[50px] text-gray-400 z-50 hover:text-gray-600 transition-colors"
+                  className="absolute top-0 cursor-pointer right-4 -mt-[50px] bg-white rounded-full p-2 transition-colors"
                   aria-label="Close alert"
                 >
-                  <X size={30} />
+                  <X size={30} className="text-gray-400 hover:text-gray-600" />
                 </button>
               </div>
             )}
