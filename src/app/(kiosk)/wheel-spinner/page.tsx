@@ -99,7 +99,7 @@ function InnerWheelSpinnerPage() {
 
   const handleWinningClose = () => {
     setAlertShow(false);
-    router.push("/spin_code");
+    router.push("/");
   };
 
   // const win_image =
