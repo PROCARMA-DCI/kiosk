@@ -58,7 +58,6 @@ function InnerWheelSpinnerPage() {
       value: item?.image,
     },
   }));
-  console.log(winningSegment, "winningSegment");
 
   const handleWinningSegment = (winningSegment: any) => {
     setLastWinner(winningSegment.label || winningSegment.id);
@@ -91,12 +90,17 @@ function InnerWheelSpinnerPage() {
     if (response?.success == 1) {
       handleWinningSegment(segment);
     }
-    setTimeout(() => {
-      router.push("/spin_code");
-    }, 5000);
+    // setTimeout(() => {
+    //   router.push("/spin_code");
+    // }, 5000);
   };
 
   if (data?.length === 0) return null;
+
+  const handleWinningClose = () => {
+    setAlertShow(false);
+    router.push("/spin_code");
+  };
 
   // const win_image =
   //   "https://mypcp.us/wheel_icon/9d5b40987a726c1b2b456c33036e13e3.jpg";
@@ -208,7 +212,7 @@ function InnerWheelSpinnerPage() {
 
           <div className="bg-white rounded-2xl  shadow-2xl w-full max-w-[630px]  ">
             {/* Banner Section - No padding, full width image */}
-            {winningSegment.popup_banner_image && (
+            {winningSegment?.popup_banner_image && (
               <div className="relative w-full rounded-t-2xl h-[588.73px] overflow-hidden">
                 {/* Content Section - Children content passed by user */}
                 <div
@@ -220,7 +224,7 @@ function InnerWheelSpinnerPage() {
                 >
                   {/* Close Button */}
                   <button
-                    onClick={() => setAlertShow(false)}
+                    onClick={handleWinningClose}
                     className="absolute top-0 right-4 text-white z-50 hover:text-gray-600 transition-colors"
                     aria-label="Close alert"
                   >
@@ -240,7 +244,7 @@ function InnerWheelSpinnerPage() {
             <div
               className="relative flex justify-center"
               style={{
-                marginTop: winningSegment.popup_banner_image
+                marginTop: winningSegment?.popup_banner_image
                   ? "-100px"
                   : "-100px",
               }}
@@ -267,6 +271,18 @@ function InnerWheelSpinnerPage() {
                 )}
               </div>
             </div>
+            {/* Close Button */}
+            {!winningSegment?.popup_banner_image && (
+              <div className="relative w-full">
+                <button
+                  onClick={handleWinningClose}
+                  className="absolute top-0 cursor-pointer right-4 -mt-[50px] text-gray-400 z-50 hover:text-gray-600 transition-colors"
+                  aria-label="Close alert"
+                >
+                  <X size={30} />
+                </button>
+              </div>
+            )}
             <div className=" flex flex-col justify-center items-center gap-4 max-w-lg mx-auto mt-6 pb-5">
               <h1 className="text-5xl font-extrabold text-center">
                 {lastWinner}

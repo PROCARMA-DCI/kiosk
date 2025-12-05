@@ -6,9 +6,9 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useRouter } from "next/navigation";
+import { Suspense, useContext, useState } from "react";
 
 import Image from "next/image";
-import { Suspense, useContext, useState } from "react";
 
 import BackButton from "@/common/BackButton";
 import { Button } from "@/components/ui/button";
