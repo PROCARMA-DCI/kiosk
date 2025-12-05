@@ -76,7 +76,7 @@ export default function CarouselBanner({ data }: Props) {
             key={i}
             onClick={() => goTo(i)}
             aria-label={`Go to slide ${i + 1}`}
-            className={`h-3 w-3 rounded-full transition-all duration-200
+            className={`h-[6px] w-[6px] rounded-full transition-all duration-200
               ${selectedIndex === i ? "bg-white scale-125" : "bg-white/40"}`}
           />
         ))}
