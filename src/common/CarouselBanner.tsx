@@ -71,15 +71,17 @@ export default function CarouselBanner({ data }: Props) {
 
       {/* === Dots - centered a bit above bottom === */}
       <div className="absolute bottom-[100px] left-1/2 -translate-x-1/2 flex gap-3 z-20">
-        {data.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={`h-[6px] w-[6px] rounded-full transition-all duration-200
+        {data &&
+          data.length > 1 &&
+          data.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-[6px] w-[6px] rounded-full transition-all duration-200
               ${selectedIndex === i ? "bg-white scale-125" : "bg-white/40"}`}
-          />
-        ))}
+            />
+          ))}
       </div>
     </div>
   );
