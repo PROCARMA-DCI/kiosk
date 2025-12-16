@@ -10,7 +10,7 @@ import {
 import React, { useRef } from "react";
 
 export function MovingBorder({
-  borderRadius = "1.75rem",
+  borderRadius,
   children,
   as: Component = "button",
   containerClassName,

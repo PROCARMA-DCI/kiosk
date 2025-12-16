@@ -147,15 +147,15 @@ function LoyaltySpinInner() {
 
               {/* Button */}
               <MovingBorder
-                className="bg-white p-0 rounded-xl"
                 containerClassName="w-full"
                 borderClassName="h-1"
                 animate={loading}
+                borderRadius="18.6px"
               >
                 <Button
                   disabled={!isReady}
                   onClick={handleSubmit}
-                  className={`w-full h-[60px] rounded-[18.6px]  cursor-pointer py-5 text-lg font-semibold  shadow-md transition-all ${
+                  className={`w-full h-[60px]  cursor-pointer py-5 text-lg font-semibold  shadow-md transition-all ${
                     isReady
                       ? " hover:scale-105 text-white"
                       : "bg-gray-300  cursor-not-allowed"
@@ -163,8 +163,9 @@ function LoyaltySpinInner() {
                   style={
                     isReady
                       ? {
-                          backgroundImage:
-                            "linear-gradient(to bottom right, #30dab2, #0c5ebf)",
+                          // backgroundImage:
+                          //   "linear-gradient(to bottom right, #30dab2, #0c5ebf)",
+                          backgroundImage: `linear-gradient(to bottom right, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color}`,
                         }
                       : {}
                   }
