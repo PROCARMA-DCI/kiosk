@@ -316,7 +316,7 @@ function InnerWheelSpinnerPage() {
                 >
                   Please see a store representative to redeem.
                 </p>
-                <p
+                {/* <p
                   style={{
                     fontFamily: "var(--font-roboto)",
                     fontWeight: 700,
@@ -326,7 +326,7 @@ function InnerWheelSpinnerPage() {
                   }}
                 >
                   Your next spin will be available in 24 hrs.
-                </p>
+                </p> */}
               </div>
             </div>
           </div>
