@@ -300,9 +300,9 @@ function InnerWheelSpinnerPage() {
                   letterSpacing: "0em",
                 }}
               >
-                Congratulations! You won free {lastWinner} of your selection.
-                This will be added to your rewards in the loyalty section of
-                your Dealer&apos;s app.
+                Congratulations! You won free {lastWinner}. This will be added
+                to your rewards in the loyalty section of your Dealer&apos;s
+                app.
               </p>
               <div className="flex flex-col items-center text-center mt-2">
                 <p
