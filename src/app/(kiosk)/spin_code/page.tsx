@@ -6,10 +6,11 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useRouter } from "next/navigation";
-import { Suspense, useContext, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 
 import Image from "next/image";
 
+import { fetchPostObj } from "@/action/function";
 import BackButton from "@/common/BackButton";
 import { Button } from "@/components/ui/button";
 import { LoaderFive } from "@/components/ui/loader";
@@ -22,11 +23,28 @@ import { KaosContext } from "../layout";
 function LoyaltySpinInner() {
   const router = useRouter();
   const { selectedCard, dealers, dealer_id } = useContext(KaosContext);
+  const [footerData, setFooterData] = useState<any>([]);
   const [code, setCode] = useState("");
-
+  console.log(selectedCard);
   const [loading, setLoading] = useState(false);
 
   const isReady = code.length === 5;
+
+  const fetchFooterData = async () => {
+    const response = await fetchPostObj({
+      api: "StandingScreenCenter/spinwheelFooterDetail",
+      setLoading,
+      isValue: true,
+      showErrorToast: true,
+      data: { button_id: selectedCard?.id },
+    });
+    if (response?.success == 1) {
+      setFooterData(response.message);
+    }
+  };
+  useEffect(() => {
+    fetchFooterData();
+  }, [selectedCard]);
 
   const handleSubmit = () => {
     router.push(`/wheel-spinner?code=${code}`);
@@ -179,67 +197,71 @@ function LoyaltySpinInner() {
           </Card>
         </div>
         <div className="relative flex flex-col gap-8 w-full  min-h-96 mx-auto mt-20 ">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.id}
-              className="flex items-center gap-4 w-[600px] mx-auto"
-              variants={variants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              custom={i}
-            >
-              <div className="flex gap-4 ">
-                <h1 className=" text-[25px] uppercase leading-[100%] text-[#001931]">
-                  {step.id}.
-                </h1>
-                <div className="">
-                  <h2 className="w-[380px] text-[25px]  uppercase leading-[100%] text-[#001931]">
-                    {step.title}
-                  </h2>
-                  <p
-                    className="w-[370px] text-[#55778B] mt-1 "
-                    style={{
-                      fontFamily: "var(--font-roboto)",
-                      fontSize: "10.83px",
-                      lineHeight: "15.57px",
-                      fontWeight: "700",
-                    }}
-                  >
-                    {step.text}
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-center  items-center w-[200px]">
-                {step.img2 ? (
-                  <div className="flex items-center">
-                    <Image
-                      src={step.img}
-                      alt={step.title}
-                      width={500}
-                      height={500}
-                      className={`rounded-xl ${step.class}`}
-                    />
-                    <Image
-                      src={step.img2}
-                      alt={step.title}
-                      width={500}
-                      height={500}
-                      className={`rounded-xl -ml-3 ${step.class}`}
-                    />
+          {loading
+            ? null
+            : footerData &&
+              footerData.length > 0 &&
+              footerData?.map((step: any, index: number) => (
+                <motion.div
+                  key={index}
+                  className="flex items-center gap-4 w-[600px] mx-auto"
+                  variants={variants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  // custom={index}
+                >
+                  <div className="flex gap-4 ">
+                    <h1 className=" text-[25px] uppercase leading-[100%] text-[#001931]">
+                      {index + 1}.
+                    </h1>
+                    <div className="">
+                      <h2 className="w-[380px] text-[25px]  uppercase leading-[100%] text-[#001931]">
+                        {step.title}
+                      </h2>
+                      <p
+                        className="w-[370px] text-[#55778B] mt-1 "
+                        style={{
+                          fontFamily: "var(--font-roboto)",
+                          fontSize: "10.83px",
+                          lineHeight: "15.57px",
+                          fontWeight: "700",
+                        }}
+                      >
+                        {step.description}
+                      </p>
+                    </div>
                   </div>
-                ) : (
-                  <Image
-                    src={step.img}
-                    alt={step.title}
-                    width={200}
-                    height={200}
-                    className={`rounded-xl border border-gray-200 ${step.class}`}
-                  />
-                )}
-              </div>
-            </motion.div>
-          ))}
+                  <div className="flex justify-center  items-center w-[200px]">
+                    {step.img2 ? (
+                      <div className="flex items-center">
+                        <Image
+                          src={step.img}
+                          alt={step.title}
+                          width={500}
+                          height={500}
+                          className={`rounded-xl ${step.class}`}
+                        />
+                        <Image
+                          src={step.img2}
+                          alt={step.title}
+                          width={500}
+                          height={500}
+                          className={`rounded-xl -ml-3 ${step.class}`}
+                        />
+                      </div>
+                    ) : (
+                      <Image
+                        src={step.image_path}
+                        alt={step.title}
+                        width={200}
+                        height={200}
+                        className={`rounded-xl border border-gray-200 w-[97.96px] h-[70.66px`}
+                      />
+                    )}
+                  </div>
+                </motion.div>
+              ))}
         </div>
       </div>
     </>
