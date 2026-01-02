@@ -109,6 +109,7 @@ export const SpinnerWheelGame = React.forwardRef(
       renderSegmentContent,
       isSpinning,
       setIsSpinning,
+      stopAudio,
     }: any,
     ref: any
   ) => {
@@ -122,7 +123,8 @@ export const SpinnerWheelGame = React.forwardRef(
     const radius = size / 2;
 
     const spin = useCallback(() => {
-      playWheelSound("/sound/SpinningPrizeWheelSoundEffect.mp3");
+      stopAudio();
+      playWheelSound("/sound/Luckywheelspinsoundeffect.mp3");
       if (isSpinning || validSegments.length === 0) return;
 
       setIsSpinning(true);
@@ -262,7 +264,7 @@ export const SpinnerWheelGame = React.forwardRef(
           {/* Center Button */}
           <div
             className="absolute z-10 cursor-pointer flex items-center justify-center"
-            onClick={spin}
+            onClick={isSpinning ? undefined : () => spin()}
             style={{
               width: size * 0.15,
               height: size * 0.15,

@@ -14,6 +14,7 @@ import { KaosContext } from "../layout";
 
 function InnerWheelSpinnerPage() {
   const searhParams = useSearchParams();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const { selectedCard } = useContext(KaosContext);
   const router = useRouter();
   const [data, setData] = useState<any>(null);
@@ -23,9 +24,40 @@ function InnerWheelSpinnerPage() {
   const [loading, setLoading] = useState(false);
   const [alertShow, setAlertShow] = useState(false);
   const [winningSegment, setWinningSegment] = useState<any>(null);
+  const [isMuted, setIsMuted] = useState(false);
 
   const code = searhParams.get("code");
   const hasFetched = useRef(false);
+
+  // Stop audio function
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current.src = "";
+      audioRef.current = null;
+    }
+  };
+
+  // Start background music
+  const startBackgroundMusic = () => {
+    stopAudio(); // Clean up any existing audio
+    audioRef.current = playWheelSound("/sound/bgmusic2.mp3", true);
+  };
+
+  // Toggle mute
+  const toggleMute = () => {
+    if (audioRef.current) {
+      if (isMuted) {
+        audioRef.current.volume = 1.0;
+        setIsMuted(false);
+      } else {
+        audioRef.current.volume = 0;
+        setIsMuted(true);
+      }
+    }
+  };
+
   const fetchCardDetail = async (code: any) => {
     const response = await fetchPostObj({
       api: "spinroulette/checkspinweelcode",
@@ -38,41 +70,16 @@ function InnerWheelSpinnerPage() {
 
     if (response.success == 1) {
       setData(response?.wheel);
+      startBackgroundMusic();
     } else {
       router.back();
     }
   };
-  useEffect(() => {
-    if (hasFetched.current) return;
-    hasFetched.current = true;
-    fetchCardDetail(code);
-  }, []);
-
-  const segments = data?.wheel_options?.map((item: any) => ({
-    id: item?.id,
-    // label: item?.label,
-    // points: Number(item.points),
-    color: item?.color,
-    content: {
-      type: "image",
-      value: item?.image,
-    },
-  }));
-
-  const handleWinningSegment = (winningSegment: any) => {
-    setLastWinner(winningSegment.label || winningSegment.id);
-    setLastPoints(winningSegment.points || 0);
-
-    // Confetti explosion effect
-    showConfetti();
-    setWinningSegment(winningSegment);
-    setAlertShow(true);
-  };
 
   const submitPinResult = async (seg: any) => {
     const segment = data?.wheel_options?.find((s: any) => s.id === seg.id);
-
-    playWheelSound("/sound/AFTER-SPIN-WHEEL.mp3");
+    stopAudio();
+    playWheelSound("/sound/Win1.mp3");
     const apiData = {
       ContractID: data?.ContractID,
       IsGuest: data?.IsGuest,
@@ -88,30 +95,74 @@ function InnerWheelSpinnerPage() {
     });
 
     if (response?.success == 1) {
-      handleWinningSegment(segment);
+      setLastWinner(segment?.label || segment?.id);
+      setLastPoints(segment?.points || 0);
+      showConfetti();
+      setWinningSegment(segment);
+      setAlertShow(true);
     }
     // setTimeout(() => {
     //   router.push("/spin_code");
     // }, 5000);
   };
-
-  if (data?.length === 0) return null;
-
   const handleWinningClose = () => {
     setAlertShow(false);
+    stopAudio();
     router.push("/");
   };
 
-  // const win_image =
-  //   "https://mypcp.us/wheel_icon/9d5b40987a726c1b2b456c33036e13e3.jpg";
-  // const popup_banner_image =
-  //   "https://mypcp.us/wheel_icon/4197ef6310edb99f4eb16fca951dd10a.jpg";
-  // const color = "#19b324";
+  useEffect(() => {
+    if (!code) return;
+    if (hasFetched.current) return;
+
+    hasFetched.current = true;
+    fetchCardDetail(code);
+
+    // Cleanup on navigation or tab close
+    const handleBeforeUnload = () => stopAudio();
+    const handleVisibilityChange = () => {
+      if (document.hidden) stopAudio();
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      stopAudio();
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [code]);
+
+  const segments = data?.wheel_options?.map((item: any) => ({
+    id: item?.id,
+    // label: item?.label,
+    // points: Number(item.points),
+    color: item?.color,
+    content: {
+      type: "image",
+      value: item?.image,
+    },
+  }));
+
+  if (data?.length === 0) return null;
+
   return (
     <>
       <div className="overflow-hidden">
         {loading && <ScreenLoader />}
         {!isSpinning && <BackButton backRoute="/spin_code" />}
+        {/* <button
+          onClick={toggleMute}
+          className="fixed top-36 right-4 z-50 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all"
+          aria-label={isMuted ? "Unmute" : "Mute"}
+        >
+          {isMuted ? (
+            <VolumeX size={24} className="text-gray-700" />
+          ) : (
+            <Volume2 size={24} className="text-gray-700" />
+          )}
+        </button> */}
         <main className="relative  min-h-[731px] h-[calc(100vh-131px)] flex flex-col gap-4 ">
           {/* Demo Section */}
           <div className="mt-16">
@@ -130,7 +181,7 @@ function InnerWheelSpinnerPage() {
                 <SpinnerWheelGame
                   segments={segments}
                   size={600}
-                  spinDuration={9}
+                  spinDuration={6}
                   spinPower={5}
                   onSpinComplete={(s: any) => submitPinResult(s)}
                   pointerColor="#FFD700"
@@ -140,6 +191,7 @@ function InnerWheelSpinnerPage() {
                   showLabels={true}
                   isSpinning={isSpinning}
                   setIsSpinning={setIsSpinning}
+                  stopAudio={stopAudio}
                 />
               </div>
               {/* Spinner Support Base */}

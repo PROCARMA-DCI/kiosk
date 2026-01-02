@@ -25,7 +25,7 @@ function LoyaltySpinInner() {
   const { selectedCard, dealers, dealer_id } = useContext(KaosContext);
   const [footerData, setFooterData] = useState<any>([]);
   const [code, setCode] = useState("");
-  console.log(selectedCard);
+
   const [loading, setLoading] = useState(false);
 
   const isReady = code.length === 5;
@@ -224,7 +224,7 @@ function LoyaltySpinInner() {
                         style={{
                           fontFamily: "var(--font-roboto)",
                           fontSize: "10.83px",
-                          lineHeight: "15.57px",
+                          // lineHeight: "15.57px",
                           fontWeight: "700",
                         }}
                       >
