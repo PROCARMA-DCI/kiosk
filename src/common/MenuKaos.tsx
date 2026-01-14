@@ -5,7 +5,6 @@ import { fetchPostObj } from "@/action/function";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import SimpleModal from "@/components/modals/SimpleModal";
 import { FilterableSelect } from "@/components/select/FilterableSelect";
-import { getSessionId } from "@/utils/session";
 
 import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -18,9 +17,8 @@ const MenuKaos = ({
   setInactive,
   setBannerData,
 }: any) => {
-  const { dealers, setDealers }: any = useContext(KaosContext);
+  const { dealers, setDealers, session_id }: any = useContext(KaosContext);
   const [loading, setLoading] = useState(false);
-  const session_id = getSessionId();
 
   useEffect(() => {
     if (session_id) {

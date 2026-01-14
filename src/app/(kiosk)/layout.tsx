@@ -6,10 +6,12 @@ import MenuKaos from "@/common/MenuKaos";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { HtmlVideoEmbed } from "@/components/videoPlayer";
 import { playWheelSound } from "@/utils/helpers";
+import { getSessionId } from "@/utils/session";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
 
 interface KaosContextType {
+  session_id: string | null;
   dealer_id: string | undefined | null;
   setDealerID: React.Dispatch<React.SetStateAction<string | undefined | null>>;
   dealers: Record<string, any>[];
@@ -36,6 +38,7 @@ const LayoutInner = ({ children }: any) => {
   const [dealer_id, setDealerID] = useState<string | undefined | null>(
     searchParams.get("dealer_id")
   );
+  const [session_id, setSessionId] = useState<string | null>(null);
   const [bannerData, setBannerData] = useState<any>(null);
 
   const [dealerModel, setDealerModel] = useState<boolean>(false);
@@ -80,9 +83,26 @@ const LayoutInner = ({ children }: any) => {
     }
   }, [dealer_id, pathname, router, searchParams]);
 
+  // initialize once
+  useEffect(() => {
+    setSessionId(getSessionId());
+  }, []);
+
+  // 🔥 detect day change ONLY ONCE
+  useEffect(() => {
+    const checkDayChange = () => {
+      const newSession = getSessionId();
+      setSessionId((prev) => (prev !== newSession ? newSession : prev));
+    };
+
+    const timer = setInterval(checkDayChange, 60 * 1000); // every minute
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <KaosContext.Provider
       value={{
+        session_id,
         dealer_id,
         setDealerID,
         setDealers,
