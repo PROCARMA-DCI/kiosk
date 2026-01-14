@@ -1,8 +1,10 @@
 "use client";
 import useClickOutside from "@/@core/hooks/useClickOutside";
+import { getActivity } from "@/action/activity";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import { cn } from "@/lib/utils";
 import { playWheelSound } from "@/utils/helpers";
+import { getSessionId } from "@/utils/session";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ChevronLeft, Home, Play } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -13,7 +15,8 @@ const BackButton = ({ backRoute }: { backRoute?: string }) => {
   const router = useRouter();
   const pathname = usePathname();
   const ref = useClickOutside(() => setExpanded(false));
-  const { setInactive } = useContext(KaosContext);
+  const { setInactive, dealer_id } = useContext(KaosContext);
+  const session_id = getSessionId();
 
   const handleToggle = () => {
     playWheelSound("/sound/BUTTON-NAVAGATION.wav");
@@ -22,8 +25,17 @@ const BackButton = ({ backRoute }: { backRoute?: string }) => {
 
   const handleBack = () => {
     playWheelSound("/sound/BUTTON-NAVAGATION.wav");
-    if (backRoute) router.push(backRoute);
-    else router.back();
+    if (backRoute) {
+      if (dealer_id && session_id) {
+        getActivity({
+          session_id: session_id,
+          activity: "Back Button Click",
+          type: `internal: ${backRoute}`,
+          dealer_id: dealer_id,
+        });
+      }
+      router.push(backRoute);
+    } else router.back();
   };
 
   // Dock items
@@ -37,6 +49,14 @@ const BackButton = ({ backRoute }: { backRoute?: string }) => {
       icon: <Home className="h-5 w-5" />,
       action: () => {
         playWheelSound("/sound/BUTTON-NAVAGATION.wav");
+        if (dealer_id && session_id) {
+          getActivity({
+            session_id: session_id,
+            activity: "Back Button Click",
+            type: "internal: Home",
+            dealer_id: dealer_id,
+          });
+        }
         router.push("/");
       },
       label: "Home",

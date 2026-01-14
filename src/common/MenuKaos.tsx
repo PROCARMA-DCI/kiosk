@@ -1,9 +1,11 @@
 "use client";
 
+import { getActivity } from "@/action/activity";
 import { fetchPostObj } from "@/action/function";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import SimpleModal from "@/components/modals/SimpleModal";
 import { FilterableSelect } from "@/components/select/FilterableSelect";
+import { getSessionId } from "@/utils/session";
 
 import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -18,6 +20,18 @@ const MenuKaos = ({
 }: any) => {
   const { dealers, setDealers }: any = useContext(KaosContext);
   const [loading, setLoading] = useState(false);
+  const session_id = getSessionId();
+
+  useEffect(() => {
+    if (session_id) {
+      getActivity({
+        session_id: session_id,
+        activity: "visiting home page",
+        type: "home",
+        dealer_id: dealer_id,
+      });
+    }
+  }, [session_id]);
   const fetchBanner = async (dealer_id: string) => {
     const response = await fetchPostObj({
       api: "StandingScreenCenter/dealerHeroScreenSettings",

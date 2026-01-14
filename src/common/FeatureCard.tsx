@@ -4,9 +4,11 @@ import { fetchPostObj } from "@/action/function";
 
 import { cn } from "@/lib/utils";
 
+import { getActivity } from "@/action/activity";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { playWheelSound } from "@/utils/helpers";
+import { getSessionId } from "@/utils/session";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useContext, useEffect, useState } from "react";
 import ShowImageHandle from "./ShowImageHandle";
@@ -19,10 +21,18 @@ const InnerFeatureCardKaos = () => {
   const [iframeUrl, setIframeUrl] = useState<string | null>(null);
   const router = useRouter();
   const dealer_id = searhParams.get("dealer_id");
-
+  const session_id = getSessionId();
   const handleClick = (feature: any) => {
     playWheelSound("/sound/MAIN-BUTTON-CLICK.mp3");
     setSelectedCard(feature);
+    if (dealer_id && session_id) {
+      getActivity({
+        session_id: session_id,
+        activity: "Button Click",
+        type: `internal: ${feature.type}`,
+        dealer_id: dealer_id,
+      });
+    }
 
     // Navigate based on type
     if (feature.type === "list") {

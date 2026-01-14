@@ -7,6 +7,7 @@ import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense, useContext } from "react";
 import { KaosContext } from "./layout";
+
 const KaosHomePage = () => {
   const { bannerData, globalLoading }: any = useContext(KaosContext);
 

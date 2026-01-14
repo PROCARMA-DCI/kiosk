@@ -1,6 +1,5 @@
 "use client";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { useState } from "react";
 
 export default function ShowImageHandle({
@@ -16,7 +15,7 @@ export default function ShowImageHandle({
   );
 
   return (
-    <Image
+    <img
       className={cn("object-cover", className)}
       src={imgSrc}
       alt={alt}

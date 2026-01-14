@@ -1,11 +1,13 @@
 "use client";
 
+import { getActivity } from "@/action/activity";
 import { fetchPostObj } from "@/action/function";
 import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { showConfetti } from "@/components/showConfetti";
 import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
 import { playWheelSound } from "@/utils/helpers";
+import { getSessionId } from "@/utils/session";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,7 +17,7 @@ import { KaosContext } from "../layout";
 function InnerWheelSpinnerPage() {
   const searhParams = useSearchParams();
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const { selectedCard } = useContext(KaosContext);
+  const { selectedCard, dealer_id } = useContext(KaosContext);
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [lastWinner, setLastWinner] = useState("No User");
@@ -29,6 +31,7 @@ function InnerWheelSpinnerPage() {
   const code = searhParams.get("code");
   const hasFetched = useRef(false);
 
+  const session_id = getSessionId();
   // Stop audio function
   const stopAudio = () => {
     if (audioRef.current) {
@@ -70,6 +73,14 @@ function InnerWheelSpinnerPage() {
 
     if (response.success == 1) {
       setData(response?.wheel);
+      if (dealer_id && session_id) {
+        getActivity({
+          session_id: session_id,
+          activity: "Button Click",
+          type: `internal: spin button click`,
+          dealer_id: dealer_id,
+        });
+      }
       startBackgroundMusic();
     } else {
       router.back();
@@ -386,7 +397,7 @@ function InnerWheelSpinnerPage() {
       )}
       {/* end################################################################################3
       #####################################################################33
-      ############################3 */}
+      ############################ */}
 
       {/* {alertShow && (
         <AlertPopup
