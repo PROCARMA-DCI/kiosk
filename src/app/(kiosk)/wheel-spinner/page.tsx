@@ -76,7 +76,7 @@ function InnerWheelSpinnerPage() {
       if (dealer_id && session_id) {
         getActivity({
           session_id: session_id,
-          activity: "Code Button Click: Visiting Spinner Page",
+          activity: "Code Button Clicked: Visiting Spinner Page",
           type: `internal`,
           dealer_id: dealer_id,
         });
