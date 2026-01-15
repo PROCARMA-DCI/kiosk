@@ -28,8 +28,8 @@ const InnerFeatureCardKaos = () => {
     if (dealer_id && session_id) {
       getActivity({
         session_id: session_id,
-        activity: "Button Click",
-        type: `internal: ${feature.type}`,
+        activity: `Button Click: ${feature.type} `,
+        type: `internal`,
         dealer_id: dealer_id,
       });
     }

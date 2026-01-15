@@ -76,8 +76,8 @@ function InnerWheelSpinnerPage() {
       if (dealer_id && session_id) {
         getActivity({
           session_id: session_id,
-          activity: "Button Click",
-          type: `internal: spin button click`,
+          activity: "Code Button Click: Visiting Spinner Page",
+          type: `internal`,
           dealer_id: dealer_id,
         });
       }
@@ -97,6 +97,14 @@ function InnerWheelSpinnerPage() {
       code: data?.code,
       option_id: segment?.id,
     };
+    if (dealer_id && session_id) {
+      getActivity({
+        session_id: session_id,
+        activity: "Spinner Clicked",
+        type: `internal`,
+        dealer_id: dealer_id,
+      });
+    }
     const response = await fetchPostObj({
       api: "spinroulette/savespinresult",
       setLoading,
@@ -111,6 +119,16 @@ function InnerWheelSpinnerPage() {
       showConfetti();
       setWinningSegment(segment);
       setAlertShow(true);
+      if (dealer_id && session_id) {
+        getActivity({
+          session_id: session_id,
+          activity: `Got Spinner Result, label:${
+            segment?.label || segment?.id
+          }, points:${segment?.points || 0}`,
+          type: `internal`,
+          dealer_id: dealer_id,
+        });
+      }
     }
     // setTimeout(() => {
     //   router.push("/spin_code");

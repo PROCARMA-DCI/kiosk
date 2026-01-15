@@ -1,12 +1,12 @@
 "use client";
 
+import { getActivity } from "@/action/activity";
 import { fetchPostObj } from "@/action/function";
 import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
+import { getSessionId } from "@/utils/session";
 import { useParams, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
-
-import { useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 
 export function HtmlPreview({ html }: { html?: string }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -47,7 +47,16 @@ const InnerDetailKaosHtmlPage = () => {
   const [loading, setLoading] = useState(false);
   const detail_id = params?.subslug;
   const dealer_id = searhParams.get("dealer_id");
+  const session_id = getSessionId();
   const fetchCardDetail = async (dealer_id: string) => {
+    if (dealer_id && session_id) {
+      getActivity({
+        session_id: session_id,
+        activity: `Visiting Card Detail: ${detail_id}`,
+        type: `internal`,
+        dealer_id: dealer_id,
+      });
+    }
     const response = await fetchPostObj({
       api: "StandingScreenCenter/cardExplanation",
       method: "POST",

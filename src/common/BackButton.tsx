@@ -29,8 +29,8 @@ const BackButton = ({ backRoute }: { backRoute?: string }) => {
       if (dealer_id && session_id) {
         getActivity({
           session_id: session_id,
-          activity: "Back Button Click",
-          type: `internal: ${backRoute}`,
+          activity: `Back Button Click: ${backRoute}`,
+          type: `internal`,
           dealer_id: dealer_id,
         });
       }
@@ -52,8 +52,8 @@ const BackButton = ({ backRoute }: { backRoute?: string }) => {
         if (dealer_id && session_id) {
           getActivity({
             session_id: session_id,
-            activity: "Back Button Click",
-            type: "internal: Home",
+            activity: "Back to Home",
+            type: "internal",
             dealer_id: dealer_id,
           });
         }
