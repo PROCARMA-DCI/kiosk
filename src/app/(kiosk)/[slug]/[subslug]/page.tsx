@@ -52,7 +52,7 @@ const InnerDetailKaosHtmlPage = () => {
     if (dealer_id && session_id) {
       getActivity({
         session_id: session_id,
-        activity: `Visiting Card Detail: ${detail_id}`,
+        activity: `Visiting Card Detail: html description`,
         type: `internal`,
         dealer_id: dealer_id,
       });
