@@ -28,7 +28,7 @@ const InnerFeatureCardKaos = () => {
     if (dealer_id && session_id) {
       getActivity({
         session_id: session_id,
-        activity: `Button Click: ${feature.type} `,
+        activity: `Button Click: ${feature.title} `,
         type: `internal`,
         dealer_id: dealer_id,
       });
@@ -115,30 +115,25 @@ const InnerFeatureCardKaos = () => {
               />
             ))
         : // 🔹 Show actual cards when loaded
-          cards.map((feature, index) => (
-            <>
-              <div>
-                <button
-                  onClick={() => handleClick(feature)}
-                  className={cn("  ")}
-                >
-                  <div className="mb-4">
-                    {feature.icon && (
-                      <ShowImageHandle
-                        src={feature.icon}
-                        alt={feature.title}
-                        className="w-[176.73px] h-[178.08px] rounded-[14.9px] transition-all duration-300 hover:scale-105 cursor-pointer object-cover"
-                        width={500}
-                        height={500}
-                      />
-                    )}
-                  </div>
-                  {/* <h3 className=" text-[13.54px] leading-[13.54px] tracking-[0] uppercase text-center text-[#455D69]">
+          cards.map((feature, i) => (
+            <div key={i}>
+              <button onClick={() => handleClick(feature)} className={cn("  ")}>
+                <div className="mb-4">
+                  {feature.icon && (
+                    <ShowImageHandle
+                      src={feature.icon}
+                      alt={feature.title}
+                      className="w-[176.73px] h-[178.08px] rounded-[14.9px] transition-all duration-300 hover:scale-105 cursor-pointer object-cover"
+                      width={500}
+                      height={500}
+                    />
+                  )}
+                </div>
+                {/* <h3 className=" text-[13.54px] leading-[13.54px] tracking-[0] uppercase text-center text-[#455D69]">
                   {feature.title}
                 </h3> */}
-                </button>
-              </div>
-            </>
+              </button>
+            </div>
           ))}
     </div>
   );

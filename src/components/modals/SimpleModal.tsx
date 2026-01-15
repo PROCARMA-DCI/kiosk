@@ -1,7 +1,7 @@
 "use client";
 import useClickOutside from "@/@core/hooks/useClickOutside";
 import { XIcon } from "lucide-react";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { twMerge } from "tailwind-merge";
 
@@ -27,9 +27,16 @@ const SimpleModal = ({
   headerCustom,
 }: SimpleModalProps) => {
   const wrapperRef = useClickOutside(close); // adapt if your hook signature differs
-  if (!open) return null;
 
-  const modalRoot = document.getElementById("modal-root") ?? document.body;
+  const [mounted, setMounted] = useState(false);
+  const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    setModalRoot(document.getElementById("modal-root") ?? document.body);
+  }, []);
+
+  if (!mounted || !open || !modalRoot) return null;
 
   return ReactDOM.createPortal(
     <div
