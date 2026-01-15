@@ -21,7 +21,7 @@ const MenuKaos = ({
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (session_id) {
+    if (session_id && dealer_id) {
       getActivity({
         session_id: session_id,
         activity: "visiting home page",
@@ -29,7 +29,7 @@ const MenuKaos = ({
         dealer_id: dealer_id,
       });
     }
-  }, [session_id]);
+  }, [session_id, dealer_id]);
   const fetchBanner = async (dealer_id: string) => {
     const response = await fetchPostObj({
       api: "StandingScreenCenter/dealerHeroScreenSettings",
