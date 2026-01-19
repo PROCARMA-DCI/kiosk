@@ -1,19 +1,34 @@
 "use client";
 
+import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import React from "react";
 
-type Props = { data: { url: string }[] };
+type Props = {
+  data: { url: string }[];
+  delay?: number; // ⏱️ time in ms
+};
 
-export default function CarouselBanner({ data }: Props) {
-  // Embla hook: ref to attach to viewport; emblaApi becomes available once initialized
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: false,
-    skipSnaps: false,
-  });
+export default function CarouselBanner({
+  data,
+  delay = 4000, // 👈 change time here (4 seconds)
+}: Props) {
+  const autoplay = React.useRef(
+    Autoplay({
+      delay,
+      stopOnInteraction: false,
+    }),
+  );
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: false,
+    },
+    [autoplay.current],
+  );
+
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  // When embla initializes or changes slides, update selected index
   React.useEffect(() => {
     if (!emblaApi) return;
 
@@ -23,7 +38,7 @@ export default function CarouselBanner({ data }: Props) {
 
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
-    onSelect(); // set initial
+    onSelect();
 
     return () => {
       emblaApi.off("select", onSelect);
@@ -31,19 +46,9 @@ export default function CarouselBanner({ data }: Props) {
     };
   }, [emblaApi]);
 
-  const goTo = React.useCallback(
-    (index: number) => {
-      if (!emblaApi) return;
-      // ensure index is within bounds
-      const max = emblaApi.scrollSnapList().length - 1;
-      const safeIndex = Math.min(Math.max(0, index), max);
-      emblaApi.scrollTo(safeIndex);
-    },
-    [emblaApi]
-  );
+  const goTo = (index: number) => emblaApi?.scrollTo(index);
 
-  if (!data || data.length === 0) return null;
-
+  if (!data?.length) return null;
   return (
     <div className="relative w-full">
       {/* === Embla viewport === */}
@@ -59,10 +64,8 @@ export default function CarouselBanner({ data }: Props) {
             >
               <img
                 src={item.url}
+                className="w-full h-full object-cover"
                 alt={`banner-${idx}`}
-                className="w-full h-[500px] object-cover"
-                width={1200}
-                height={500}
               />
             </div>
           ))}

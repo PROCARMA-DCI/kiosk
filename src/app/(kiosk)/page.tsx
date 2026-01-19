@@ -22,7 +22,10 @@ const KaosHomePage = () => {
         ) : (
           <>
             {Array.isArray(bannerData?.carousal) ? (
-              <CarouselBanner data={bannerData?.carousal} />
+              <CarouselBanner
+                data={bannerData?.carousal}
+                delay={Number(bannerData?.delayTime ?? 4000)}
+              />
             ) : (
               <div className="h-[500px] bg-gray-500 w-full flex justify-center items-center">
                 <h1 className="text-2xl font-bold text-white">
