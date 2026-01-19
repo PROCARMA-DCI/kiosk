@@ -6,29 +6,40 @@ import React from "react";
 
 type Props = {
   data: { url: string }[];
-  delay?: number; // ⏱️ time in ms
+  delay?: number; // autoplay delay (ms)
+  autoScroll?: boolean; // ON / OFF
 };
 
 export default function CarouselBanner({
   data,
-  delay = 4000, // 👈 change time here (4 seconds)
+  delay = 4000,
+  autoScroll = false,
 }: Props) {
+  // Create autoplay plugin only when enabled
   const autoplay = React.useRef(
-    Autoplay({
-      delay,
-      stopOnInteraction: false,
-    }),
+    Autoplay(
+      {
+        delay,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true, // optional UX improvement
+      },
+      // @ts-ignore
+      (emblaRoot) => emblaRoot.parentElement,
+    ),
   );
+
+  const plugins = autoScroll ? [autoplay.current] : [];
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: false,
     },
-    [autoplay.current],
+    plugins,
   );
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
+  // Update selected dot
   React.useEffect(() => {
     if (!emblaApi) return;
 
@@ -45,6 +56,13 @@ export default function CarouselBanner({
       emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi]);
+
+  // Update autoplay delay dynamically
+  React.useEffect(() => {
+    if (!autoScroll || !emblaApi) return;
+
+    autoplay.current?.reset();
+  }, [delay, autoScroll, emblaApi]);
 
   const goTo = (index: number) => emblaApi?.scrollTo(index);
 
