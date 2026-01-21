@@ -68,7 +68,7 @@ function InnerWheelSpinnerPage() {
       setLoading,
       isValue: true,
       showErrorToast: true,
-      data: { code },
+      data: { code, DealerID: dealer_id },
     });
 
     if (response.success == 1) {
@@ -96,6 +96,7 @@ function InnerWheelSpinnerPage() {
       IsGuest: data?.IsGuest,
       code: data?.code,
       option_id: segment?.id,
+      DealerID: dealer_id,
     };
     if (dealer_id && session_id) {
       getActivity({
