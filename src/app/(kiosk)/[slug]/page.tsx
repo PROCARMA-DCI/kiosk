@@ -31,7 +31,7 @@ const InnerDetailKaosPage = () => {
     });
     if (res.success == 1) {
       setDealerID(res.message);
-      router.push("/?dealer_id=" + res.message);
+      router.push("/");
     }
   };
 
