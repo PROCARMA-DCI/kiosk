@@ -135,92 +135,94 @@ const BackButton = ({ backRoute }: { backRoute?: string }) => {
   };
 
   return (
-    <div
-      ref={ref}
-      className="fixed md:absolute left-0 top-1/2 -translate-y-1/2 z-50"
-    >
-      <div className="relative flex items-center">
-        <motion.button
-          onClick={handleToggle}
-          className={cn(
-            "flex items-center justify-center rounded-r-full bg-[#00244C99]",
-            " text-primary-foreground shadow-lg",
-            "hover:shadow-xl hover:scale-105",
-            "transition-all duration-200 ease-out",
-            "p-2 h-20 w-6"
-          )}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <motion.div
-            animate={{ rotate: expanded ? 180 : 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 25,
-            }}
+    dealer_id && (
+      <div
+        ref={ref}
+        className="fixed md:absolute left-0 top-1/2 -translate-y-1/2 z-50"
+      >
+        <div className="relative flex items-center">
+          <motion.button
+            onClick={handleToggle}
+            className={cn(
+              "flex items-center justify-center rounded-r-full bg-[#00244C99]",
+              " text-primary-foreground shadow-lg",
+              "hover:shadow-xl hover:scale-105",
+              "transition-all duration-200 ease-out",
+              "p-2 h-20 w-6",
+            )}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <ChevronLeft className="h-6 w-6" />
-          </motion.div>
-        </motion.button>
+            <motion.div
+              animate={{ rotate: expanded ? 180 : 0 }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 25,
+              }}
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </motion.div>
+          </motion.button>
+
+          <AnimatePresence>
+            {expanded && (
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.2 }}
+                className="flex gap-2 ml-2"
+              >
+                {items.map((item, index) => (
+                  <motion.button
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 30,
+                      delay: index * 0.05,
+                    }}
+                    onClick={() => {
+                      item.action();
+                      setExpanded(false);
+                    }}
+                    className={cn(
+                      "h-10 w-10 flex items-center justify-center rounded-full",
+                      "bg-[#00244C99] text-white shadow-md",
+                      "hover:shadow-lg hover:bg-accent hover:text-accent-foreground",
+                      "transition-colors duration-200 ease-out",
+                      "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+                    )}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.92 }}
+                    title={item.label}
+                  >
+                    {item.icon}
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
         <AnimatePresence>
           {expanded && (
             <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="flex gap-2 ml-2"
-            >
-              {items.map((item, index) => (
-                <motion.button
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 30,
-                    delay: index * 0.05,
-                  }}
-                  onClick={() => {
-                    item.action();
-                    setExpanded(false);
-                  }}
-                  className={cn(
-                    "h-10 w-10 flex items-center justify-center rounded-full",
-                    "bg-[#00244C99] text-white shadow-md",
-                    "hover:shadow-lg hover:bg-accent hover:text-accent-foreground",
-                    "transition-colors duration-200 ease-out",
-                    "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                  )}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.92 }}
-                  title={item.label}
-                >
-                  {item.icon}
-                </motion.button>
-              ))}
-            </motion.div>
+              className="fixed inset-0 -z-10 bg-black/0"
+              onClick={() => setExpanded(false)}
+            />
           )}
         </AnimatePresence>
       </div>
-
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 -z-10 bg-black/0"
-            onClick={() => setExpanded(false)}
-          />
-        )}
-      </AnimatePresence>
-    </div>
+    )
   );
 };
 

@@ -14,13 +14,13 @@ import { KaosContext } from "../layout";
 const InnerDetailKaosPage = () => {
   const [data, setData] = useState<any>(null);
   const searhParams = useSearchParams();
-  const { selectedCard } = useContext(KaosContext);
+  const { selectedCard, dealer_id } = useContext(KaosContext);
 
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const card_id = params?.slug;
   const title = searhParams.get("name");
-  const dealer_id = searhParams.get("dealer_id");
+
   const fetchCardDetail = async (dealer_id: string) => {
     const response = await fetchPostObj({
       api: "StandingScreenCenter/dealerCardDetail",

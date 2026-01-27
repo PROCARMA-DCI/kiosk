@@ -28,7 +28,7 @@ interface KaosContextType {
 }
 
 export const KaosContext = createContext<KaosContextType>(
-  {} as KaosContextType
+  {} as KaosContextType,
 );
 const LayoutInner = ({ children }: any) => {
   const searchParams = useSearchParams();
@@ -36,7 +36,7 @@ const LayoutInner = ({ children }: any) => {
   const pathname = usePathname();
   const [dealers, setDealers] = useState<Record<string, any>[]>([]);
   const [dealer_id, setDealerID] = useState<string | undefined | null>(
-    searchParams.get("dealer_id")
+    searchParams.get("dealer_id"),
   );
   const [session_id, setSessionId] = useState<string | null>(null);
   const [bannerData, setBannerData] = useState<any>(null);

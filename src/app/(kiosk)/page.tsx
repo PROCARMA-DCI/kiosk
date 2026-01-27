@@ -24,8 +24,13 @@ const KaosHomePage = () => {
             {Array.isArray(bannerData?.carousal) ? (
               <CarouselBanner
                 data={bannerData?.carousal}
-                delay={Number(bannerData?.transitionTime ?? 4000)}
-                autoScroll={bannerData?.autoScroll == "true" ? true : false}
+                delay={Number(bannerData?.transitionTime ?? 4) * 1000}
+                autoScroll={
+                  bannerData?.autoScroll == "true" ||
+                  bannerData?.autoScroll == "yes"
+                    ? true
+                    : false
+                }
               />
             ) : (
               <div className="h-[500px] bg-gray-500 w-full flex justify-center items-center">

@@ -6,8 +6,8 @@ import React from "react";
 
 type Props = {
   data: { url: string }[];
-  delay?: number; // autoplay delay (ms)
-  autoScroll?: boolean; // ON / OFF
+  delay?: number;
+  autoScroll?: boolean;
 };
 
 export default function CarouselBanner({
@@ -15,95 +15,94 @@ export default function CarouselBanner({
   delay = 4000,
   autoScroll = false,
 }: Props) {
-  // Create autoplay plugin only when enabled
-  const autoplay = React.useRef(
-    Autoplay(
-      {
-        delay,
-        stopOnInteraction: false,
-        stopOnMouseEnter: true, // optional UX improvement
-      },
-      // @ts-ignore
-      (emblaRoot) => emblaRoot.parentElement,
-    ),
-  );
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const plugins = autoScroll ? [autoplay.current] : [];
+  // Create plugins array based on autoScroll
+  const plugins = React.useMemo(() => {
+    if (!autoScroll) return [];
+    return [
+      Autoplay({
+        delay: delay,
+        stopOnInteraction: false,
+      }),
+    ];
+  }, [autoScroll, delay]);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
-      loop: false,
+      loop: true,
     },
     plugins,
   );
 
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  // Handle slide selection
+  const onSelect = React.useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
 
-  // Update selected dot
+  // Set up event listeners
   React.useEffect(() => {
     if (!emblaApi) return;
 
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    };
-
+    onSelect(); // Set initial index
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
-    onSelect();
 
     return () => {
       emblaApi.off("select", onSelect);
       emblaApi.off("reInit", onSelect);
     };
-  }, [emblaApi]);
+  }, [emblaApi, onSelect]);
 
-  // Update autoplay delay dynamically
-  React.useEffect(() => {
-    if (!autoScroll || !emblaApi) return;
-
-    autoplay.current?.reset();
-  }, [delay, autoScroll, emblaApi]);
-
-  const goTo = (index: number) => emblaApi?.scrollTo(index);
+  const scrollTo = React.useCallback(
+    (index: number) => {
+      if (emblaApi) emblaApi.scrollTo(index);
+    },
+    [emblaApi],
+  );
 
   if (!data?.length) return null;
+
   return (
     <div className="relative w-full">
-      {/* === Embla viewport === */}
+      {/* Carousel */}
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {data.map((item, idx) => (
             <div
               key={idx}
-              className="flex-[0_0_100%] h-[500px]" // each slide takes full viewport width
+              className="flex-[0_0_100%] min-w-0 h-[500px]"
               role="group"
-              aria-roledescription="slide"
-              aria-label={`Slide ${idx + 1}`}
+              aria-label={`Slide ${idx + 1} of ${data.length}`}
             >
               <img
                 src={item.url}
                 className="w-full h-full object-cover"
-                alt={`banner-${idx}`}
+                alt={`Banner ${idx + 1}`}
               />
             </div>
           ))}
         </div>
       </div>
 
-      {/* === Dots - centered a bit above bottom === */}
-      <div className="absolute bottom-[100px] left-1/2 -translate-x-1/2 flex gap-3 z-20">
-        {data &&
-          data.length > 1 &&
-          data.map((_, i) => (
+      {/* Dots */}
+      {data.length > 1 && (
+        <div className="absolute bottom-[100px] left-1/2 -translate-x-1/2 flex gap-3 z-20">
+          {data.map((_, index) => (
             <button
-              key={i}
-              onClick={() => goTo(i)}
-              aria-label={`Go to slide ${i + 1}`}
-              className={`h-[6px] w-[6px] rounded-full transition-all duration-200
-              ${selectedIndex === i ? "bg-white scale-125" : "bg-white/40"}`}
+              key={index}
+              type="button"
+              onClick={() => scrollTo(index)}
+              aria-label={`Go to slide ${index + 1}`}
+              aria-current={selectedIndex === index ? "true" : "false"}
+              className={`h-[6px] w-[6px] rounded-full transition-all duration-200 ${
+                selectedIndex === index ? "bg-white scale-125" : "bg-white/40"
+              }`}
             />
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
