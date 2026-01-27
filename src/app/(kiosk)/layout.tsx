@@ -6,7 +6,7 @@ import MenuKaos from "@/common/MenuKaos";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { HtmlVideoEmbed } from "@/components/videoPlayer";
 import { playWheelSound } from "@/utils/helpers";
-import { getSessionId } from "@/utils/session";
+import { getOrCreateSession, getSessionId } from "@/utils/session";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
 
@@ -85,7 +85,7 @@ const LayoutInner = ({ children }: any) => {
 
   // initialize once
   useEffect(() => {
-    setSessionId(getSessionId());
+    setSessionId(getOrCreateSession());
   }, []);
 
   // 🔥 detect day change ONLY ONCE

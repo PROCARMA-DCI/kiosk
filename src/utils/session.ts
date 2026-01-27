@@ -8,35 +8,21 @@ const getToday = () => {
 export const getOrCreateSession = () => {
   if (typeof window === "undefined") return null;
 
-  const today = getToday();
+  const newSession = crypto.randomUUID();
+  sessionStorage.setItem(SESSION_KEY, newSession);
 
-  const session = sessionStorage.getItem(SESSION_KEY);
-  const sessionDate = sessionStorage.getItem(SESSION_DATE_KEY);
-
-  // 🔄 New day OR missing session
-  if (!session || sessionDate !== today) {
-    const newSession = crypto.randomUUID();
-
-    sessionStorage.setItem(SESSION_KEY, newSession);
-    sessionStorage.setItem(SESSION_DATE_KEY, today);
-
-    return newSession;
-  }
-
-  return session;
+  return newSession;
 };
 
 export const getSessionId = () => {
   if (typeof window === "undefined") return null;
 
-  const today = getToday();
+  let session = sessionStorage.getItem(SESSION_KEY);
 
-  const session = sessionStorage.getItem(SESSION_KEY);
-  const sessionDate = sessionStorage.getItem(SESSION_DATE_KEY);
-
-  // 🔄 Expired → recreate & return immediately
-  if (!session || sessionDate !== today) {
-    return getOrCreateSession(); // ✅ always returns ID
+  // Create only if missing
+  if (!session) {
+    session = crypto.randomUUID();
+    sessionStorage.setItem(SESSION_KEY, session);
   }
 
   return session;
