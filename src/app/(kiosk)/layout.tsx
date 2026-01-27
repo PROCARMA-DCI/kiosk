@@ -25,6 +25,7 @@ interface KaosContextType {
   setInactive: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedCard: React.Dispatch<React.SetStateAction<any>>;
   selectedCard: any;
+  setSessionId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export const KaosContext = createContext<KaosContextType>(
@@ -87,6 +88,7 @@ const LayoutInner = ({ children }: any) => {
   useEffect(() => {
     setSessionId(getOrCreateSession());
   }, []);
+  console.log("session_id", session_id);
 
   // 🔥 detect day change ONLY ONCE
   useEffect(() => {
@@ -116,6 +118,7 @@ const LayoutInner = ({ children }: any) => {
         setInactive,
         setSelectedCard,
         selectedCard,
+        setSessionId,
       }}
     >
       <div className="min-h-screen flex  justify-center bg-background">

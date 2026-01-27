@@ -1,5 +1,6 @@
 "use client";
 
+import { KaosContext } from "@/app/(kiosk)/layout";
 import {
   Select,
   SelectContent,
@@ -10,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { getOrCreateSession } from "@/utils/session";
 import * as React from "react";
 
 // ---- Types ----
@@ -48,21 +50,23 @@ export function FilterableSelect({
   disable,
   errorMessage,
 }: FilterableSelectProps) {
+  const { setSessionId } = React.useContext(KaosContext);
   // normalize options
   const normalized = React.useMemo(
     () =>
       options?.map((opt) =>
-        typeof opt === "string" ? { value: opt, title: opt } : opt
+        typeof opt === "string" ? { value: opt, title: opt } : opt,
       ) ?? [],
-    [options]
+    [options],
   );
 
   const handleSelect = (val: string | number) => {
     const selected = normalized.find(
-      (opt) => opt[keyValue as keyof OptionObject] === val
+      (opt) => opt[keyValue as keyof OptionObject] === val,
     );
     setvalue?.(val);
     onChange?.(selected ?? "");
+    setSessionId(getOrCreateSession());
   };
 
   return (
