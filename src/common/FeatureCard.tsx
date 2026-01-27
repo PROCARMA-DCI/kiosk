@@ -9,18 +9,17 @@ import { KaosContext } from "@/app/(kiosk)/layout";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { playWheelSound } from "@/utils/helpers";
 import { getSessionId } from "@/utils/session";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Suspense, useContext, useEffect, useState } from "react";
 import ShowImageHandle from "./ShowImageHandle";
 
 const InnerFeatureCardKaos = () => {
-  const searhParams = useSearchParams();
-  const { setSelectedCard } = useContext(KaosContext);
+  const { setSelectedCard, dealer_id } = useContext(KaosContext);
   const [cards, setCards] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [iframeUrl, setIframeUrl] = useState<string | null>(null);
   const router = useRouter();
-  const dealer_id = searhParams.get("dealer_id");
+
   const session_id = getSessionId();
   const handleClick = (feature: any) => {
     playWheelSound("/sound/MAIN-BUTTON-CLICK.mp3");

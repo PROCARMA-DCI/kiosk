@@ -5,8 +5,9 @@ import { fetchPostObj } from "@/action/function";
 import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { getSessionId } from "@/utils/session";
-import { useParams, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useParams } from "next/navigation";
+import { Suspense, useContext, useEffect, useRef, useState } from "react";
+import { KaosContext } from "../../layout";
 
 export function HtmlPreview({ html }: { html?: string }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -42,11 +43,11 @@ export function HtmlPreview({ html }: { html?: string }) {
 
 const InnerDetailKaosHtmlPage = () => {
   const [data, setData] = useState(null);
+  const { dealer_id } = useContext(KaosContext);
   const params = useParams();
-  const searhParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const detail_id = params?.subslug;
-  const dealer_id = searhParams.get("dealer_id");
+
   const session_id = getSessionId();
   const fetchCardDetail = async (dealer_id: string) => {
     if (dealer_id && session_id) {

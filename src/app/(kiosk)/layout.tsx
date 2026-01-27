@@ -1,8 +1,8 @@
 "use client";
 
 import { useRedirectOnRefresh } from "@/@core/hooks/useRedirectOnRefresh";
+import { fetchPostObj } from "@/action/function";
 import { HeaderKaos } from "@/common/HeaderKaos";
-import MenuKaos from "@/common/MenuKaos";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { HtmlVideoEmbed } from "@/components/videoPlayer";
 import { playWheelSound } from "@/utils/helpers";
@@ -73,23 +73,41 @@ const LayoutInner = ({ children }: any) => {
   }, [bannerData?.delayTime]);
 
   // ✅ Whenever dealer_id changes, sync it to the query
-  useEffect(() => {
-    if (!dealer_id) return;
+  // useEffect(() => {
+  //   if (!dealer_id) return;
 
-    const params = new URLSearchParams(searchParams.toString());
-    if (params.get("dealer_id") !== dealer_id) {
-      params.set("dealer_id", dealer_id);
-      const newUrl = `${pathname}?${params.toString()}`;
-      router.replace(newUrl, { scroll: false });
-    }
-  }, [dealer_id, pathname, router, searchParams]);
+  //   const params = new URLSearchParams(searchParams.toString());
+  //   if (params.get("dealer_id") !== dealer_id) {
+  //     params.set("dealer_id", dealer_id);
+  //     const newUrl = `${pathname}?${params.toString()}`;
+  //     router.replace(newUrl, { scroll: false });
+  //   }
+  // }, [dealer_id, pathname, router, searchParams]);
 
   // initialize once
   useEffect(() => {
     setSessionId(getOrCreateSession());
   }, []);
-  console.log("session_id", session_id);
 
+  const fetchBanner = async (dealer_id: string) => {
+    const response = await fetchPostObj({
+      api: "StandingScreenCenter/dealerHeroScreenSettings",
+      method: "POST",
+      isValue: true,
+      showErrorToast: true,
+      // setLoading,
+      data: { dealer_id },
+    });
+    if (response.success == 1) {
+      setBannerData(response.message);
+    }
+  };
+  useEffect(() => {
+    if (dealer_id) {
+      fetchBanner(dealer_id);
+    }
+  }, [dealer_id]);
+  console.log(dealer_id);
   // 🔥 detect day change ONLY ONCE
   useEffect(() => {
     const checkDayChange = () => {
@@ -123,7 +141,7 @@ const LayoutInner = ({ children }: any) => {
     >
       <div className="min-h-screen flex  justify-center bg-background">
         <div className="relative w-full max-w-[731px] min-h-screen shadow-2xl overflow-hidden flex flex-col">
-          <MenuKaos
+          {/* <MenuKaos
             dealer_id={dealer_id}
             setDealerId={setDealerID}
             dealerModel={dealerModel}
@@ -131,15 +149,15 @@ const LayoutInner = ({ children }: any) => {
             setInactive={setInactive}
             setGlobalLoading={setGlobalLoading}
             setBannerData={setBannerData}
-          />
+          /> */}
 
-          {!inactive && (
-            <>
-              <HeaderKaos />
+          {/* {!inactive && ( */}
+          <>
+            <HeaderKaos />
 
-              {children}
-            </>
-          )}
+            {children}
+          </>
+          {/* )} */}
         </div>
         {/* 🔹 Screensaver Overlay */}
         {inactive && bannerData?.splashVideo && (
