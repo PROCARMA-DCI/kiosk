@@ -1,6 +1,7 @@
 "use client";
 
 import { useRedirectOnRefresh } from "@/@core/hooks/useRedirectOnRefresh";
+import { getActivity } from "@/action/activity";
 import { fetchPostObj } from "@/action/function";
 import { HeaderKaos } from "@/common/HeaderKaos";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
@@ -89,6 +90,16 @@ const LayoutInner = ({ children }: any) => {
     setSessionId(getOrCreateSession());
   }, []);
 
+  useEffect(() => {
+    if (session_id && dealer_id) {
+      getActivity({
+        session_id: session_id,
+        activity: "visiting home page",
+        type: "home",
+        dealer_id: dealer_id,
+      });
+    }
+  }, [session_id, dealer_id]);
   const fetchBanner = async (dealer_id: string) => {
     const response = await fetchPostObj({
       api: "StandingScreenCenter/dealerHeroScreenSettings",
