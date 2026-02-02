@@ -8,15 +8,26 @@ import { getSessionId } from "@/utils/session";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ChevronLeft, Home, Play } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
-const BackButton = ({ backRoute }: { backRoute?: string }) => {
+const BackButton = ({
+  backRoute,
+  fn,
+}: {
+  backRoute?: string;
+  fn?: () => void;
+}) => {
   const [expanded, setExpanded] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const ref = useClickOutside(() => setExpanded(false));
   const { setInactive, dealer_id } = useContext(KaosContext);
   const session_id = getSessionId();
+  useEffect(() => {
+    if (fn) {
+      fn();
+    }
+  }, []);
 
   const handleToggle = () => {
     playWheelSound("/sound/BUTTON-NAVAGATION.wav");

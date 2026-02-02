@@ -81,14 +81,16 @@ function InnerWheelSpinnerPage() {
           dealer_id: dealer_id,
         });
       }
-      startBackgroundMusic();
+      // startBackgroundMusic();
     } else {
       router.back();
     }
   };
 
   const submitPinResult = async (seg: any) => {
-    const segment = data?.wheel_options?.find((s: any) => s.id === seg.id);
+    const segments = data?.wheel_options;
+    const segment = segments?.find((s: any) => s.id === seg.id);
+
     stopAudio();
     playWheelSound("/sound/Win1.mp3");
     const apiData = {
@@ -169,6 +171,7 @@ function InnerWheelSpinnerPage() {
     // label: item?.label,
     // points: Number(item.points),
     color: item?.color,
+    win_percentage: item?.win_percentage,
     content: {
       type: "image",
       value: item?.image,
@@ -181,7 +184,7 @@ function InnerWheelSpinnerPage() {
     <>
       <div className="overflow-hidden">
         {loading && <ScreenLoader />}
-        {!isSpinning && <BackButton backRoute="/spin_code" />}
+        {!isSpinning && <BackButton backRoute="/spin_code" fn={stopAudio} />}
         {/* <button
           onClick={toggleMute}
           className="fixed top-36 right-4 z-50 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg transition-all"

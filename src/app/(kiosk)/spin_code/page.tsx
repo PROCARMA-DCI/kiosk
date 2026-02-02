@@ -98,7 +98,7 @@ function LoyaltySpinInner() {
             backgroundImage: `linear-gradient(90deg, ${selectedCard?.gradient_start_color}, ${selectedCard?.gradient_end_color}`,
           }}
         >
-          LOYALTY SPIN
+          {dealer_id == "2846" ? "ROYALTY SPIN" : "LOYALTY SPIN"}
         </h4>
         <BackButton backRoute="/" />
 

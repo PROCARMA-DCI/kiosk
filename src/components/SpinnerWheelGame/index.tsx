@@ -111,7 +111,7 @@ export const SpinnerWheelGame = React.forwardRef(
       setIsSpinning,
       stopAudio,
     }: any,
-    ref: any
+    ref: any,
   ) => {
     const containerRef = useRef(null);
 
@@ -122,24 +122,75 @@ export const SpinnerWheelGame = React.forwardRef(
       validSegments.length > 0 ? 360 / validSegments.length : 0;
     const radius = size / 2;
 
+    // hybrid, most high percentage more win, but 0 doesnot win
+    const pickWeightedIndex = (segments: any[]) => {
+      const pool: number[] = [];
+
+      segments.forEach((s, i) => {
+        const p = Number(s.win_percentage) || 0;
+        const normalized = p > 0 && p < 1 ? p * 100 : p;
+        const qty = Number(s.quantity ?? 1);
+
+        if (qty > 0 && normalized > 0) {
+          for (let k = 0; k < normalized; k++) {
+            pool.push(i);
+          }
+        }
+      });
+
+      if (!pool.length) {
+        return Math.floor(Math.random() * segments.length);
+      }
+
+      return pool[Math.floor(Math.random() * pool.length)];
+    };
+    // always win higher percentage value
+    const pickWinningIndex = (segments: any[]) => {
+      let maxIndex = 0;
+      let maxValue = -Infinity;
+
+      segments.forEach((s, i) => {
+        const p = Number(s.win_percentage) || 0;
+        const normalized = p > 0 && p < 1 ? p * 100 : p;
+
+        if (normalized > maxValue) {
+          maxValue = normalized;
+          maxIndex = i;
+        }
+      });
+
+      return maxIndex;
+    };
+
     const spin = useCallback(() => {
       stopAudio();
       playWheelSound("/sound/Luckywheelspinsoundeffect.mp3");
+
       if (isSpinning || validSegments.length === 0) return;
 
       setIsSpinning(true);
       onSpinStart?.();
 
-      const randomSpin = Math.random() * 360 * spinPower + 360 * 5;
-      const newRotation = (rotation + randomSpin) % 360;
+      // 🎯 1. PICK WINNER BY PERCENTAGE
+      const selectedIndex = pickWeightedIndex(validSegments);
+
+      // 🎯 2. CALCULATE TARGET ANGLE
+      const targetAngle = selectedIndex * segmentAngle + segmentAngle / 2;
+
+      // 🎯 3. ADD FULL SPINS FOR NATURAL ANIMATION
+      const spins = 360 * (5 + spinPower);
+      const finalSpin = spins + (360 - targetAngle);
+
+      const newRotation = (rotation + finalSpin) % 360;
 
       const startTime = Date.now();
+
       const animate = () => {
         const elapsed = (Date.now() - startTime) / 1000;
         const progress = Math.min(elapsed / spinDuration, 1);
 
         const easeOut = 1 - Math.pow(1 - progress, 3);
-        const currentRotation = rotation + randomSpin * easeOut;
+        const currentRotation = rotation + finalSpin * easeOut;
 
         setRotation(currentRotation % 360);
 
@@ -149,12 +200,8 @@ export const SpinnerWheelGame = React.forwardRef(
           setRotation(newRotation);
           setIsSpinning(false);
 
-          const normalizedRotation = (360 - (newRotation % 360)) % 360;
-          const selectedIndex =
-            Math.floor(normalizedRotation / segmentAngle) %
-            validSegments.length;
+          // ✅ FINAL RESULT (NO RANDOM HERE)
           const selected = validSegments[selectedIndex];
-
           onSpinComplete?.(selected);
         }
       };
@@ -170,6 +217,55 @@ export const SpinnerWheelGame = React.forwardRef(
       onSpinStart,
       onSpinComplete,
     ]);
+
+    // const spin = useCallback(() => {
+    //   stopAudio();
+    //   playWheelSound("/sound/Luckywheelspinsoundeffect.mp3");
+    //   if (isSpinning || validSegments.length === 0) return;
+
+    //   setIsSpinning(true);
+    //   onSpinStart?.();
+
+    //   const randomSpin = Math.random() * 360 * spinPower + 360 * 5;
+    //   const newRotation = (rotation + randomSpin) % 360;
+
+    //   const startTime = Date.now();
+    //   const animate = () => {
+    //     const elapsed = (Date.now() - startTime) / 1000;
+    //     const progress = Math.min(elapsed / spinDuration, 1);
+
+    //     const easeOut = 1 - Math.pow(1 - progress, 3);
+    //     const currentRotation = rotation + randomSpin * easeOut;
+
+    //     setRotation(currentRotation % 360);
+
+    //     if (progress < 1) {
+    //       requestAnimationFrame(animate);
+    //     } else {
+    //       setRotation(newRotation);
+    //       setIsSpinning(false);
+
+    //       const normalizedRotation = (360 - (newRotation % 360)) % 360;
+    //       const selectedIndex =
+    //         Math.floor(normalizedRotation / segmentAngle) %
+    //         validSegments.length;
+    //       const selected = validSegments[selectedIndex];
+
+    //       onSpinComplete?.(selected);
+    //     }
+    //   };
+
+    //   requestAnimationFrame(animate);
+    // }, [
+    //   rotation,
+    //   isSpinning,
+    //   spinDuration,
+    //   spinPower,
+    //   validSegments,
+    //   segmentAngle,
+    //   onSpinStart,
+    //   onSpinComplete,
+    // ]);
 
     const createSegmentPath = (index: number) => {
       const startAngle = (index * segmentAngle - 90) * (Math.PI / 180);
@@ -344,11 +440,11 @@ export const SpinnerWheelGame = React.forwardRef(
                                 // dynamic size based on radius + segment count
                                 width: `${Math.min(
                                   radius * 0.35,
-                                  radius * (3 / validSegments.length)
+                                  radius * (3 / validSegments.length),
                                 )}px`,
                                 height: `${Math.min(
                                   radius * 0.35,
-                                  radius * (3 / validSegments.length)
+                                  radius * (3 / validSegments.length),
                                 )}px`,
                               }}
                               className="object-cover rounded-full"
@@ -413,7 +509,7 @@ export const SpinnerWheelGame = React.forwardRef(
         </div>
       </div>
     );
-  }
+  },
 );
 
 SpinnerWheelGame.displayName = "SpinnerWheelGame";

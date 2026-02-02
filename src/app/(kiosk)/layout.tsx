@@ -50,6 +50,12 @@ const LayoutInner = ({ children }: any) => {
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   useRedirectOnRefresh();
+  useEffect(() => {
+    const DealerID = localStorage.getItem("dealer_id");
+    if (DealerID) {
+      setDealerID(DealerID);
+    }
+  }, []);
   // 🔹 Reset inactivity timer on user action
   useEffect(() => {
     const delayTime = Number(bannerData?.delayTime ?? 0) * 1000;
@@ -118,7 +124,6 @@ const LayoutInner = ({ children }: any) => {
       fetchBanner(dealer_id);
     }
   }, [dealer_id]);
-  console.log(dealer_id);
   // 🔥 detect day change ONLY ONCE
   useEffect(() => {
     const checkDayChange = () => {
