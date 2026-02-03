@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ShowImageHandle({
   src,
@@ -11,8 +11,11 @@ export default function ShowImageHandle({
   height = 500,
 }: any) {
   const [imgSrc, setImgSrc] = useState(
-    (typeof src === "string" && src) || defaultImage
+    (typeof src === "string" && src) || defaultImage,
   );
+  useEffect(() => {
+    setImgSrc(src);
+  }, [src]);
 
   return (
     <img
