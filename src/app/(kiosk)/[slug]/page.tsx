@@ -128,6 +128,7 @@ const InnerDetailKaosPage = () => {
                       <p className="uppercase text-[13.54px] font-light ">
                         {item.subTitle}
                       </p>
+
                       <p
                         style={{
                           fontFamily: "var(--font-roboto)",
@@ -136,9 +137,10 @@ const InnerDetailKaosPage = () => {
                           lineHeight: "15.57px",
                           letterSpacing: "0em",
                         }}
-                      >
-                        {item.description}
-                      </p>
+                        dangerouslySetInnerHTML={{
+                          __html: item?.description,
+                        }}
+                      />
                     </div>
                   </div>
                 </div>

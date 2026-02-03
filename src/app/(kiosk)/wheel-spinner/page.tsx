@@ -6,6 +6,7 @@ import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { showConfetti } from "@/components/showConfetti";
 import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
+import { Button } from "@/components/ui/button";
 import { playWheelSound } from "@/utils/helpers";
 import { getSessionId } from "@/utils/session";
 import { X } from "lucide-react";
@@ -81,7 +82,7 @@ function InnerWheelSpinnerPage() {
           dealer_id: dealer_id,
         });
       }
-      // startBackgroundMusic();
+      startBackgroundMusic();
     } else {
       router.back();
     }
@@ -182,6 +183,7 @@ function InnerWheelSpinnerPage() {
 
   return (
     <>
+      <Button onClick={stopAudio}>Remove Audio</Button>
       <div className="overflow-hidden">
         {loading && <ScreenLoader />}
         {!isSpinning && <BackButton backRoute="/spin_code" fn={stopAudio} />}

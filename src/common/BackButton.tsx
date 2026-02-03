@@ -23,11 +23,7 @@ const BackButton = ({
   const ref = useClickOutside(() => setExpanded(false));
   const { setInactive, dealer_id } = useContext(KaosContext);
   const session_id = getSessionId();
-  useEffect(() => {
-    if (fn) {
-      fn();
-    }
-  }, []);
+  useEffect(() => {}, []);
 
   const handleToggle = () => {
     playWheelSound("/sound/BUTTON-NAVAGATION.wav");
@@ -35,6 +31,9 @@ const BackButton = ({
   };
 
   const handleBack = () => {
+    if (fn) {
+      fn();
+    }
     playWheelSound("/sound/BUTTON-NAVAGATION.wav");
     if (backRoute) {
       if (dealer_id && session_id) {
@@ -59,6 +58,9 @@ const BackButton = ({
     pathname !== "/" && {
       icon: <Home className="h-5 w-5" />,
       action: () => {
+        if (fn) {
+          fn();
+        }
         playWheelSound("/sound/BUTTON-NAVAGATION.wav");
         if (dealer_id && session_id) {
           getActivity({
@@ -75,6 +77,9 @@ const BackButton = ({
     {
       icon: <Play className="h-5 w-5" />,
       action: () => {
+        if (fn) {
+          fn();
+        }
         playWheelSound("/sound/BUTTON-NAVAGATION.wav");
         setInactive(true);
       },
