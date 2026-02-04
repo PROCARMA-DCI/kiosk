@@ -6,7 +6,6 @@ import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { showConfetti } from "@/components/showConfetti";
 import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
-import { Button } from "@/components/ui/button";
 import { playWheelSound } from "@/utils/helpers";
 import { getSessionId } from "@/utils/session";
 import { X } from "lucide-react";
@@ -61,15 +60,16 @@ function InnerWheelSpinnerPage() {
       }
     }
   };
-
+  // console.log("selectedCard", selectedCard);
   const fetchCardDetail = async (code: any) => {
     const response = await fetchPostObj({
-      api: "spinroulette/checkspinweelcode",
+      // api: "spinroulette/checkspinweelcode",
+      api: "spinroulette/checknewspinweelcode",
       method: "POST",
       setLoading,
       isValue: true,
       showErrorToast: true,
-      data: { code, DealerID: dealer_id },
+      data: { code, DealerID: dealer_id, ButtonID: selectedCard?.id },
     });
 
     if (response.success == 1) {
@@ -183,7 +183,7 @@ function InnerWheelSpinnerPage() {
 
   return (
     <>
-      <Button onClick={stopAudio}>Remove Audio</Button>
+      {/* <Button onClick={stopAudio}>Remove Audio</Button> */}
       <div className="overflow-hidden">
         {loading && <ScreenLoader />}
         {!isSpinning && <BackButton backRoute="/spin_code" fn={stopAudio} />}
