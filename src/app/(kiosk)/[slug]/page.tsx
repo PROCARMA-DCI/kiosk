@@ -23,19 +23,19 @@ const InnerDetailKaosPage = () => {
   const card_id = params?.slug;
   const title = searhParams.get("name");
 
-  const fetchGetDealerId = async () => {
-    const res = await fetchPostObj({
-      method: "GET",
-      setLoading,
-      api: `StandingScreenCenter/kioskName?name=${card_id}`,
-    });
-    if (res.success == 1) {
-      setDealerID(res.message);
-      // ✅ save to localStorage
-      localStorage.setItem("dealer_id", res.message);
-      router.push("/");
-    }
-  };
+  // const fetchGetDealerId = async () => {
+  //   const res = await fetchPostObj({
+  //     method: "GET",
+  //     setLoading,
+  //     api: `StandingScreenCenter/kioskName?name=${card_id}`,
+  //   });
+  //   if (res.success == 1) {
+  //     setDealerID(res.message);
+  //     // ✅ save to localStorage
+  //     localStorage.setItem("dealer_id", res.message);
+  //     router.push("/");
+  //   }
+  // };
 
   const fetchCardDetail = async (dealer_id: string) => {
     const response = await fetchPostObj({
@@ -59,9 +59,9 @@ const InnerDetailKaosPage = () => {
       fetchCardDetail(dealer_id);
     }
 
-    if (!dealer_id) {
-      fetchGetDealerId();
-    }
+    // if (!dealer_id) {
+    //   fetchGetDealerId();
+    // }
   }, []);
 
   return (

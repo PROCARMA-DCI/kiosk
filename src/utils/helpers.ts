@@ -40,3 +40,11 @@ export const stopAllWheelSounds = () => {
     stopWheelSound(key);
   }
 };
+
+export const safeAtob = (value: string): string | null => {
+  try {
+    return atob(value);
+  } catch (err) {
+    return null; // tampered or invalid
+  }
+};

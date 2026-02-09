@@ -4,11 +4,11 @@ import { useRedirectOnRefresh } from "@/@core/hooks/useRedirectOnRefresh";
 import { getActivity } from "@/action/activity";
 import { fetchPostObj } from "@/action/function";
 import { HeaderKaos } from "@/common/HeaderKaos";
+import KioskSignIn from "@/common/KioskSignIn";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { HtmlVideoEmbed } from "@/components/videoPlayer";
-import { playWheelSound } from "@/utils/helpers";
+import { playWheelSound, safeAtob } from "@/utils/helpers";
 import { getOrCreateSession, getSessionId } from "@/utils/session";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
 
 interface KaosContextType {
@@ -33,25 +33,22 @@ export const KaosContext = createContext<KaosContextType>(
   {} as KaosContextType,
 );
 const LayoutInner = ({ children }: any) => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
   const [dealers, setDealers] = useState<Record<string, any>[]>([]);
-  const [dealer_id, setDealerID] = useState<string | undefined | null>(
-    searchParams.get("dealer_id"),
-  );
+  const [dealer_id, setDealerID] = useState<string | undefined | null>(null);
   const [session_id, setSessionId] = useState<string | null>(null);
   const [bannerData, setBannerData] = useState<any>(null);
 
   const [dealerModel, setDealerModel] = useState<boolean>(false);
   const [inactive, setInactive] = useState(false);
-  const [globalLoading, setGlobalLoading] = useState(false);
+  const [globalLoading, setGlobalLoading] = useState(true);
   const [selectedCard, setSelectedCard] = useState<any>(null);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   useRedirectOnRefresh();
   useEffect(() => {
-    const DealerID = localStorage.getItem("dealer_id");
+    const stored = localStorage.getItem("dealer_id");
+
+    const DealerID = stored ? safeAtob(stored) : null;
     if (DealerID) {
       setDealerID(DealerID);
     }
@@ -79,18 +76,6 @@ const LayoutInner = ({ children }: any) => {
     }
   }, [bannerData?.delayTime]);
 
-  // ✅ Whenever dealer_id changes, sync it to the query
-  // useEffect(() => {
-  //   if (!dealer_id) return;
-
-  //   const params = new URLSearchParams(searchParams.toString());
-  //   if (params.get("dealer_id") !== dealer_id) {
-  //     params.set("dealer_id", dealer_id);
-  //     const newUrl = `${pathname}?${params.toString()}`;
-  //     router.replace(newUrl, { scroll: false });
-  //   }
-  // }, [dealer_id, pathname, router, searchParams]);
-
   // initialize once
   useEffect(() => {
     setSessionId(getOrCreateSession());
@@ -112,7 +97,7 @@ const LayoutInner = ({ children }: any) => {
       method: "POST",
       isValue: true,
       showErrorToast: true,
-      // setLoading,
+      setLoading: setGlobalLoading,
       data: { dealer_id },
     });
     if (response.success == 1) {
@@ -155,9 +140,12 @@ const LayoutInner = ({ children }: any) => {
         setSessionId,
       }}
     >
-      <div className="min-h-screen flex  justify-center bg-background">
-        <div className="relative w-full max-w-[731px] min-h-screen shadow-2xl overflow-hidden flex flex-col">
-          {/* <MenuKaos
+      {!dealer_id ? (
+        <KioskSignIn />
+      ) : (
+        <div className="min-h-screen flex  justify-center bg-background">
+          <div className="relative w-full max-w-[731px] min-h-screen shadow-2xl overflow-hidden flex flex-col">
+            {/* <MenuKaos
             dealer_id={dealer_id}
             setDealerId={setDealerID}
             dealerModel={dealerModel}
@@ -167,44 +155,45 @@ const LayoutInner = ({ children }: any) => {
             setBannerData={setBannerData}
           /> */}
 
-          {/* {!inactive && ( */}
-          <>
-            <HeaderKaos />
+            {/* {!inactive && ( */}
+            <>
+              <HeaderKaos />
 
-            {children}
-          </>
-          {/* )} */}
-        </div>
-        {/* 🔹 Screensaver Overlay */}
-        {inactive && bannerData?.splashVideo && (
-          <div
-            className="absolute inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700"
-            onClick={() => {
-              playWheelSound("/sound/SPLASHPAGE-SOUND.mp3");
-              setInactive(false);
-            }} // click to close video
-          >
-            {bannerData.splashVideo?.includes("vimeo.com") ? (
-              // ✅ Handle Vimeo embed
-              <>
-                {/* <TestVideo /> */}
-                <HtmlVideoEmbed html={bannerData.splashVideo} />
-              </>
-            ) : (
-              // ✅ Handle direct video file
-              <video
-                className="w-full bg-black/90 shadow-md aspect-video"
-                src={bannerData.splashVideo}
-                title="Video"
-                autoPlay
-                muted
-                loop
-                playsInline
-              />
-            )}
+              {children}
+            </>
+            {/* )} */}
           </div>
-        )}
-      </div>
+          {/* 🔹 Screensaver Overlay */}
+          {inactive && bannerData?.splashVideo && (
+            <div
+              className="absolute inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700"
+              onClick={() => {
+                playWheelSound("/sound/SPLASHPAGE-SOUND.mp3");
+                setInactive(false);
+              }} // click to close video
+            >
+              {bannerData.splashVideo?.includes("vimeo.com") ? (
+                // ✅ Handle Vimeo embed
+                <>
+                  {/* <TestVideo /> */}
+                  <HtmlVideoEmbed html={bannerData.splashVideo} />
+                </>
+              ) : (
+                // ✅ Handle direct video file
+                <video
+                  className="w-full bg-black/90 shadow-md aspect-video"
+                  src={bannerData.splashVideo}
+                  title="Video"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </KaosContext.Provider>
   );
 };
