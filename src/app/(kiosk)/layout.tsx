@@ -6,6 +6,7 @@ import { fetchPostObj } from "@/action/function";
 import { HeaderKaos } from "@/common/HeaderKaos";
 import KioskSignIn from "@/common/KioskSignIn";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
+import { ShaderAnimation } from "@/components/ui/shader-animation";
 import { HtmlVideoEmbed } from "@/components/videoPlayer";
 import { playWheelSound, safeAtob } from "@/utils/helpers";
 import { getOrCreateSession, getSessionId } from "@/utils/session";
@@ -40,17 +41,24 @@ const LayoutInner = ({ children }: any) => {
 
   const [dealerModel, setDealerModel] = useState<boolean>(false);
   const [inactive, setInactive] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [globalLoading, setGlobalLoading] = useState(true);
   const [selectedCard, setSelectedCard] = useState<any>(null);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   useRedirectOnRefresh();
   useEffect(() => {
-    const stored = localStorage.getItem("dealer_id");
+    try {
+      const stored = localStorage.getItem("dealer_id");
 
-    const DealerID = stored ? safeAtob(stored) : null;
-    if (DealerID) {
-      setDealerID(DealerID);
+      const DealerID = stored ? safeAtob(stored) : null;
+      if (DealerID) {
+        setDealerID(DealerID);
+      } else {
+        localStorage.removeItem("dealer_id"); // cleanup tampered value
+      }
+    } finally {
+      setLoading(false); // 🔥 always stop loading
     }
   }, []);
   // 🔹 Reset inactivity timer on user action
@@ -119,8 +127,9 @@ const LayoutInner = ({ children }: any) => {
     const timer = setInterval(checkDayChange, 60 * 1000); // every minute
     return () => clearInterval(timer);
   }, []);
-
-  return (
+  return loading ? (
+    <ScreenLoader />
+  ) : (
     <KaosContext.Provider
       value={{
         session_id,
@@ -140,10 +149,82 @@ const LayoutInner = ({ children }: any) => {
         setSessionId,
       }}
     >
-      {!dealer_id ? (
-        <KioskSignIn />
+      {!loading && !dealer_id ? (
+        // <KioskSignIn />
+        <div className="relative flex max-w-[731px] w-full min-h-screen flex-col items-center justify-center overflow-hidden m-auto">
+          {/* Layer 1: ShaderAnimation at the very bottom */}
+          <div className="absolute inset-0 z-0">
+            <ShaderAnimation />
+          </div>
+
+          {/* Layer 2: Your overlays on top of shader */}
+          <div className="absolute inset-0 z-[1] pointer-events-none">
+            {/* Dark overlay */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background: "#021620",
+                opacity: 0.35, // Reduced to let shader show through
+              }}
+            />
+            <div className="absolute inset-0 w-full h-full">
+              <div
+                className="absolute "
+                style={{
+                  opacity: 0.35,
+                  transform: "rotate(-90deg)",
+                  transformOrigin: "center center",
+                  width: "100vh",
+                  height: "100vw",
+                  left: "50%",
+                  top: "50%",
+                  marginLeft: "-50vh",
+                  marginTop: "-50vw",
+                }}
+              >
+                <img
+                  src="/images/signinbackground.png"
+                  alt="Background"
+                  className="w-full h-full"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                />
+              </div>
+            </div>
+            {/* Gradient overlay - Color */}
+            {/* <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90.9deg, #00BCFF 0%, #EFA800 100%)",
+                opacity: 0.25, // Reduced to let shader show through
+                mixBlendMode: "color",
+              }}
+            /> */}
+
+            {/* Gradient overlay - Soft light */}
+            {/* <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90.9deg, #00BCFF 0%, #6BB38D 44.71%, #81B176 53.85%, #EFA800 100%)",
+                opacity: 0.25, // Reduced to let shader show through
+                mixBlendMode: "soft-light",
+              }}
+            /> */}
+          </div>
+
+          {/* Layer 3: Sign-in form - NO pointer-events-none here! */}
+          <div className="relative z-10 w-full">
+            <KioskSignIn />
+          </div>
+        </div>
       ) : (
-        <div className="min-h-screen flex  justify-center bg-background">
+        <div className="min-h-screen flex m-auto  justify-center bg-background">
           <div className="relative w-full max-w-[731px] min-h-screen shadow-2xl overflow-hidden flex flex-col">
             {/* <MenuKaos
             dealer_id={dealer_id}

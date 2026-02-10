@@ -35,11 +35,11 @@ export default function KioskSignIn() {
 
   return (
     <div
-      className="relative max-w-[731px] min-h-screen  overflow-hidden bg-cover bg-center bg-no-repeat "
-      style={{ backgroundImage: `url(/images/signinbackground.png)` }}
+      className="relative m-auto max-w-[731px] min-h-screen  overflow-hidden bg-cover bg-center bg-no-repeat "
+      // style={{ backgroundImage: `url(/images/signinbackground.png)` }}
     >
       {/* Background Image with Rotation and Overlay */}
-      <div className="absolute inset-0 w-full h-full">
+      {/* <div className="absolute inset-0 w-full h-full">
         <div
           className="absolute"
           style={{
@@ -65,28 +65,28 @@ export default function KioskSignIn() {
             }}
           />
         </div>
-      </div>
+      </div> */}
       {/* Dark overlay */}
-      <div
+      {/* <div
         className="absolute inset-0"
         style={{
           background: "#021620",
           opacity: 0.55,
         }}
-      />
+      /> */}
 
       {/* Gradient overlay - Color */}
-      <div
+      {/* <div
         className="absolute inset-0"
         style={{
           background: "linear-gradient(90.9deg, #00BCFF 0%, #EFA800 100%)",
           opacity: 0.55,
           mixBlendMode: "color",
         }}
-      />
+      /> */}
 
       {/* Gradient overlay - Soft light */}
-      <div
+      {/* <div
         className="absolute inset-0"
         style={{
           background:
@@ -94,7 +94,7 @@ export default function KioskSignIn() {
           opacity: 0.55,
           mixBlendMode: "soft-light",
         }}
-      />
+      /> */}
 
       {/* Sign In Container */}
       <div className="relative flex items-center justify-center h-full w-full mt-40">
