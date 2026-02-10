@@ -171,12 +171,12 @@ const LayoutInner = ({ children }: any) => {
               <div
                 className="absolute "
                 style={{
-                  opacity: 0.35,
+                  opacity: 0.1,
                   transform: "rotate(-90deg)",
                   transformOrigin: "center center",
-                  width: "100vh",
-                  height: "100vw",
-                  left: "50%",
+                  width: "120vh",
+                  height: "120vw",
+                  left: "30%",
                   top: "50%",
                   marginLeft: "-50vh",
                   marginTop: "-50vw",

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { playWheelSound } from "@/utils/helpers";
 import { getSessionId } from "@/utils/session";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ChevronLeft, Home, Play } from "lucide-react";
+import { ArrowLeft, ChevronLeft, Home, LogOut, Play } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
@@ -21,7 +21,7 @@ const BackButton = ({
   const router = useRouter();
   const pathname = usePathname();
   const ref = useClickOutside(() => setExpanded(false));
-  const { setInactive, dealer_id } = useContext(KaosContext);
+  const { setInactive, dealer_id, setDealerID } = useContext(KaosContext);
   const session_id = getSessionId();
   useEffect(() => {}, []);
 
@@ -58,9 +58,6 @@ const BackButton = ({
     pathname !== "/" && {
       icon: <Home className="h-5 w-5" />,
       action: () => {
-        if (fn) {
-          fn();
-        }
         playWheelSound("/sound/BUTTON-NAVAGATION.wav");
         if (dealer_id && session_id) {
           getActivity({
@@ -82,6 +79,23 @@ const BackButton = ({
         }
         playWheelSound("/sound/BUTTON-NAVAGATION.wav");
         setInactive(true);
+      },
+      label: "Play",
+    },
+    {
+      icon: <LogOut className="h-5 w-5" />,
+      action: () => {
+        playWheelSound("/sound/BUTTON-NAVAGATION.wav");
+        if (dealer_id && session_id) {
+          getActivity({
+            session_id: session_id,
+            activity: "Logout Clicked",
+            type: "internal",
+            dealer_id: dealer_id,
+          });
+        }
+        setDealerID(null);
+        localStorage.clear();
       },
       label: "Play",
     },

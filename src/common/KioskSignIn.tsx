@@ -35,7 +35,7 @@ export default function KioskSignIn() {
 
   return (
     <div
-      className="relative m-auto max-w-[731px] min-h-screen  overflow-hidden bg-cover bg-center bg-no-repeat "
+      className="relative  m-auto max-w-[731px] min-h-screen  overflow-hidden bg-cover bg-center bg-no-repeat "
       // style={{ backgroundImage: `url(/images/signinbackground.png)` }}
     >
       {/* Background Image with Rotation and Overlay */}
