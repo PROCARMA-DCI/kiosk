@@ -2,6 +2,7 @@
 
 import { fetchPostObj } from "@/action/function";
 import { KaosContext } from "@/app/(kiosk)/layout";
+import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { Button } from "@/components/ui/button";
 import React, { useContext, useState } from "react";
 import { toast } from "sonner";
@@ -11,6 +12,7 @@ export default function KioskSignIn() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { setDealerID, setGlobalLoading } = useContext(KaosContext);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +23,7 @@ export default function KioskSignIn() {
     const res = await fetchPostObj({
       data,
       api: "StandingScreenCenter/kioskLogin",
-      setLoading: setGlobalLoading,
+      setLoading: setLoading,
     });
     if (res.success) {
       setDealerID(res.message);
@@ -95,7 +97,7 @@ export default function KioskSignIn() {
           mixBlendMode: "soft-light",
         }}
       /> */}
-
+      <ScreenLoader loading={loading} />
       {/* Sign In Container */}
       <div className="relative flex items-center justify-center h-full w-full mt-40">
         <div

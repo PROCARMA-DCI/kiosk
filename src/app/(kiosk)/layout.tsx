@@ -150,7 +150,6 @@ const LayoutInner = ({ children }: any) => {
       }}
     >
       {!loading && !dealer_id ? (
-        // <KioskSignIn />
         <div className="relative flex max-w-[731px] w-full min-h-screen flex-col items-center justify-center overflow-hidden m-auto">
           {/* Layer 1: ShaderAnimation at the very bottom */}
           <div className="absolute inset-0 z-0">
@@ -167,6 +166,25 @@ const LayoutInner = ({ children }: any) => {
                 opacity: 0.35, // Reduced to let shader show through
               }}
             />
+            <div className="absolute inset-0 w-full h-full">
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(90.9deg, #00BCFF 0%, #6BB38D 44.71%, #81B176 53.85%, #EFA800 100%)",
+                  opacity: 0.1, // keep same light effect
+                  transform: "rotate(-90deg)",
+                  transformOrigin: "center center",
+                  width: "120vh",
+                  height: "120vw",
+                  left: "30%",
+                  top: "50%",
+                  marginLeft: "-50vh",
+                  marginTop: "-50vw",
+                }}
+              />
+            </div>
+
             <div className="absolute inset-0 w-full h-full">
               <div
                 className="absolute "
@@ -196,26 +214,26 @@ const LayoutInner = ({ children }: any) => {
               </div>
             </div>
             {/* Gradient overlay - Color */}
-            {/* <div
+            <div
               className="absolute inset-0"
               style={{
                 background:
                   "linear-gradient(90.9deg, #00BCFF 0%, #EFA800 100%)",
-                opacity: 0.25, // Reduced to let shader show through
+                opacity: 0.1, // Reduced to let shader show through
                 mixBlendMode: "color",
               }}
-            /> */}
+            />
 
             {/* Gradient overlay - Soft light */}
-            {/* <div
+            <div
               className="absolute inset-0"
               style={{
                 background:
                   "linear-gradient(90.9deg, #00BCFF 0%, #6BB38D 44.71%, #81B176 53.85%, #EFA800 100%)",
-                opacity: 0.25, // Reduced to let shader show through
+                opacity: 0.1, // Reduced to let shader show through
                 mixBlendMode: "soft-light",
               }}
-            /> */}
+            />
           </div>
 
           {/* Layer 3: Sign-in form - NO pointer-events-none here! */}
