@@ -101,7 +101,7 @@ const InnerDetailKaosPage = () => {
                 className=""
               >
                 <div
-                  className="rounded-[27.08px]  bg-red-800 shadow-md m-auto w-[622.94px] h-[156px]  text-white"
+                  className="rounded-[27.08px]  bg-red-800 shadow-md m-auto w-[622.94px] h-[180px]  text-white"
                   style={{
                     background: `
                       linear-gradient(to right, ${item?.gradient_start_color}, ${item?.gradient_end_color}),
@@ -117,9 +117,9 @@ const InnerDetailKaosPage = () => {
                     <Image
                       src={item.image}
                       alt="kiosk slug"
-                      className="w-[179.79px] h-[156px]  rounded-[25px] object-cover  "
-                      height={300}
-                      width={300}
+                      className="w-[180px] h-[180px] aspect-square  rounded-[25px] object-cover  "
+                      height={800}
+                      width={800}
                     />
                     <div className="flex flex-col gap-2">
                       <h1 className="font-bold text-[27.08px] leading-[13.54px] tracking-[0] uppercase">
