@@ -1,6 +1,7 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
+import { setLocalStorageDealerID } from "@/action/localStorage";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,7 @@ export default function KioskSignIn() {
       setDealerID(res.message);
       const encodedDealerId = btoa(res.message);
       // ✅ save to localStorage
-      localStorage.setItem("dealer_id", encodedDealerId);
+      setLocalStorageDealerID(encodedDealerId);
     } else {
       toast.error("Invalid Credentials");
     }

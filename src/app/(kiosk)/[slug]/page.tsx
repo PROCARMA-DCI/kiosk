@@ -1,6 +1,7 @@
 "use client";
 
 import { fetchPostObj } from "@/action/function";
+import { clearLocalStorage } from "@/action/localStorage";
 import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { playWheelSound } from "@/utils/helpers";
@@ -22,6 +23,8 @@ const InnerDetailKaosPage = () => {
   const [loading, setLoading] = useState(false);
   const card_id = params?.slug;
   const title = searhParams.get("name");
+
+  console.log(card_id);
 
   // const fetchGetDealerId = async () => {
   //   const res = await fetchPostObj({
@@ -49,13 +52,18 @@ const InnerDetailKaosPage = () => {
 
     if (response.success == 1) {
       setData(response.message);
+    } else {
+      router.push("/");
     }
   };
   useEffect(() => {
     if (hasRunRef.current) return;
     hasRunRef.current = true;
-
-    if (dealer_id && card_id) {
+    if (card_id === "signout") {
+      clearLocalStorage();
+      setDealerID(null);
+      router.push("/");
+    } else if (dealer_id && card_id) {
       fetchCardDetail(dealer_id);
     }
 

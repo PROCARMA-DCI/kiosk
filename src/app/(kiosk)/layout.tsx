@@ -3,6 +3,10 @@
 import { useRedirectOnRefresh } from "@/@core/hooks/useRedirectOnRefresh";
 import { getActivity } from "@/action/activity";
 import { fetchPostObj } from "@/action/function";
+import {
+  getLocalStorageDealerID,
+  removeLocalStorageDealerID,
+} from "@/action/localStorage";
 import { HeaderKaos } from "@/common/HeaderKaos";
 import KioskSignIn from "@/common/KioskSignIn";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
@@ -49,13 +53,13 @@ const LayoutInner = ({ children }: any) => {
   useRedirectOnRefresh();
   useEffect(() => {
     try {
-      const stored = localStorage.getItem("dealer_id");
+      const stored = getLocalStorageDealerID();
 
       const DealerID = stored ? safeAtob(stored) : null;
       if (DealerID) {
         setDealerID(DealerID);
       } else {
-        localStorage.removeItem("dealer_id"); // cleanup tampered value
+        removeLocalStorageDealerID(); // cleanup tampered value
       }
     } finally {
       setLoading(false); // 🔥 always stop loading
