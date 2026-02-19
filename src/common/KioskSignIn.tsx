@@ -5,6 +5,7 @@ import { setLocalStorageDealerID } from "@/action/localStorage";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { Button } from "@/components/ui/button";
+import { Eye, EyeOff } from "lucide-react";
 import React, { useContext, useState } from "react";
 import { toast } from "sonner";
 
@@ -173,6 +174,7 @@ export default function KioskSignIn() {
                   >
                     Password
                   </label>
+
                   <div className="relative">
                     <div className="absolute left-6 top-1/2 -translate-y-1/2">
                       <svg
@@ -188,31 +190,22 @@ export default function KioskSignIn() {
                         />
                       </svg>
                     </div>
+
                     <input
                       id="password"
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full text-white  bg-white/10  focus:outline-none focus:ring-2  transition-all p-4 rounded-lg ps-20"
+                      className="w-full text-white bg-white/10 focus:outline-none focus:ring-2 transition-all p-4 rounded-lg ps-20"
                     />
+
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-6 top-1/2 -translate-y-1/2 hover:opacity-80 transition-opacity"
+                      className="absolute cursor-pointer duration-300 right-6 top-1/2 -translate-y-1/2 hover:opacity-80 transition-opacity text-white/70"
                     >
-                      <svg
-                        width="37"
-                        height="37"
-                        viewBox="0 0 37 37"
-                        fill="none"
-                      >
-                        <path
-                          d="M18.5 7.75C10.25 7.75 3.24875 12.65 0.5 19.375C3.24875 26.1 10.25 31 18.5 31C26.75 31 33.7513 26.1 36.5 19.375C33.7513 12.65 26.75 7.75 18.5 7.75ZM18.5 26.8125C13.7938 26.8125 10 23.0188 10 18.3125C10 13.6062 13.7938 9.8125 18.5 9.8125C23.2062 9.8125 27 13.6062 27 18.3125C27 23.0188 23.2062 26.8125 18.5 26.8125ZM18.5 13.25C15.6925 13.25 13.4375 15.505 13.4375 18.3125C13.4375 21.12 15.6925 23.375 18.5 23.375C21.3075 23.375 23.5625 21.12 23.5625 18.3125C23.5625 15.505 21.3075 13.25 18.5 13.25Z"
-                          fill="white"
-                          fillOpacity="0.7"
-                        />
-                      </svg>
+                      {showPassword ? <EyeOff size={28} /> : <Eye size={28} />}
                     </button>
                   </div>
                 </div>
