@@ -17,7 +17,7 @@ import {
   Sun,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Clock from "react-live-clock";
 import ShowImageHandle from "./ShowImageHandle";
 
@@ -51,13 +51,14 @@ export function HeaderKaos() {
     setDealerModel,
     setGlobalLoading: setLoading,
     globalLoading: loading,
+    todayWeather,
+    setTodayWeather,
   }: any = useContext(KaosContext);
   const pathname = usePathname();
   const router = useRouter();
   const today = new Date();
   const month = today.toLocaleString("default", { month: "long" });
   const date = today.getDate();
-  const [todayWeather, setTodayWeather] = useState<any>(null);
 
   const fetchBanner = async (dealer_id: string) => {
     const response = await fetchPostObj({
@@ -89,7 +90,7 @@ export function HeaderKaos() {
   return (
     <div>
       <div
-        className={`   w-full flex items-center  h-[131px] shadow-lg  bg-cover bg-center bg-no-repeat text-white `}
+        className={`w-full flex items-center  h-[131px] shadow-lg  bg-cover bg-center bg-no-repeat text-white`}
         // style={{ backgroundImage: `url(${bannerData?.topBanner})` }}
         style={
           bannerData?.heroBackgroundType?.toLowerCase() === "image"
@@ -97,20 +98,20 @@ export function HeaderKaos() {
                 backgroundImage: `url(${bannerData?.topBanner})`,
               }
             : bannerData?.heroBackgroundType?.toLowerCase() === "gradient"
-            ? {
-                background: `
+              ? {
+                  background: `
                 linear-gradient(to right, ${bannerData?.startGradient}, ${bannerData?.endGradient}),
                 -webkit-linear-gradient(left, ${bannerData?.startGradient}, ${bannerData?.endGradient})
           `,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundBlendMode: "overlay",
-              }
-            : {}
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundBlendMode: "overlay",
+                }
+              : {}
         }
       >
-        <div className="w-full flex items-center justify-between ">
+        <div className="w-full flex items-center justify-between">
           <div
             className="relative pl-8 p-3"
             onClick={homeRoute}
@@ -162,7 +163,7 @@ export function WeatherBox({ todayWeather, weatherIcon }: any) {
           <div className="flex flex-col items-center">
             <p className="text-sm font-medium">
               {convertTemperature(
-                todayWeather?.current?.temperature ?? "12 °C"
+                todayWeather?.current?.temperature ?? "12 °C",
               )}
             </p>
             <p className="text-sm opacity-80">

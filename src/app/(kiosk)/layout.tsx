@@ -32,6 +32,8 @@ interface KaosContextType {
   setSelectedCard: React.Dispatch<React.SetStateAction<any>>;
   selectedCard: any;
   setSessionId: React.Dispatch<React.SetStateAction<string | null>>;
+  todayWeather: Record<string, any> | null;
+  setTodayWeather: React.Dispatch<React.SetStateAction<Record<string, any>>>;
 }
 
 export const KaosContext = createContext<KaosContextType>(
@@ -42,6 +44,9 @@ const LayoutInner = ({ children }: any) => {
   const [dealer_id, setDealerID] = useState<string | undefined | null>(null);
   const [session_id, setSessionId] = useState<string | null>(null);
   const [bannerData, setBannerData] = useState<any>(null);
+  const [todayWeather, setTodayWeather] = useState<Record<string, any> | null>(
+    null,
+  );
 
   const [dealerModel, setDealerModel] = useState<boolean>(false);
   const [inactive, setInactive] = useState(false);
@@ -131,6 +136,25 @@ const LayoutInner = ({ children }: any) => {
     const timer = setInterval(checkDayChange, 60 * 1000); // every minute
     return () => clearInterval(timer);
   }, []);
+  console.log(todayWeather?.current);
+  const getWeatherVideo = () => {
+    const description = todayWeather?.current?.description?.toLowerCase() || "";
+
+    if (description.includes("snow")) {
+      return "/videos/SNOWFALL_WEBM/SNOW_ONLY_ALPHA_TRANSPARENCY.webm";
+    }
+
+    if (description.includes("rain")) {
+      return "/videos/RAINFALL_WEBM/Rainfall_Alpha_Trasnparency.webm";
+    }
+
+    if (description.includes("clear")) {
+      return "/videos/SNOWFALL_WEBM/ICE_ONLY_ALPHA_TRANSPARENCY.webm";
+    }
+
+    // Default fallback
+    return "/videos/SNOWFALL_WEBM/ICE_ONLY_ALPHA_TRANSPARENCY.webm";
+  };
   return loading ? (
     <ScreenLoader />
   ) : (
@@ -151,152 +175,153 @@ const LayoutInner = ({ children }: any) => {
         setSelectedCard,
         selectedCard,
         setSessionId,
+        todayWeather,
+        setTodayWeather,
       }}
     >
-      {!loading && !dealer_id ? (
-        <div className="relative flex max-w-[731px] w-full min-h-screen flex-col items-center justify-center overflow-hidden m-auto">
-          {/* Layer 1: ShaderAnimation at the very bottom */}
-          <div className="absolute inset-0 z-0">
-            <ShaderAnimation />
-          </div>
+      <div className="relative min-h-screen bg-background">
+        {!loading && !dealer_id ? (
+          <div className="relative flex max-w-[731px] w-full min-h-screen flex-col items-center justify-center overflow-hidden m-auto">
+            {/* Layer 1: ShaderAnimation at the very bottom */}
+            <div className="absolute inset-0 z-0">
+              <ShaderAnimation />
+            </div>
 
-          {/* Layer 2: Your overlays on top of shader */}
-          <div className="absolute inset-0 z-[1] pointer-events-none">
-            {/* Dark overlay */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background: "#021620",
-                opacity: 0.35, // Reduced to let shader show through
-              }}
-            />
-            <div className="absolute inset-0 w-full h-full">
+            {/* Layer 2: Your overlays on top of shader */}
+            <div className="absolute inset-0 z-[1] pointer-events-none">
+              {/* Dark overlay */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: "#021620",
+                  opacity: 0.35, // Reduced to let shader show through
+                }}
+              />
+              <div className="absolute inset-0 w-full h-full">
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(90.9deg, #00BCFF 0%, #6BB38D 44.71%, #81B176 53.85%, #EFA800 100%)",
+                    opacity: 0.1, // keep same light effect
+                    transform: "rotate(-90deg)",
+                    transformOrigin: "center center",
+                    width: "120vh",
+                    height: "120vw",
+                    left: "30%",
+                    top: "50%",
+                    marginLeft: "-50vh",
+                    marginTop: "-50vw",
+                  }}
+                />
+              </div>
+
+              <div className="absolute inset-0 w-full h-full">
+                <div
+                  className="absolute "
+                  style={{
+                    opacity: 0.1,
+                    transform: "rotate(-90deg)",
+                    transformOrigin: "center center",
+                    width: "120vh",
+                    height: "120vw",
+                    left: "30%",
+                    top: "50%",
+                    marginLeft: "-50vh",
+                    marginTop: "-50vw",
+                  }}
+                >
+                  <img
+                    src="/images/signinbackground.png"
+                    alt="Background"
+                    className="w-full h-full"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
+                </div>
+              </div>
+              {/* Gradient overlay - Color */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(90.9deg, #00BCFF 0%, #EFA800 100%)",
+                  opacity: 0.1, // Reduced to let shader show through
+                  mixBlendMode: "color",
+                }}
+              />
+
+              {/* Gradient overlay - Soft light */}
               <div
                 className="absolute inset-0"
                 style={{
                   background:
                     "linear-gradient(90.9deg, #00BCFF 0%, #6BB38D 44.71%, #81B176 53.85%, #EFA800 100%)",
-                  opacity: 0.1, // keep same light effect
-                  transform: "rotate(-90deg)",
-                  transformOrigin: "center center",
-                  width: "120vh",
-                  height: "120vw",
-                  left: "30%",
-                  top: "50%",
-                  marginLeft: "-50vh",
-                  marginTop: "-50vw",
+                  opacity: 0.1, // Reduced to let shader show through
+                  mixBlendMode: "soft-light",
                 }}
               />
             </div>
 
-            <div className="absolute inset-0 w-full h-full">
-              <div
-                className="absolute "
-                style={{
-                  opacity: 0.1,
-                  transform: "rotate(-90deg)",
-                  transformOrigin: "center center",
-                  width: "120vh",
-                  height: "120vw",
-                  left: "30%",
-                  top: "50%",
-                  marginLeft: "-50vh",
-                  marginTop: "-50vw",
-                }}
-              >
-                <img
-                  src="/images/signinbackground.png"
-                  alt="Background"
-                  className="w-full h-full"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                />
-              </div>
+            {/* Layer 3: Sign-in form - NO pointer-events-none here! */}
+            <div className="relative z-10 w-full">
+              <KioskSignIn />
             </div>
-            {/* Gradient overlay - Color */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(90.9deg, #00BCFF 0%, #EFA800 100%)",
-                opacity: 0.1, // Reduced to let shader show through
-                mixBlendMode: "color",
-              }}
-            />
-
-            {/* Gradient overlay - Soft light */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(90.9deg, #00BCFF 0%, #6BB38D 44.71%, #81B176 53.85%, #EFA800 100%)",
-                opacity: 0.1, // Reduced to let shader show through
-                mixBlendMode: "soft-light",
-              }}
-            />
           </div>
-
-          {/* Layer 3: Sign-in form - NO pointer-events-none here! */}
-          <div className="relative z-10 w-full">
-            <KioskSignIn />
-          </div>
-        </div>
-      ) : (
-        <div className="min-h-screen flex m-auto  justify-center bg-background">
-          <div className="relative w-full max-w-[731px] min-h-screen shadow-2xl overflow-hidden flex flex-col">
-            {/* <MenuKaos
-            dealer_id={dealer_id}
-            setDealerId={setDealerID}
-            dealerModel={dealerModel}
-            setDealerModel={setDealerModel}
-            setInactive={setInactive}
-            setGlobalLoading={setGlobalLoading}
-            setBannerData={setBannerData}
-          /> */}
-
-            {/* {!inactive && ( */}
-            <>
+        ) : (
+          <>
+            {/* 🧱 Content */}
+            <div className="relative flex flex-col justify-center">
               <HeaderKaos />
-
               {children}
-            </>
-            {/* )} */}
-          </div>
-          {/* 🔹 Screensaver Overlay */}
-          {inactive && bannerData?.splashVideo && (
-            <div
-              className="absolute inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700"
-              onClick={() => {
-                playWheelSound("/sound/SPLASHPAGE-SOUND.mp3");
-                setInactive(false);
-              }} // click to close video
-            >
-              {bannerData.splashVideo?.includes("vimeo.com") ? (
-                // ✅ Handle Vimeo embed
-                <>
-                  {/* <TestVideo /> */}
-                  <HtmlVideoEmbed html={bannerData.splashVideo} />
-                </>
-              ) : (
-                // ✅ Handle direct video file
-                <video
-                  className="w-full bg-black/90 shadow-md aspect-video"
-                  src={bannerData.splashVideo}
-                  title="Video"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                />
-              )}
             </div>
-          )}
-        </div>
-      )}
+
+            {/* 🌧 Weather Overlay (ALWAYS ON TOP) */}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="fixed inset-0 w-full h-full object-cover pointer-events-none mix-blend-plus-lighter"
+            >
+              <source src={getWeatherVideo()} type="video/webm" />
+            </video>
+            {/* 🔹 Screensaver Overlay */}
+            {inactive && bannerData?.splashVideo && (
+              <div
+                className="absolute inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700"
+                onClick={() => {
+                  playWheelSound("/sound/SPLASHPAGE-SOUND.mp3");
+                  setInactive(false);
+                }} // click to close video
+              >
+                {bannerData.splashVideo?.includes("vimeo.com") ? (
+                  // ✅ Handle Vimeo embed
+                  <>
+                    {/* <TestVideo /> */}
+                    <HtmlVideoEmbed html={bannerData.splashVideo} />
+                  </>
+                ) : (
+                  // ✅ Handle direct video file
+                  <video
+                    className="w-full bg-black/90 shadow-md aspect-video"
+                    src={bannerData.splashVideo}
+                    title="Video"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                  />
+                )}
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </KaosContext.Provider>
   );
 };

@@ -43,7 +43,7 @@ const KaosHomePage = () => {
         )}
 
         {/* Feature Card */}
-        <div className="flex mx-[50px]  -mt-20">
+        <div className="flex mx-[50px]  -mt-20 ">
           <FeatureCardKaos />
         </div>
       </div>
