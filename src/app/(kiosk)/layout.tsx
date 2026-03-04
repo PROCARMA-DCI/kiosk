@@ -142,18 +142,9 @@ const LayoutInner = ({ children }: any) => {
 
     if (description.includes("snow")) {
       return "/videos/SNOWFALL_WEBM/SNOW_ONLY_ALPHA_TRANSPARENCY.webm";
-    }
-
-    if (description.includes("rain")) {
+    } else if (description.includes("rain")) {
       return "/videos/RAINFALL_WEBM/Rainfall_Alpha_Trasnparency.webm";
-    }
-
-    if (description.includes("clear")) {
-      return "/videos/SNOWFALL_WEBM/ICE_ONLY_ALPHA_TRANSPARENCY.webm";
-    }
-
-    // Default fallback
-    return "/videos/SNOWFALL_WEBM/ICE_ONLY_ALPHA_TRANSPARENCY.webm";
+    } else return null;
   };
   return loading ? (
     <ScreenLoader />
@@ -281,15 +272,17 @@ const LayoutInner = ({ children }: any) => {
             </div>
 
             {/* 🌧 Weather Overlay (ALWAYS ON TOP) */}
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="fixed inset-0 w-full h-full object-cover pointer-events-none mix-blend-plus-lighter"
-            >
-              <source src={getWeatherVideo()} type="video/webm" />
-            </video>
+            {getWeatherVideo() && (
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="fixed inset-0 w-full h-full object-cover pointer-events-none mix-blend-plus-lighter"
+              >
+                <source src={getWeatherVideo() ?? ""} type="video/webm" />
+              </video>
+            )}
             {/* 🔹 Screensaver Overlay */}
             {inactive && bannerData?.splashVideo && (
               <div
