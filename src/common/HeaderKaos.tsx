@@ -78,10 +78,8 @@ export function HeaderKaos() {
     todayWeather?.description?.toLowerCase()
   ] || <Sun />;
   useEffect(() => {
-    if (dealer_id) {
-      fetchBanner(dealer_id);
-    }
-  }, [dealer_id]);
+    fetchBanner(dealer_id);
+  }, []);
   if (loading) return <LayoutSkeleton header={true} />;
 
   const homeRoute = () => {

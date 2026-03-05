@@ -136,7 +136,7 @@ const LayoutInner = ({ children }: any) => {
     const timer = setInterval(checkDayChange, 60 * 1000); // every minute
     return () => clearInterval(timer);
   }, []);
-  console.log(todayWeather?.current);
+
   const getWeatherVideo = () => {
     const description = todayWeather?.current?.description?.toLowerCase() || "";
 
@@ -144,7 +144,9 @@ const LayoutInner = ({ children }: any) => {
       return "/videos/SNOWFALL_WEBM/SNOW_ONLY_ALPHA_TRANSPARENCY.webm";
     } else if (description.includes("rain")) {
       return "/videos/RAINFALL_WEBM/Rainfall_Alpha_Trasnparency.webm";
-    } else return null;
+    } else if (bannerData?.enable_weather_condition == 1) {
+      return bannerData?.video_url;
+    }
   };
   return loading ? (
     <ScreenLoader />
