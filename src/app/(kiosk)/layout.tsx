@@ -146,6 +146,8 @@ const LayoutInner = ({ children }: any) => {
     //   return "/videos/RAINFALL_WEBM/Rainfall_Alpha_Trasnparency.webm";
     // }
     if (bannerData?.enable_weather_condition == 1) {
+      return todayWeather?.current?.background;
+    } else if (bannerData?.video_url) {
       return bannerData?.video_url;
     }
   };
