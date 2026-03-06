@@ -140,11 +140,12 @@ const LayoutInner = ({ children }: any) => {
   const getWeatherVideo = () => {
     const description = todayWeather?.current?.description?.toLowerCase() || "";
 
-    if (description.includes("snow")) {
-      return "/videos/SNOWFALL_WEBM/SNOW_ONLY_ALPHA_TRANSPARENCY.webm";
-    } else if (description.includes("rain")) {
-      return "/videos/RAINFALL_WEBM/Rainfall_Alpha_Trasnparency.webm";
-    } else if (bannerData?.enable_weather_condition == 1) {
+    // if (description.includes("snow")) {
+    //   return "/videos/SNOWFALL_WEBM/SNOW_ONLY_ALPHA_TRANSPARENCY.webm";
+    // } else if (description.includes("rain")) {
+    //   return "/videos/RAINFALL_WEBM/Rainfall_Alpha_Trasnparency.webm";
+    // }
+    if (bannerData?.enable_weather_condition == 1) {
       return bannerData?.video_url;
     }
   };
