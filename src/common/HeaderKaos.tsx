@@ -10,28 +10,35 @@ import {
 } from "@/components/ui/popover";
 import {
   Cloud,
+  CloudDrizzle,
   CloudFog,
   CloudLightning,
   CloudRain,
+  Haze,
   Snowflake,
   Sun,
+  Tornado,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { JSX, useContext, useEffect } from "react";
 import Clock from "react-live-clock";
 import ShowImageHandle from "./ShowImageHandle";
 
-const weatherIcons: any = {
-  "clear sky": <Sun />,
-  "few clouds": <Cloud />,
-  "scattered clouds": <Cloud />,
-  "broken clouds": <Cloud />,
-  "shower rain": <CloudRain />,
+const weatherIcons: { [key: string]: JSX.Element } = {
+  clear: <Sun />,
+  cloud: <Cloud />,
   rain: <CloudRain />,
+  drizzle: <CloudDrizzle />,
   thunderstorm: <CloudLightning />,
   snow: <Snowflake />,
   mist: <CloudFog />,
+  fog: <CloudFog />,
+  haze: <Haze />,
+  smoke: <CloudFog />,
+  sand: <CloudFog />,
+  tornado: <Tornado />,
 };
+
 function convertTemperature(tempStr: string): string {
   // Extract number from string (e.g. "9.67 °C" → 9.67)
   const celsius = parseFloat(tempStr);
@@ -74,9 +81,20 @@ export function HeaderKaos() {
       setTodayWeather(todayWeather);
     }
   };
-  const weatherIcon = weatherIcons[
-    todayWeather?.description?.toLowerCase()
-  ] || <Sun />;
+  console.log(todayWeather);
+  function getWeatherIcon(description?: string) {
+    if (!description) return <Sun />; // default
+
+    const desc = description.toLowerCase();
+    for (const key in weatherIcons) {
+      if (desc.includes(key)) {
+        return weatherIcons[key];
+      }
+    }
+
+    return <Sun />; // fallback
+  }
+  const weatherIcon = getWeatherIcon(todayWeather?.current?.description);
   useEffect(() => {
     fetchBanner(dealer_id);
   }, []);

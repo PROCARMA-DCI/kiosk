@@ -175,7 +175,7 @@ const LayoutInner = ({ children }: any) => {
         setTodayWeather,
       }}
     >
-      <div className="relative min-h-screen bg-background">
+      <div className="relative h-screen overflow-auto bg-background w-[731px] mx-auto">
         {!loading && !dealer_id ? (
           <div className="relative flex max-w-[731px] w-full min-h-screen flex-col items-center justify-center overflow-hidden m-auto">
             {/* Layer 1: ShaderAnimation at the very bottom */}
@@ -291,7 +291,7 @@ const LayoutInner = ({ children }: any) => {
             {/* 🔹 Screensaver Overlay */}
             {inactive && bannerData?.splashVideo && (
               <div
-                className="absolute inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700"
+                className="absolute  inset-0 z-50 flex items-center justify-center bg-black transition-opacity duration-700"
                 onClick={() => {
                   playWheelSound("/sound/SPLASHPAGE-SOUND.mp3");
                   setInactive(false);
@@ -306,7 +306,7 @@ const LayoutInner = ({ children }: any) => {
                 ) : (
                   // ✅ Handle direct video file
                   <video
-                    className="w-full bg-black/90 shadow-md aspect-video"
+                    className="w-full bg-black/90 shadow-md aspect-video "
                     src={bannerData.splashVideo}
                     title="Video"
                     autoPlay
