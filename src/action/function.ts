@@ -17,7 +17,7 @@ export const formDataToObject = (formData: FormData): Record<string, any> => {
 /* -------------------------------------------------------------------------- */
 export const objectToFormData = (
   obj: Record<string, any>,
-  formdata?: FormData
+  formdata?: FormData,
 ): FormData => {
   const formData = formdata ?? new FormData();
   for (const key in obj) {
@@ -130,7 +130,10 @@ export const fetchPost = async <T = any>({
             result.message ??
             result.messages ??
             result.msg ??
-            "Request successful"
+            "Request successful",
+          {
+            duration: 3000,
+          },
         );
       }
 
@@ -141,7 +144,7 @@ export const fetchPost = async <T = any>({
         dispatch(
           selectionKey
             ? fetchSelector({ [selectionKey]: result })
-            : fetchSelector(result)
+            : fetchSelector(result),
         );
       }
 
@@ -158,14 +161,16 @@ export const fetchPost = async <T = any>({
         "Something went wrong";
 
       if (showToast || showErrorToast) {
-        toast.error(message);
+        toast.error(message, {
+          duration: 3000,
+        });
       }
 
       if (dispatch && fetchSelector) {
         dispatch(
           selectionKey
             ? fetchSelector({ [selectionKey]: {} })
-            : fetchSelector({})
+            : fetchSelector({}),
         );
       }
 
@@ -174,7 +179,9 @@ export const fetchPost = async <T = any>({
   } catch (err) {
     console.error("fetchPost error:", err);
     setLoading?.(false);
-    toast.error(errorMsg ?? "Network Error");
+    toast.error(errorMsg ?? "Network Error", {
+      duration: 3000,
+    });
     return undefined;
   }
 };
@@ -182,8 +189,10 @@ export const fetchPost = async <T = any>({
 /* -------------------------------------------------------------------------- */
 /* ⚡ fetchPostObj: Converts object → FormData automatically                 */
 /* -------------------------------------------------------------------------- */
-export interface FetchPostObjParams<T = any>
-  extends Omit<FetchPostParams<T>, "formdata"> {
+export interface FetchPostObjParams<T = any> extends Omit<
+  FetchPostParams<T>,
+  "formdata"
+> {
   data?: Record<string, any>;
   auth?: Record<string, any>;
 }
