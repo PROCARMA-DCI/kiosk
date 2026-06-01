@@ -60,7 +60,7 @@ function InnerWheelSpinnerPage() {
       }
     }
   };
-  // console.log("selectedCard", selectedCard);
+
   const fetchCardDetail = async (code: any) => {
     const response = await fetchPostObj({
       api: "spinroulette/checknewspinweelcode",
@@ -85,6 +85,7 @@ function InnerWheelSpinnerPage() {
     } else if (code === "31111") {
       const wheel_options = { wheel_options: demoSegments };
       setData(wheel_options);
+      startBackgroundMusic();
     } else {
       router.back();
     }
@@ -188,7 +189,7 @@ function InnerWheelSpinnerPage() {
       value: item?.image,
     },
   }));
-  console.log("segments", segments);
+
   if (data?.length === 0) return null;
 
   return (
