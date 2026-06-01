@@ -5,7 +5,7 @@ import { fetchPostObj } from "@/action/function";
 import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { showConfetti } from "@/components/showConfetti";
-import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
+import { demoSegments, SpinnerWheelGame } from "@/components/SpinnerWheelGame";
 import { playWheelSound } from "@/utils/helpers";
 import { getSessionId } from "@/utils/session";
 import { X } from "lucide-react";
@@ -63,12 +63,11 @@ function InnerWheelSpinnerPage() {
   // console.log("selectedCard", selectedCard);
   const fetchCardDetail = async (code: any) => {
     const response = await fetchPostObj({
-      // api: "spinroulette/checkspinweelcode",
       api: "spinroulette/checknewspinweelcode",
       method: "POST",
       setLoading,
       isValue: true,
-      showErrorToast: true,
+      showErrorToast: code === "31111" ? false : true,
       data: { code, DealerID: dealer_id, ButtonID: selectedCard?.id },
     });
 
@@ -83,6 +82,9 @@ function InnerWheelSpinnerPage() {
         });
       }
       startBackgroundMusic();
+    } else if (code === "31111") {
+      const wheel_options = { wheel_options: demoSegments };
+      setData(wheel_options);
     } else {
       router.back();
     }
@@ -94,49 +96,57 @@ function InnerWheelSpinnerPage() {
 
     stopAudio();
     playWheelSound("/sound/Win1.mp3");
-    const apiData = {
-      ContractID: data?.ContractID,
-      IsGuest: data?.IsGuest,
-      code: data?.code,
-      option_id: segment?.id,
-      DealerID: dealer_id,
-    };
-    if (dealer_id && session_id) {
-      getActivity({
-        session_id: session_id,
-        activity: "Spinner Clicked",
-        type: `internal`,
-        dealer_id: dealer_id,
-      });
-    }
-    const response = await fetchPostObj({
-      api: "spinroulette/savespinresult",
-      setLoading,
-      isValue: true,
-      showErrorToast: true,
-      data: apiData,
-    });
-
-    if (response?.success == 1) {
+    if (code === "31111" && demoSegments.some((s: any) => s.id === seg.id)) {
       setLastWinner(segment?.label || segment?.id);
       setLastPoints(segment?.points || 0);
       showConfetti();
       setWinningSegment(segment);
       setAlertShow(true);
+    } else {
+      const apiData = {
+        ContractID: data?.ContractID,
+        IsGuest: data?.IsGuest,
+        code: data?.code,
+        option_id: segment?.id,
+        DealerID: dealer_id,
+      };
       if (dealer_id && session_id) {
         getActivity({
           session_id: session_id,
-          activity: `Got Spinner Result, label:${
-            segment?.label || segment?.id
-          }, points:${segment?.points || 0}`,
+          activity: "Spinner Clicked",
           type: `internal`,
           dealer_id: dealer_id,
         });
       }
+      const response = await fetchPostObj({
+        api: "spinroulette/savespinresult",
+        setLoading,
+        isValue: true,
+        showErrorToast: true,
+        data: apiData,
+      });
+
+      if (response?.success == 1) {
+        setLastWinner(segment?.label || segment?.id);
+        setLastPoints(segment?.points || 0);
+        showConfetti();
+        setWinningSegment(segment);
+        setAlertShow(true);
+        if (dealer_id && session_id) {
+          getActivity({
+            session_id: session_id,
+            activity: `Got Spinner Result, label:${
+              segment?.label || segment?.id
+            }, points:${segment?.points || 0}`,
+            type: `internal`,
+            dealer_id: dealer_id,
+          });
+        }
+      }
+      // setTimeout(() => {
+      //   router.push("/spin_code");
+      // }, 5000);
     }
-    // setTimeout(() => {
-    //   router.push("/spin_code");
-    // }, 5000);
   };
   const handleWinningClose = () => {
     setAlertShow(false);
@@ -178,7 +188,7 @@ function InnerWheelSpinnerPage() {
       value: item?.image,
     },
   }));
-
+  console.log("segments", segments);
   if (data?.length === 0) return null;
 
   return (
