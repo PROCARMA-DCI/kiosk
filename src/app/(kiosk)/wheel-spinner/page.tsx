@@ -5,7 +5,7 @@ import { fetchPostObj } from "@/action/function";
 import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { showConfetti } from "@/components/showConfetti";
-import { demoSegments, SpinnerWheelGame } from "@/components/SpinnerWheelGame";
+import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
 import { playWheelSound } from "@/utils/helpers";
 import { getSessionId } from "@/utils/session";
 import { X } from "lucide-react";
@@ -82,8 +82,8 @@ function InnerWheelSpinnerPage() {
         });
       }
       startBackgroundMusic();
-    } else if (code === "31111") {
-      const wheel_options = { wheel_options: demoSegments };
+    } else if (code === "31111" && selectedCard?.wheel_options?.length > 0) {
+      const wheel_options = { wheel_options: selectedCard?.wheel_options };
       setData(wheel_options);
       startBackgroundMusic();
     } else {
@@ -97,7 +97,10 @@ function InnerWheelSpinnerPage() {
 
     stopAudio();
     playWheelSound("/sound/Win1.mp3");
-    if (code === "31111" && demoSegments.some((s: any) => s.id === seg.id)) {
+    if (
+      code === "31111" &&
+      selectedCard?.wheel_options.some((s: any) => s.id === seg.id)
+    ) {
       setLastWinner(segment?.label || segment?.id);
       setLastPoints(segment?.points || 0);
       showConfetti();
