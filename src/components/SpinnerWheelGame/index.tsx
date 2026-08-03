@@ -1,84 +1,84 @@
 "use client";
 
-export const demoSegments = [
-  {
-    id: "1",
-    label: "Prize 1",
-    points: 100,
-    quantity: 10,
-    color: "#FF6B6B",
-    image: "/images/kaos/kaos1.png",
-    popup_banner_image:
-      "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
-    win_image: "/images/kaos/kaos1.png",
-  },
-  {
-    id: "2",
-    label: "Prize 2",
-    points: 200,
-    quantity: 10,
-    color: "#4ECDC4",
-    image: "/images/kaos/kaos2.png",
-    popup_banner_image:
-      "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
-    win_image: "/images/kaos/kaos2.png",
-  },
-  {
-    id: "3",
-    label: "Prize 3",
-    points: 300,
-    quantity: 10,
-    color: "#FFE66D",
-    image: "/images/kaos/kaos3.png",
-    popup_banner_image:
-      "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
-    win_image: "/images/kaos/kaos3.png",
-  },
-  {
-    id: "4",
-    label: "Prize 4",
-    points: 100,
-    quantity: 10,
-    color: "#95E1D3",
-    image: "/images/kaos/kaos2.png",
-    popup_banner_image:
-      "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
-    win_image: "/images/kaos/kaos2.png",
-  },
-  {
-    id: "5",
-    label: "Prize 5",
-    points: 200,
-    quantity: 10,
-    color: "#F38181",
-    image: "/images/kaos/kaos1.png",
-    popup_banner_image:
-      "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
-    win_image: "/images/kaos/kaos1.png",
-  },
-  {
-    id: "6",
-    label: "Prize 6",
-    points: 300,
-    quantity: 10,
-    color: "#AA96DA",
-    image: "/images/kaos/kaos1.png",
-    popup_banner_image:
-      "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
-    win_image: "/images/kaos/kaos1.png",
-  },
-  {
-    id: "7",
-    label: "Prize 7",
-    points: 100,
-    quantity: 10,
-    color: "#95E1D3",
-    image: "/images/kaos/kaos3.png",
-    popup_banner_image:
-      "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
-    win_image: "/images/kaos/kaos3.png",
-  },
-];
+// export const demoSegments = [
+//   {
+//     id: "1",
+//     label: "Prize 1",
+//     points: 100,
+//     quantity: 10,
+//     color: "#FF6B6B",
+//     image: "/images/kaos/kaos1.png",
+//     popup_banner_image:
+//       "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
+//     win_image: "/images/kaos/kaos1.png",
+//   },
+//   {
+//     id: "2",
+//     label: "Prize 2",
+//     points: 200,
+//     quantity: 10,
+//     color: "#4ECDC4",
+//     image: "/images/kaos/kaos2.png",
+//     popup_banner_image:
+//       "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
+//     win_image: "/images/kaos/kaos2.png",
+//   },
+//   {
+//     id: "3",
+//     label: "Prize 3",
+//     points: 300,
+//     quantity: 10,
+//     color: "#FFE66D",
+//     image: "/images/kaos/kaos3.png",
+//     popup_banner_image:
+//       "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
+//     win_image: "/images/kaos/kaos3.png",
+//   },
+//   {
+//     id: "4",
+//     label: "Prize 4",
+//     points: 100,
+//     quantity: 10,
+//     color: "#95E1D3",
+//     image: "/images/kaos/kaos2.png",
+//     popup_banner_image:
+//       "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
+//     win_image: "/images/kaos/kaos2.png",
+//   },
+//   {
+//     id: "5",
+//     label: "Prize 5",
+//     points: 200,
+//     quantity: 10,
+//     color: "#F38181",
+//     image: "/images/kaos/kaos1.png",
+//     popup_banner_image:
+//       "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
+//     win_image: "/images/kaos/kaos1.png",
+//   },
+//   {
+//     id: "6",
+//     label: "Prize 6",
+//     points: 300,
+//     quantity: 10,
+//     color: "#AA96DA",
+//     image: "/images/kaos/kaos1.png",
+//     popup_banner_image:
+//       "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
+//     win_image: "/images/kaos/kaos1.png",
+//   },
+//   {
+//     id: "7",
+//     label: "Prize 7",
+//     points: 100,
+//     quantity: 10,
+//     color: "#95E1D3",
+//     image: "/images/kaos/kaos3.png",
+//     popup_banner_image:
+//       "https://mypcp.us/wheel_icon/4969bb923caebae00e6ce1d591ff5523.jpg",
+//     win_image: "/images/kaos/kaos3.png",
+//   },
+// ];
 
 import { playWheelSound } from "@/utils/helpers";
 import Image from "next/image";

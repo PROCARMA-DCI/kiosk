@@ -228,7 +228,7 @@ export default function KioskSignIn() {
                 {/* Sign In Button */}
                 <Button
                   type="submit"
-                  className="w-full font-semibold hover:opacity-90 active:scale-[0.99] transition-all bg-[#00D1FF] text-[#000000] p-6 text-lg"
+                  className="w-full cursor-pointer font-semibold hover:opacity-90 active:scale-[0.99] transition-all bg-[#00D1FF] text-[#000000] p-6 text-lg"
                 >
                   Sign In
                 </Button>
