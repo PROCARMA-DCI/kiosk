@@ -13,7 +13,8 @@ export default function KioskSignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { setDealerID, setGlobalLoading } = useContext(KaosContext);
+  const { setDealerID, setGlobalLoading, setScreens, setSelectedScreen } =
+    useContext(KaosContext);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,12 +25,16 @@ export default function KioskSignIn() {
     };
     const res = await fetchPostObj({
       data,
-      api: "StandingScreenCenter/kioskLogin",
+      api: "StandingScreenCenter1/kioskLogin",
       setLoading: setLoading,
     });
     if (res.success) {
-      setDealerID(res.message);
-      const encodedDealerId = btoa(res.message);
+      setDealerID(res?.dealer_id);
+      setScreens(res?.screens);
+      if (res?.screens?.length === 1) {
+        setSelectedScreen(res.screens[0]);
+      }
+      const encodedDealerId = btoa(res.dealer_id);
       // ✅ save to localStorage
       setLocalStorageDealerID(encodedDealerId);
     } else {

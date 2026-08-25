@@ -9,6 +9,7 @@ import {
 } from "@/action/localStorage";
 import { HeaderKaos } from "@/common/HeaderKaos";
 import KioskSignIn from "@/common/KioskSignIn";
+import ScreenSelection from "@/common/ScreenSelection";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { ShaderAnimation } from "@/components/ui/shader-animation";
 import { HtmlVideoEmbed } from "@/components/videoPlayer";
@@ -16,6 +17,10 @@ import { playWheelSound, safeAtob } from "@/utils/helpers";
 import { getOrCreateSession, getSessionId } from "@/utils/session";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
 
+interface ScreenType {
+  screen_number: number;
+  name: string;
+}
 interface KaosContextType {
   session_id: string | null;
   dealer_id: string | undefined | null;
@@ -34,14 +39,23 @@ interface KaosContextType {
   setSessionId: React.Dispatch<React.SetStateAction<string | null>>;
   todayWeather: Record<string, any> | null;
   setTodayWeather: React.Dispatch<React.SetStateAction<Record<string, any>>>;
+  screens: ScreenType[] | undefined;
+  setScreens: React.Dispatch<React.SetStateAction<ScreenType[] | undefined>>;
+  selectedScreen: ScreenType | undefined;
+  setSelectedScreen: React.Dispatch<
+    React.SetStateAction<ScreenType | undefined>
+  >;
 }
 
 export const KaosContext = createContext<KaosContextType>(
   {} as KaosContextType,
 );
+
 const LayoutInner = ({ children }: any) => {
   const [dealers, setDealers] = useState<Record<string, any>[]>([]);
   const [dealer_id, setDealerID] = useState<string | undefined | null>(null);
+  const [selectedScreen, setSelectedScreen] = useState<ScreenType>();
+  const [screens, setScreens] = useState<ScreenType[]>();
   const [session_id, setSessionId] = useState<string | null>(null);
   const [bannerData, setBannerData] = useState<any>(null);
   const [todayWeather, setTodayWeather] = useState<Record<string, any> | null>(
@@ -173,10 +187,16 @@ const LayoutInner = ({ children }: any) => {
         setSessionId,
         todayWeather,
         setTodayWeather,
+        screens,
+        setScreens,
+        selectedScreen,
+        setSelectedScreen,
       }}
     >
       <div className="relative h-screen overflow-auto bg-background w-[731px] mx-auto">
-        {!loading && !dealer_id ? (
+        {!loading && dealer_id && screens && screens.length > 1 && !selectedScreen ? (
+          <ScreenSelection screens={screens} onSelect={setSelectedScreen} />
+        ) : !loading && !dealer_id && !selectedScreen ? (
           <div className="relative flex max-w-[731px] w-full min-h-screen flex-col items-center justify-center overflow-hidden m-auto">
             {/* Layer 1: ShaderAnimation at the very bottom */}
             <div className="absolute inset-0 z-0">
