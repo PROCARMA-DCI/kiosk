@@ -5,7 +5,7 @@ import { setLocalStorageDealerID } from "@/action/localStorage";
 import { KaosContext } from "@/app/(kiosk)/layout";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Lock, UserRound } from "lucide-react";
 import React, { useContext, useState } from "react";
 import { toast } from "sonner";
 
@@ -147,18 +147,7 @@ export default function KioskSignIn() {
                   </label>
                   <div className="relative">
                     <div className="absolute left-6 top-1/2 -translate-y-1/2">
-                      <svg
-                        width="37"
-                        height="37"
-                        viewBox="0 0 37 37"
-                        fill="none"
-                      >
-                        <path
-                          d="M5.5625 31.625C5.5625 31.625 3 31.625 3 29.0625C3 26.5 5.5625 19.375 18.5 19.375C31.4375 19.375 34 26.5 34 29.0625C34 31.625 31.4375 31.625 31.4375 31.625H5.5625ZM18.5 16.8125C20.1793 16.8125 21.7897 16.1458 22.9775 14.958C24.1653 13.7702 24.8125 12.1598 24.8125 10.5C24.8125 8.84022 24.1653 7.22984 22.9775 6.04203C21.7897 4.85422 20.1793 4.1875 18.5 4.1875C16.8207 4.1875 15.2103 4.85422 14.0225 6.04203C12.8347 7.22984 12.1875 8.84022 12.1875 10.5C12.1875 12.1598 12.8347 13.7702 14.0225 14.958C15.2103 16.1458 16.8207 16.8125 18.5 16.8125Z"
-                          fill="white"
-                          fillOpacity="0.7"
-                        />
-                      </svg>
+                      <UserRound />
                     </div>
                     <input
                       id="username"
@@ -182,18 +171,7 @@ export default function KioskSignIn() {
 
                   <div className="relative">
                     <div className="absolute left-6 top-1/2 -translate-y-1/2">
-                      <svg
-                        width="37"
-                        height="37"
-                        viewBox="0 0 37 37"
-                        fill="none"
-                      >
-                        <path
-                          d="M27.625 13.25H25.5V10C25.5 7.74566 24.6045 5.58365 23.0104 3.98959C21.4163 2.39553 19.2543 1.5 17 1.5C14.7457 1.5 12.5837 2.39553 10.9896 3.98959C9.39553 5.58365 8.5 7.74566 8.5 10V13.25H6.375C5.51359 13.25 4.68773 13.5924 4.07814 14.2019C3.46855 14.8115 3.12598 15.6374 3.12598 16.4988V31.0012C3.12598 31.8626 3.46855 32.6885 4.07814 33.2981C4.68773 33.9076 5.51359 34.25 6.375 34.25H27.625C28.4864 34.25 29.3123 33.9076 29.9219 33.2981C30.5315 32.6885 30.874 31.8626 30.874 31.0012V16.4988C30.874 15.6374 30.5315 14.8115 29.9219 14.2019C29.3123 13.5924 28.4864 13.25 27.625 13.25ZM12 10C12 8.67392 12.5268 7.40215 13.4645 6.46447C14.4021 5.52678 15.6739 5 17 5C18.3261 5 19.5979 5.52678 20.5355 6.46447C21.4732 7.40215 22 8.67392 22 10V13.25H12V10Z"
-                          fill="white"
-                          fillOpacity="0.7"
-                        />
-                      </svg>
+                      <Lock />
                     </div>
 
                     <input
@@ -208,7 +186,7 @@ export default function KioskSignIn() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute cursor-pointer duration-300 right-6 top-1/2 -translate-y-1/2 hover:opacity-80 transition-opacity text-white/70"
+                      className="absolute cursor-pointer duration-300 right-6 top-1/2 -translate-y-1/2 hover:opacity-80 transition-opacity "
                     >
                       {showPassword ? <EyeOff size={28} /> : <Eye size={28} />}
                     </button>
