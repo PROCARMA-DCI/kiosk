@@ -17,7 +17,8 @@ const MenuKaos = ({
   setInactive,
   setBannerData,
 }: any) => {
-  const { dealers, setDealers, session_id }: any = useContext(KaosContext);
+  const { dealers, setDealers, session_id, selectedScreen }: any =
+    useContext(KaosContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -27,20 +28,21 @@ const MenuKaos = ({
         activity: "visiting home page",
         type: "home",
         dealer_id: dealer_id,
+        screen_number: selectedScreen.screen_number,
       });
     }
   }, [session_id, dealer_id]);
   const fetchBanner = async (dealer_id: string) => {
     const response = await fetchPostObj({
-      api: "StandingScreenCenter/dealerHeroScreenSettings",
+      api: "/dealerHeroScreenSettings",
       method: "POST",
       isValue: true,
       showErrorToast: true,
       setLoading,
-      data: { dealer_id },
+      data: { dealer_id, screen_number: selectedScreen.screen_number },
     });
     if (response.success == 1) {
-      setBannerData(response.message);
+      setBannerData(response.data);
     }
   };
   useEffect(() => {
@@ -50,7 +52,7 @@ const MenuKaos = ({
   }, [dealer_id]);
   const getEnableDealers = async () => {
     const response = await fetchPostObj({
-      api: "StandingScreenCenter/enabledStandingScreenDealer",
+      api: "/enabledStandingScreenDealer",
       method: "POST",
       isValue: true,
       showErrorToast: true,

@@ -14,7 +14,8 @@ import { Suspense, useContext, useEffect, useState } from "react";
 import ShowImageHandle from "./ShowImageHandle";
 
 const InnerFeatureCardKaos = () => {
-  const { setSelectedCard, dealer_id } = useContext(KaosContext);
+  const { setSelectedCard, dealer_id, selectedScreen } =
+    useContext(KaosContext);
   const [cards, setCards] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [iframeUrl, setIframeUrl] = useState<string | null>(null);
@@ -30,6 +31,7 @@ const InnerFeatureCardKaos = () => {
         activity: `Button Click: ${feature.title} `,
         type: `internal`,
         dealer_id: dealer_id,
+        screen_number: selectedScreen?.screen_number,
       });
     }
 
@@ -53,12 +55,12 @@ const InnerFeatureCardKaos = () => {
   };
   const fetchWeatherApi = async (dealer_id: string) => {
     const response = await fetchPostObj({
-      api: "StandingScreenCenter/dealerStandingScreenCards",
+      api: "/dealerStandingScreenCards",
       method: "POST",
       setLoading,
       isValue: true,
       showErrorToast: true,
-      data: { dealer_id },
+      data: { dealer_id, screen_number: selectedScreen?.screen_number },
     });
 
     if (response.success == 1) {

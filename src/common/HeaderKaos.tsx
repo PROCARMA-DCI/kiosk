@@ -54,6 +54,7 @@ function convertTemperature(tempStr: string): string {
 export function HeaderKaos() {
   const {
     dealer_id,
+    selectedScreen,
     bannerData,
     setDealerModel,
     setGlobalLoading: setLoading,
@@ -69,12 +70,12 @@ export function HeaderKaos() {
 
   const fetchBanner = async (dealer_id: string) => {
     const response = await fetchPostObj({
-      api: "StandingScreenCenter/dealerWeatherDetail",
+      api: "/dealerWeatherDetail",
       method: "POST",
       isValue: true,
       showErrorToast: true,
       setLoading,
-      data: { dealer_id },
+      data: { dealer_id, screen_number: selectedScreen.screen_number },
     });
     if (response.success == 1) {
       const todayWeather = response?.data;
@@ -102,6 +103,7 @@ export function HeaderKaos() {
   const homeRoute = () => {
     router.push("/");
   };
+
   return (
     <div>
       <div

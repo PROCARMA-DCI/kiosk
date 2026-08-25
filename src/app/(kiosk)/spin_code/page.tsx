@@ -22,7 +22,8 @@ import { KaosContext } from "../layout";
 
 function LoyaltySpinInner() {
   const router = useRouter();
-  const { selectedCard, dealers, dealer_id } = useContext(KaosContext);
+  const { selectedCard, dealers, dealer_id, selectedScreen } =
+    useContext(KaosContext);
   const [footerData, setFooterData] = useState<any>([]);
   const [code, setCode] = useState("");
 
@@ -32,11 +33,14 @@ function LoyaltySpinInner() {
 
   const fetchFooterData = async () => {
     const response = await fetchPostObj({
-      api: "StandingScreenCenter/spinwheelFooterDetail",
+      api: "/spinwheelFooterDetail",
       setLoading,
       isValue: true,
       showErrorToast: true,
-      data: { button_id: selectedCard?.id },
+      data: {
+        button_id: selectedCard?.id,
+        screen_number: selectedScreen?.screen_number,
+      },
     });
     if (response?.success == 1) {
       setFooterData(response.message);

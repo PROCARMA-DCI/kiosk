@@ -25,7 +25,7 @@ export default function KioskSignIn() {
     };
     const res = await fetchPostObj({
       data,
-      api: "StandingScreenCenter1/kioskLogin",
+      api: "/kioskLogin",
       setLoading: setLoading,
     });
     if (res.success) {

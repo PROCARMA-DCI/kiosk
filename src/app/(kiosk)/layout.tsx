@@ -5,7 +5,10 @@ import { getActivity } from "@/action/activity";
 import { fetchPostObj } from "@/action/function";
 import {
   getLocalStorageDealerID,
+  getLocalStorageSelectedScreen,
   removeLocalStorageDealerID,
+  removeLocalStorageSelectedScreen,
+  setLocalStorageSelectedScreen,
 } from "@/action/localStorage";
 import { HeaderKaos } from "@/common/HeaderKaos";
 import KioskSignIn from "@/common/KioskSignIn";
@@ -15,6 +18,7 @@ import { ShaderAnimation } from "@/components/ui/shader-animation";
 import { HtmlVideoEmbed } from "@/components/videoPlayer";
 import { playWheelSound, safeAtob } from "@/utils/helpers";
 import { getOrCreateSession, getSessionId } from "@/utils/session";
+import { useRouter } from "next/navigation";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
 
 interface ScreenType {
@@ -52,6 +56,7 @@ export const KaosContext = createContext<KaosContextType>(
 );
 
 const LayoutInner = ({ children }: any) => {
+  const router = useRouter();
   const [dealers, setDealers] = useState<Record<string, any>[]>([]);
   const [dealer_id, setDealerID] = useState<string | undefined | null>(null);
   const [selectedScreen, setSelectedScreen] = useState<ScreenType>();
@@ -68,9 +73,13 @@ const LayoutInner = ({ children }: any) => {
   const [globalLoading, setGlobalLoading] = useState(true);
   const [selectedCard, setSelectedCard] = useState<any>(null);
 
+  const screen_number = selectedScreen?.screen_number;
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   useRedirectOnRefresh();
   useEffect(() => {
+    if (!dealer_id) {
+      router.push("/signout");
+    }
     try {
       const stored = getLocalStorageDealerID();
 
@@ -80,10 +89,31 @@ const LayoutInner = ({ children }: any) => {
       } else {
         removeLocalStorageDealerID(); // cleanup tampered value
       }
+
+      const storedScreen = getLocalStorageSelectedScreen<ScreenType>();
+      if (storedScreen) {
+        setSelectedScreen(storedScreen);
+      } else {
+        removeLocalStorageSelectedScreen();
+      }
     } finally {
       setLoading(false); // 🔥 always stop loading
     }
   }, []);
+
+  const setSelectedScreenPersist: React.Dispatch<
+    React.SetStateAction<ScreenType | undefined>
+  > = (value) => {
+    setSelectedScreen((prev) => {
+      const next = typeof value === "function" ? (value as any)(prev) : value;
+      if (next) {
+        setLocalStorageSelectedScreen(next);
+      } else {
+        removeLocalStorageSelectedScreen();
+      }
+      return next;
+    });
+  };
   // 🔹 Reset inactivity timer on user action
   useEffect(() => {
     const delayTime = Number(bannerData?.delayTime ?? 0) * 1000;
@@ -113,33 +143,34 @@ const LayoutInner = ({ children }: any) => {
   }, []);
 
   useEffect(() => {
-    if (session_id && dealer_id) {
+    if (session_id && dealer_id && selectedScreen) {
       getActivity({
         session_id: session_id,
         activity: "visiting home page",
         type: "home",
         dealer_id: dealer_id,
+        screen_number: screen_number,
       });
     }
-  }, [session_id, dealer_id]);
+  }, [session_id, dealer_id, selectedScreen]);
   const fetchBanner = async (dealer_id: string) => {
     const response = await fetchPostObj({
-      api: "StandingScreenCenter/dealerHeroScreenSettings",
+      api: "/dealerHeroScreenSettings",
       method: "POST",
       isValue: true,
       showErrorToast: true,
       setLoading: setGlobalLoading,
-      data: { dealer_id },
+      data: { dealer_id, screen_number: screen_number },
     });
     if (response.success == 1) {
-      setBannerData(response.message);
+      setBannerData(response.data);
     }
   };
   useEffect(() => {
-    if (dealer_id) {
+    if (dealer_id && screen_number) {
       fetchBanner(dealer_id);
     }
-  }, [dealer_id]);
+  }, [dealer_id, screen_number]);
   // 🔥 detect day change ONLY ONCE
   useEffect(() => {
     const checkDayChange = () => {
@@ -165,6 +196,7 @@ const LayoutInner = ({ children }: any) => {
       return bannerData?.video_url;
     }
   };
+
   return loading ? (
     <ScreenLoader />
   ) : (
@@ -190,13 +222,20 @@ const LayoutInner = ({ children }: any) => {
         screens,
         setScreens,
         selectedScreen,
-        setSelectedScreen,
+        setSelectedScreen: setSelectedScreenPersist,
       }}
     >
       <div className="relative h-screen overflow-auto bg-background w-[731px] mx-auto">
-        {!loading && dealer_id && screens && screens.length > 1 && !selectedScreen ? (
-          <ScreenSelection screens={screens} onSelect={setSelectedScreen} />
-        ) : !loading && !dealer_id && !selectedScreen ? (
+        {!loading &&
+        dealer_id &&
+        screens &&
+        screens.length > 1 &&
+        !screen_number ? (
+          <ScreenSelection
+            screens={screens}
+            onSelect={setSelectedScreenPersist}
+          />
+        ) : !loading && !dealer_id && !screen_number ? (
           <div className="relative flex max-w-[731px] w-full min-h-screen flex-col items-center justify-center overflow-hidden m-auto">
             {/* Layer 1: ShaderAnimation at the very bottom */}
             <div className="absolute inset-0 z-0">

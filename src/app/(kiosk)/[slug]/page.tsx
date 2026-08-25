@@ -17,20 +17,19 @@ const InnerDetailKaosPage = () => {
   const router = useRouter();
   const hasRunRef = useRef(false);
   const searhParams = useSearchParams();
-  const { selectedCard, dealer_id, setDealerID } = useContext(KaosContext);
+  const { selectedCard, dealer_id, setDealerID, setSelectedCard } =
+    useContext(KaosContext);
 
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const card_id = params?.slug;
   const title = searhParams.get("name");
 
-  console.log(card_id);
-
   // const fetchGetDealerId = async () => {
   //   const res = await fetchPostObj({
   //     method: "GET",
   //     setLoading,
-  //     api: `StandingScreenCenter/kioskName?name=${card_id}`,
+  //     api: `/kioskName?name=${card_id}`,
   //   });
   //   if (res.success == 1) {
   //     setDealerID(res.message);
@@ -42,12 +41,15 @@ const InnerDetailKaosPage = () => {
 
   const fetchCardDetail = async (dealer_id: string) => {
     const response = await fetchPostObj({
-      api: "StandingScreenCenter/dealerCardDetail",
+      api: "/dealerCardDetail",
       method: "POST",
       setLoading,
       isValue: true,
       showErrorToast: true,
-      data: { dealer_id, card_id: card_id },
+      data: {
+        dealer_id,
+        card_id: card_id,
+      },
     });
 
     if (response.success == 1) {
@@ -62,6 +64,7 @@ const InnerDetailKaosPage = () => {
     if (card_id === "signout") {
       clearLocalStorage();
       setDealerID(null);
+      setSelectedCard(null);
       router.push("/");
     } else if (dealer_id && card_id) {
       fetchCardDetail(dealer_id);

@@ -43,7 +43,7 @@ export function HtmlPreview({ html }: { html?: string }) {
 
 const InnerDetailKaosHtmlPage = () => {
   const [data, setData] = useState(null);
-  const { dealer_id } = useContext(KaosContext);
+  const { dealer_id, selectedScreen } = useContext(KaosContext);
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const detail_id = params?.subslug;
@@ -56,15 +56,16 @@ const InnerDetailKaosHtmlPage = () => {
         activity: `Visiting Card Detail: html description`,
         type: `internal`,
         dealer_id: dealer_id,
+        screen_number: selectedScreen?.screen_number
       });
     }
     const response = await fetchPostObj({
-      api: "StandingScreenCenter/cardExplanation",
+      api: "/cardExplanation",
       method: "POST",
       setLoading,
       isValue: true,
       showErrorToast: true,
-      data: { dealer_id, detail_id: detail_id },
+      data: { dealer_id, detail_id: detail_id,screen_number: selectedScreen?.screen_number, },
     });
 
     if (response.success == 1) {
