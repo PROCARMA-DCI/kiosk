@@ -68,7 +68,7 @@ const InnerFeatureCardKaos = () => {
     }
   };
   useEffect(() => {
-    if (!dealer_id) return;
+    if (!dealer_id || !selectedScreen) return;
 
     const fetchData = async () => {
       try {
@@ -80,7 +80,7 @@ const InnerFeatureCardKaos = () => {
     };
 
     fetchData();
-  }, [dealer_id]);
+  }, [dealer_id, selectedScreen]);
   return iframeUrl ? (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] flex flex-col">
       <div className="bg-black text-white p-4 flex items-center justify-between">

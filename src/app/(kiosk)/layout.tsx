@@ -5,9 +5,12 @@ import { getActivity } from "@/action/activity";
 import { fetchPostObj } from "@/action/function";
 import {
   getLocalStorageDealerID,
+  getLocalStorageScreens,
   getLocalStorageSelectedScreen,
   removeLocalStorageDealerID,
+  removeLocalStorageScreens,
   removeLocalStorageSelectedScreen,
+  setLocalStorageScreens,
   setLocalStorageSelectedScreen,
 } from "@/action/localStorage";
 import { HeaderKaos } from "@/common/HeaderKaos";
@@ -18,7 +21,6 @@ import { ShaderAnimation } from "@/components/ui/shader-animation";
 import { HtmlVideoEmbed } from "@/components/videoPlayer";
 import { playWheelSound, safeAtob } from "@/utils/helpers";
 import { getOrCreateSession, getSessionId } from "@/utils/session";
-import { useRouter } from "next/navigation";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
 
 interface ScreenType {
@@ -56,7 +58,6 @@ export const KaosContext = createContext<KaosContextType>(
 );
 
 const LayoutInner = ({ children }: any) => {
-  const router = useRouter();
   const [dealers, setDealers] = useState<Record<string, any>[]>([]);
   const [dealer_id, setDealerID] = useState<string | undefined | null>(null);
   const [selectedScreen, setSelectedScreen] = useState<ScreenType>();
@@ -76,30 +77,6 @@ const LayoutInner = ({ children }: any) => {
   const screen_number = selectedScreen?.screen_number;
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   useRedirectOnRefresh();
-  useEffect(() => {
-    if (!dealer_id) {
-      router.push("/signout");
-    }
-    try {
-      const stored = getLocalStorageDealerID();
-
-      const DealerID = stored ? safeAtob(stored) : null;
-      if (DealerID) {
-        setDealerID(DealerID);
-      } else {
-        removeLocalStorageDealerID(); // cleanup tampered value
-      }
-
-      const storedScreen = getLocalStorageSelectedScreen<ScreenType>();
-      if (storedScreen) {
-        setSelectedScreen(storedScreen);
-      } else {
-        removeLocalStorageSelectedScreen();
-      }
-    } finally {
-      setLoading(false); // 🔥 always stop loading
-    }
-  }, []);
 
   const setSelectedScreenPersist: React.Dispatch<
     React.SetStateAction<ScreenType | undefined>
@@ -114,6 +91,53 @@ const LayoutInner = ({ children }: any) => {
       return next;
     });
   };
+
+  const setScreensPersist: React.Dispatch<
+    React.SetStateAction<ScreenType[] | undefined>
+  > = (value) => {
+    setScreens((prev) => {
+      const next = typeof value === "function" ? (value as any)(prev) : value;
+      if (next) {
+        setLocalStorageScreens(next);
+      } else {
+        removeLocalStorageScreens();
+      }
+      return next;
+    });
+  };
+
+  // 🔹 Restore session (dealer, screens, selected screen) from localStorage on load
+  useEffect(() => {
+    try {
+      const stored = getLocalStorageDealerID();
+      const DealerID = stored ? safeAtob(stored) : null;
+
+      if (!DealerID) {
+        removeLocalStorageDealerID();
+        removeLocalStorageScreens();
+        removeLocalStorageSelectedScreen();
+        return;
+      }
+
+      setDealerID(DealerID);
+
+      const storedScreens = getLocalStorageScreens<ScreenType[]>();
+      const storedScreen = getLocalStorageSelectedScreen<ScreenType>();
+
+      if (storedScreens && storedScreens.length) {
+        setScreens(storedScreens);
+      }
+
+      if (storedScreen) {
+        setSelectedScreen(storedScreen);
+      } else if (storedScreens && storedScreens.length === 1) {
+        // Only one screen was ever available — select it automatically
+        setSelectedScreenPersist(storedScreens[0]);
+      }
+    } finally {
+      setLoading(false); // 🔥 always stop loading
+    }
+  }, []);
   // 🔹 Reset inactivity timer on user action
   useEffect(() => {
     const delayTime = Number(bannerData?.delayTime ?? 0) * 1000;
@@ -220,22 +244,13 @@ const LayoutInner = ({ children }: any) => {
         todayWeather,
         setTodayWeather,
         screens,
-        setScreens,
+        setScreens: setScreensPersist,
         selectedScreen,
         setSelectedScreen: setSelectedScreenPersist,
       }}
     >
       <div className="relative h-screen overflow-auto bg-background w-[731px] mx-auto">
-        {!loading &&
-        dealer_id &&
-        screens &&
-        screens.length > 1 &&
-        !screen_number ? (
-          <ScreenSelection
-            screens={screens}
-            onSelect={setSelectedScreenPersist}
-          />
-        ) : !loading && !dealer_id && !screen_number ? (
+        {!loading && !dealer_id ? (
           <div className="relative flex max-w-[731px] w-full min-h-screen flex-col items-center justify-center overflow-hidden m-auto">
             {/* Layer 1: ShaderAnimation at the very bottom */}
             <div className="absolute inset-0 z-0">
@@ -327,6 +342,11 @@ const LayoutInner = ({ children }: any) => {
               <KioskSignIn />
             </div>
           </div>
+        ) : !loading && screens && screens.length > 1 && !screen_number ? (
+          <ScreenSelection
+            screens={screens}
+            onSelect={setSelectedScreenPersist}
+          />
         ) : (
           <>
             {/* 🧱 Content */}

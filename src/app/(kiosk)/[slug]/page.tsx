@@ -17,8 +17,14 @@ const InnerDetailKaosPage = () => {
   const router = useRouter();
   const hasRunRef = useRef(false);
   const searhParams = useSearchParams();
-  const { selectedCard, dealer_id, setDealerID, setSelectedCard } =
-    useContext(KaosContext);
+  const {
+    selectedCard,
+    dealer_id,
+    setDealerID,
+    setSelectedCard,
+    setScreens,
+    setSelectedScreen,
+  } = useContext(KaosContext);
 
   const params = useParams();
   const [loading, setLoading] = useState(false);
@@ -65,6 +71,8 @@ const InnerDetailKaosPage = () => {
       clearLocalStorage();
       setDealerID(null);
       setSelectedCard(null);
+      setScreens(undefined);
+      setSelectedScreen(undefined);
       router.push("/");
     } else if (dealer_id && card_id) {
       fetchCardDetail(dealer_id);

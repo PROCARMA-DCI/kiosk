@@ -75,7 +75,7 @@ export function HeaderKaos() {
       isValue: true,
       showErrorToast: true,
       setLoading,
-      data: { dealer_id, screen_number: selectedScreen.screen_number },
+      data: { dealer_id, screen_number: selectedScreen?.screen_number },
     });
     if (response.success == 1) {
       const todayWeather = response?.data;
@@ -96,8 +96,9 @@ export function HeaderKaos() {
   }
   const weatherIcon = getWeatherIcon(todayWeather?.current?.description);
   useEffect(() => {
+    if (!dealer_id || !selectedScreen) return;
     fetchBanner(dealer_id);
-  }, []);
+  }, [dealer_id, selectedScreen]);
   if (loading) return <LayoutSkeleton header={true} />;
 
   const homeRoute = () => {

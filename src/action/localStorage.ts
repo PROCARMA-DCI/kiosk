@@ -1,5 +1,6 @@
 export const StorageKeys = {
   DEALER_ID: "dealer_id",
+  SCREENS: "screens",
   SELECTED_SCREEN: "selected_screen",
 } as const;
 
@@ -43,3 +44,19 @@ export const getLocalStorageSelectedScreen = <T = unknown>(): T | null => {
 
 export const removeLocalStorageSelectedScreen = () =>
   removeLocalStorageItem(StorageKeys.SELECTED_SCREEN);
+
+export const setLocalStorageScreens = (screens: unknown) =>
+  setLocalStorageItem(StorageKeys.SCREENS, JSON.stringify(screens));
+
+export const getLocalStorageScreens = <T = unknown>(): T | null => {
+  const stored = getLocalStorageItem(StorageKeys.SCREENS);
+  if (!stored) return null;
+  try {
+    return JSON.parse(stored) as T;
+  } catch {
+    return null;
+  }
+};
+
+export const removeLocalStorageScreens = () =>
+  removeLocalStorageItem(StorageKeys.SCREENS);

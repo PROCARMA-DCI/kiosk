@@ -1,6 +1,8 @@
 "use client";
 
+import { KaosContext } from "@/app/(kiosk)/layout";
 import { Button } from "@/components/ui/button";
+import { useContext } from "react";
 
 interface ScreenType {
   screen_number: number;
@@ -16,6 +18,7 @@ export default function ScreenSelection({
   screens,
   onSelect,
 }: ScreenSelectionProps) {
+
   return (
     <div className="relative flex max-w-[731px] w-full min-h-screen flex-col items-center justify-center overflow-hidden m-auto bg-[#021620]">
       <div className="flex flex-col items-center gap-8 w-9/12">
