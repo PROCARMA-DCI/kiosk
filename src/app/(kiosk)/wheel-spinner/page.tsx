@@ -63,7 +63,7 @@ function InnerWheelSpinnerPage() {
 
   const fetchCardDetail = async (code: any) => {
     const response = await fetchPostObj({
-      api: "spinroulette/checknewspinweelcode",
+      api: "/spinroulette/checknewspinweelcode",
       method: "POST",
       setLoading,
       isValue: true,
