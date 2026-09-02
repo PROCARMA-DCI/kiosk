@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import { LoaderFive } from "@/components/ui/loader";
 import { MovingBorder } from "@/components/ui/moving-border";
 import { Skeleton } from "@/components/ui/skeleton";
-import { baseMypcp } from "@/config";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { KaosContext } from "../layout";
@@ -34,7 +33,7 @@ function LoyaltySpinInner() {
 
   const fetchFooterData = async () => {
     const response = await fetchPostObj({
-      url: `${baseMypcp}/Spinroulette/checknewspinweelcode`,
+      api: "/spinwheelFooterDetail",
       setLoading,
       isValue: true,
       showErrorToast: true,

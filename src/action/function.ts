@@ -88,7 +88,7 @@ export const fetchPost = async <T = any>({
 }: FetchPostParams<T>): Promise<T | undefined> => {
   const baseUrl = url ?? `${mypcp}${api ?? ""}`;
   const headers = new Headers();
-
+  console.log({ url });
   if (token) headers.append("Authorization", token);
   if (contentType) headers.append("Content-Type", contentType);
 

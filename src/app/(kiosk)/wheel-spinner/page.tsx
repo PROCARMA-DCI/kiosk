@@ -6,6 +6,7 @@ import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { showConfetti } from "@/components/showConfetti";
 import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
+import { baseMypcp } from "@/config";
 import { playWheelSound } from "@/utils/helpers";
 import { getSessionId } from "@/utils/session";
 import { X } from "lucide-react";
@@ -63,7 +64,7 @@ function InnerWheelSpinnerPage() {
 
   const fetchCardDetail = async (code: any) => {
     const response = await fetchPostObj({
-      api: "/spinroulette/checknewspinweelcode",
+      url: `${baseMypcp}/spinroulette/checknewspinweelcode`,
       method: "POST",
       setLoading,
       isValue: true,
