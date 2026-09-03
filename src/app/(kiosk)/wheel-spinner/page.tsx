@@ -124,7 +124,7 @@ function InnerWheelSpinnerPage() {
         });
       }
       const response = await fetchPostObj({
-        api: "spinroulette/savespinresult",
+        url: `${baseMypcp}/spinroulette/savespinresult`,
         setLoading,
         isValue: true,
         showErrorToast: true,
