@@ -21,7 +21,8 @@ const BackButton = ({
   const router = useRouter();
   const pathname = usePathname();
   const ref = useClickOutside(() => setExpanded(false));
-  const { setInactive, dealer_id, setDealerID } = useContext(KaosContext);
+  const { setInactive, dealer_id, setDealerID, selectedScreen } =
+    useContext(KaosContext);
   const session_id = getSessionId();
   useEffect(() => {}, []);
 
@@ -42,6 +43,7 @@ const BackButton = ({
           activity: `Back Button Click: ${backRoute}`,
           type: `internal`,
           dealer_id: dealer_id,
+          screen_number: selectedScreen?.screen_number,
         });
       }
       router.push(backRoute);
@@ -65,6 +67,7 @@ const BackButton = ({
             activity: "Back to Home",
             type: "internal",
             dealer_id: dealer_id,
+            screen_number: selectedScreen?.screen_number,
           });
         }
         router.push("/");

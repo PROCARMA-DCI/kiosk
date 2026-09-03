@@ -18,7 +18,8 @@ import { KaosContext } from "../layout";
 function InnerWheelSpinnerPage() {
   const searhParams = useSearchParams();
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const { selectedCard, dealer_id } = useContext(KaosContext);
+  const { selectedCard, dealer_id, selectedScreen } = useContext(KaosContext);
+
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [lastWinner, setLastWinner] = useState("No User");
@@ -80,6 +81,7 @@ function InnerWheelSpinnerPage() {
           activity: "Code Button Clicked: Visiting Spinner Page",
           type: `internal`,
           dealer_id: dealer_id,
+          screen_number: selectedScreen?.screen_number,
         });
       }
       startBackgroundMusic();
@@ -121,6 +123,7 @@ function InnerWheelSpinnerPage() {
           activity: "Spinner Clicked",
           type: `internal`,
           dealer_id: dealer_id,
+          screen_number: selectedScreen?.screen_number,
         });
       }
       const response = await fetchPostObj({
@@ -145,6 +148,7 @@ function InnerWheelSpinnerPage() {
             }, points:${segment?.points || 0}`,
             type: `internal`,
             dealer_id: dealer_id,
+            screen_number: selectedScreen?.screen_number,
           });
         }
       }

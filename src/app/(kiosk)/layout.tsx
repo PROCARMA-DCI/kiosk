@@ -75,6 +75,7 @@ const LayoutInner = ({ children }: any) => {
   const [selectedCard, setSelectedCard] = useState<any>(null);
 
   const screen_number = selectedScreen?.screen_number;
+  console.log({ screen_number });
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   useRedirectOnRefresh();
 
