@@ -103,6 +103,7 @@ export const SpinnerWheelGame = React.forwardRef(
       isSpinning,
       setIsSpinning,
       stopAudio,
+      loading,
     }: any,
     ref: any,
   ) => {
@@ -274,7 +275,7 @@ export const SpinnerWheelGame = React.forwardRef(
       return `M ${radius} ${radius} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
     };
 
-    if (validSegments.length === 0) {
+    if (!loading && validSegments.length === 0) {
       return (
         <div className="flex items-center justify-center p-8 text-gray-500">
           <p>No segments available</p>

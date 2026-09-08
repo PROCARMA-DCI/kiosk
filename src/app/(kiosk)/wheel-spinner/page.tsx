@@ -246,6 +246,7 @@ function InnerWheelSpinnerPage() {
                   isSpinning={isSpinning}
                   setIsSpinning={setIsSpinning}
                   stopAudio={stopAudio}
+                  loading={loading}
                 />
               </div>
               {/* Spinner Support Base */}
