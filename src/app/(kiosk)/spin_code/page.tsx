@@ -146,23 +146,23 @@ function LoyaltySpinInner() {
                 <InputOTPGroup className={"flex gap-2"}>
                   <InputOTPSlot
                     index={0}
-                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-100 first:rounded-xl first:border-0 "
+                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-300 first:rounded-xl first:border-0 "
                   />
                   <InputOTPSlot
                     index={1}
-                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-100 "
+                    className=" text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-300 "
                   />
                   <InputOTPSlot
                     index={2}
-                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-100 "
+                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-300 "
                   />
                   <InputOTPSlot
                     index={3}
-                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-100 "
+                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-300 "
                   />
                   <InputOTPSlot
                     index={4}
-                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-100 last:border-0 last:rounded-xl "
+                    className="text-3xl font-semibold h-16 w-10 border-0 rounded-xl bg-gray-300 last:border-0 last:rounded-xl "
                   />
                 </InputOTPGroup>
               </InputOTP>
