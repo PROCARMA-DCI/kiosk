@@ -354,7 +354,7 @@ const LayoutInner = ({ children }: any) => {
           <>
             {/* 🧱 Content */}
             <div className="relative flex flex-col justify-center">
-              {pathname === "/" && <HeaderKaos />}
+              {!pathname.startsWith("/external_url") && <HeaderKaos />}
               {children}
             </div>
 
