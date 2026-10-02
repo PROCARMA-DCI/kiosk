@@ -21,6 +21,7 @@ import { ShaderAnimation } from "@/components/ui/shader-animation";
 import { HtmlVideoEmbed } from "@/components/videoPlayer";
 import { playWheelSound, safeAtob } from "@/utils/helpers";
 import { getOrCreateSession, getSessionId } from "@/utils/session";
+import { usePathname } from "next/navigation";
 import { createContext, Suspense, useEffect, useRef, useState } from "react";
 
 interface ScreenType {
@@ -58,6 +59,7 @@ export const KaosContext = createContext<KaosContextType>(
 );
 
 const LayoutInner = ({ children }: any) => {
+  const pathname = usePathname();
   const [dealers, setDealers] = useState<Record<string, any>[]>([]);
   const [dealer_id, setDealerID] = useState<string | undefined | null>(null);
   const [selectedScreen, setSelectedScreen] = useState<ScreenType>();
@@ -352,7 +354,7 @@ const LayoutInner = ({ children }: any) => {
           <>
             {/* 🧱 Content */}
             <div className="relative flex flex-col justify-center">
-              <HeaderKaos />
+              {pathname === "/" && <HeaderKaos />}
               {children}
             </div>
 
