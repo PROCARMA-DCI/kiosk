@@ -77,9 +77,19 @@ const LayoutInner = ({ children }: any) => {
   const [selectedCard, setSelectedCard] = useState<any>(null);
 
   const screen_number = selectedScreen?.screen_number;
-  console.log({ screen_number });
+
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   useRedirectOnRefresh();
+  const { dealerLogo } = bannerData || {};
+
+  useEffect(() => {
+    if (!dealerLogo || typeof dealerLogo !== "string") return;
+    document.querySelectorAll("link[rel*='icon']").forEach((el) => el.remove());
+    const link = document.createElement("link");
+    link.rel = "icon";
+    link.href = dealerLogo;
+    document.head.appendChild(link);
+  }, [dealerLogo]);
 
   const setSelectedScreenPersist: React.Dispatch<
     React.SetStateAction<ScreenType | undefined>
@@ -354,7 +364,8 @@ const LayoutInner = ({ children }: any) => {
           <>
             {/* 🧱 Content */}
             <div className="relative flex flex-col justify-center">
-              {!pathname.startsWith("/external_url") && <HeaderKaos />}
+              {selectedCard?.page_builder_header == 0 ? <HeaderKaos /> : ""}
+              {/* {!pathname.startsWith("/external_url") && <HeaderKaos />} */}
               {children}
             </div>
 
