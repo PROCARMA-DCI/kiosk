@@ -95,6 +95,16 @@ const LayoutInner = ({ children }: any) => {
       document.head.appendChild(link);
     }
     link.href = dealerLogo;
+
+    // Repoint Next's default icon links too (without removing them) so the
+    // browser doesn't keep preferring /favicon.ico.
+    document
+      .querySelectorAll<HTMLLinkElement>("link[rel~='icon']")
+      .forEach((el) => {
+        el.removeAttribute("type");
+        el.removeAttribute("sizes");
+        el.href = dealerLogo;
+      });
   }, [dealerLogo]);
 
   const setSelectedScreenPersist: React.Dispatch<
