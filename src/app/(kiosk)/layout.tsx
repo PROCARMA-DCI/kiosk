@@ -84,11 +84,17 @@ const LayoutInner = ({ children }: any) => {
 
   useEffect(() => {
     if (!dealerLogo || typeof dealerLogo !== "string") return;
-    document.querySelectorAll("link[rel*='icon']").forEach((el) => el.remove());
-    const link = document.createElement("link");
-    link.rel = "icon";
+    // Don't remove Next-managed icon links (breaks navigation); keep our own one.
+    let link = document.getElementById(
+      "dealer-favicon",
+    ) as HTMLLinkElement | null;
+    if (!link) {
+      link = document.createElement("link");
+      link.id = "dealer-favicon";
+      link.rel = "icon";
+      document.head.appendChild(link);
+    }
     link.href = dealerLogo;
-    document.head.appendChild(link);
   }, [dealerLogo]);
 
   const setSelectedScreenPersist: React.Dispatch<
