@@ -380,7 +380,11 @@ const LayoutInner = ({ children }: any) => {
           <>
             {/* 🧱 Content */}
             <div className="relative flex flex-col justify-center">
-              {selectedCard?.page_builder_header == 0 ? "" : <HeaderKaos />}
+              {pathname !== "/" && selectedCard?.page_builder_header == 1 ? (
+                ""
+              ) : (
+                <HeaderKaos />
+              )}
               {/* {!pathname.startsWith("/external_url") && <HeaderKaos />} */}
               {children}
             </div>
