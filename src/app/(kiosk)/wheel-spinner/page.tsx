@@ -6,7 +6,7 @@ import BackButton from "@/common/BackButton";
 import { ScreenLoader } from "@/components/loader/ScreenLoader";
 import { showConfetti } from "@/components/showConfetti";
 import { SpinnerWheelGame } from "@/components/SpinnerWheelGame";
-import { baseMypcp } from "@/config";
+import { baseMypcp, mypcp } from "@/config";
 import { playWheelSound } from "@/utils/helpers";
 import { getSessionId } from "@/utils/session";
 import { X } from "lucide-react";
@@ -69,7 +69,7 @@ function InnerWheelSpinnerPage() {
       method: "POST",
       setLoading,
       isValue: true,
-      showErrorToast: code === "31111" ? false : true,
+      showErrorToast: code == "31111" ? false : true,
       data: { code, DealerID: dealer_id, ButtonID: selectedCard?.id },
     });
 
@@ -85,8 +85,16 @@ function InnerWheelSpinnerPage() {
         });
       }
       startBackgroundMusic();
-    } else if (code === "31111" && selectedCard?.wheel_options?.length > 0) {
-      const wheel_options = { wheel_options: selectedCard?.wheel_options };
+    } else if (code === "31111") {
+      const response = await fetchPostObj({
+        url: `${mypcp}/getWheelOptionsForDefaultCode`,
+        method: "POST",
+        setLoading,
+        isValue: true,
+        showErrorToast: code == "31111" ? false : true,
+        data: { code: "31111", button_id: selectedCard?.id },
+      });
+      const wheel_options = { wheel_options: response?.wheel_options };
       setData(wheel_options);
       startBackgroundMusic();
     } else {
@@ -102,7 +110,7 @@ function InnerWheelSpinnerPage() {
     playWheelSound("/sound/Win1.mp3");
     if (
       code === "31111" &&
-      selectedCard?.wheel_options.some((s: any) => s.id === seg.id)
+      data?.wheel_options.some((s: any) => s.id === seg.id)
     ) {
       setLastWinner(segment?.label || segment?.id);
       setLastPoints(segment?.points || 0);
