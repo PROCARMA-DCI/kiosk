@@ -391,15 +391,37 @@ const LayoutInner = ({ children }: any) => {
 
             {/* 🌧 Weather Overlay (ALWAYS ON TOP) */}
             {getWeatherVideo() && (
+              <>
+              {/* Turns black video background into transparency (luminance -> alpha) */}
+              <svg width="0" height="0" className="absolute" aria-hidden="true">
+                <filter
+                  id="black-to-alpha"
+                  colorInterpolationFilters="sRGB"
+                  x="0"
+                  y="0"
+                  width="100%"
+                  height="100%"
+                >
+                  <feColorMatrix
+                    type="matrix"
+                    values="1 0 0 0 0
+                            0 1 0 0 0
+                            0 0 1 0 0
+                            2 2 2 0 0"
+                  />
+                </filter>
+              </svg>
               <video
                 autoPlay
                 muted
                 loop
                 playsInline
-                className="fixed inset-0 w-full h-full object-cover pointer-events-none mix-blend-plus-lighter"
+                style={{ filter: "url(#black-to-alpha)" }}
+                className="fixed inset-0 w-full h-full object-cover pointer-events-none z-10"
               >
                 <source src={getWeatherVideo() ?? ""} type="video/webm" />
               </video>
+              </>
             )}
             {/* 🔹 Screensaver Overlay */}
             {inactive && bannerData?.splashVideo && (
