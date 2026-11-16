@@ -417,10 +417,9 @@ const LayoutInner = ({ children }: any) => {
                 loop
                 playsInline
                 style={{ filter: "url(#black-to-alpha)" }}
-                className="fixed inset-0 w-full h-full object-cover pointer-events-none z-10"
-              >
-                <source src={getWeatherVideo() ?? ""} type="video/webm" />
-              </video>
+                className="fixed inset-0 w-full h-full object-cover pointer-events-none"
+                src={getWeatherVideo() ?? ""}
+              />
               </>
             )}
             {/* 🔹 Screensaver Overlay */}
