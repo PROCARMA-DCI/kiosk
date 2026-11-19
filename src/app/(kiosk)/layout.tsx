@@ -243,10 +243,12 @@ const LayoutInner = ({ children }: any) => {
     // } else if (description.includes("rain")) {
     //   return "/videos/RAINFALL_WEBM/Rainfall_Alpha_Trasnparency.webm";
     // }
-    if (bannerData?.enable_weather_condition == 1) {
-      return todayWeather?.current?.background;
-    } else if (bannerData?.video_url) {
-      return bannerData?.video_url;
+    if (pathname === "/") {
+      if (bannerData?.enable_weather_condition == 1) {
+        return todayWeather?.current?.background;
+      } else if (bannerData?.video_url) {
+        return bannerData?.video_url;
+      }
     }
   };
 
@@ -390,40 +392,34 @@ const LayoutInner = ({ children }: any) => {
             </div>
 
             {/* 🌧 Weather Overlay (ALWAYS ON TOP) */}
-            {/* Black video background -> transparency. Alpha comes from brightness; colours are
-                brightened (gamma) so semi-dark edge pixels don't leave a black outline. */}
+            {/* Weather overlay. WebM files are expected to carry a real alpha channel (shown as-is,
+                original colours). Anything else (e.g. mp4 on black) falls back to a brightness-key. */}
             {getWeatherVideo() && (
               <>
-                <svg width="0" height="0" className="absolute" aria-hidden="true">
-                  <filter
-                    id="black-to-alpha"
-                    colorInterpolationFilters="sRGB"
-                    x="0"
-                    y="0"
-                    width="100%"
-                    height="100%"
-                  >
+                <svg
+                  width="0"
+                  height="0"
+                  className="absolute"
+                  aria-hidden="true"
+                >
+                  <filter id="black-to-alpha" colorInterpolationFilters="sRGB">
                     <feColorMatrix
                       type="matrix"
-                      values="1 0 0 0 0
-                              0 1 0 0 0
-                              0 0 1 0 0
-                              1 1 1 0 0"
+                      values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  2 2 2 0 0"
                     />
-                    <feComponentTransfer>
-                      <feFuncR type="gamma" amplitude="1" exponent="0.4" offset="0" />
-                      <feFuncG type="gamma" amplitude="1" exponent="0.4" offset="0" />
-                      <feFuncB type="gamma" amplitude="1" exponent="0.4" offset="0" />
-                      <feFuncA type="linear" slope="1.5" intercept="0" />
-                    </feComponentTransfer>
                   </filter>
                 </svg>
                 <video
+                  key={getWeatherVideo()}
                   autoPlay
                   muted
                   loop
                   playsInline
-                  style={{ filter: "url(#black-to-alpha)" }}
+                  style={
+                    /\.webm($|\?)/i.test(getWeatherVideo() ?? "")
+                      ? undefined
+                      : { filter: "url(#black-to-alpha)" }
+                  }
                   className="fixed inset-0 w-full h-full object-cover pointer-events-none"
                   src={getWeatherVideo() ?? ""}
                 />
