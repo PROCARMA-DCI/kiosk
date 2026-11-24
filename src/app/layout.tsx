@@ -2,7 +2,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { Roboto } from "next/font/google";
 import localFont from "next/font/local";
 import AppLayout from "./AppLayout";
-// @ts-expect-error CSS is loaded by Next.js and has no TypeScript module declaration.
 import "./globals.css";
 const avenir = localFont({
   src: [
